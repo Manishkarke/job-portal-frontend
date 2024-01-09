@@ -1,23 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {
-  getDataFromCookies,
-  removeDataFromCookies,
-} from "../../../../utils/cookie";
 import { fetchProfile, userLogin, userRegister } from "./authAction";
+import {
+  getDataFromLocalStorage,
+  removeDataFromLocalStorage,
+} from "../../../../utils/localStorage";
 
 const authSlice = createSlice({
   name: "auth",
   initialState: {
     isLoading: true,
     user: [],
-    token: getDataFromCookies("accessToken") || null,
+    token: getDataFromLocalStorage("accessToken") || null,
     error: null,
   },
   reducers: {
     logout: (state) => {
       state.isLoading = false;
       state.token = null;
-      removeDataFromCookies("accessToken");
+      removeDataFromLocalStorage("accessToken");
     },
   },
   extraReducers: (builder) => {

@@ -1,6 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { api } from "../../../../utils/axios";
-import { getDataFromCookies, setDataInCookies } from "../../../../utils/cookie";
+import {
+  getDataFromLocalStorage,
+  setDataInLocalStorage,
+} from "../../../../utils/localStorage";
 import { toast } from "react-toastify";
 
 export const userRegister = createAsyncThunk(
@@ -30,7 +33,7 @@ export const userLogin = createAsyncThunk(
         email,
         password,
       });
-      setDataInCookies("accessToken", response.data.token);
+      setDataInLocalStorage("accessToken", response.data.token);
 
       // TODO: Error Here Fixing needed
       if (response.data.status === 200) {
@@ -59,7 +62,7 @@ export const fetchProfile = createAsyncThunk("get/profile", async () => {
   try {
     const response = await api.get("/user/profile", {
       headers: {
-        Authorization: "Bearer " + getDataFromCookies("accessToken"),
+        Authorization: "Bearer " + getDataFromLocalStorage("accessToken"),
       },
     });
     return response.data;
