@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { api } from "../../../../utils/axios";
 import { getDataFromCookies, setDataInCookies } from "../../../../utils/cookie";
+import { toast } from "react-toastify";
 
 export const userRegister = createAsyncThunk(
   "auth/register",
@@ -23,7 +24,7 @@ export const userRegister = createAsyncThunk(
 
 export const userLogin = createAsyncThunk(
   "auth/login",
-  async ({ email, password, navigate, toast }) => {
+  async ({ email, password, navigate }) => {
     try {
       const response = await api.post("/user/login", {
         email,
@@ -32,17 +33,15 @@ export const userLogin = createAsyncThunk(
       setDataInCookies("accessToken", response.data.token);
 
       // TODO: Error Here Fixing needed
-      if (response.data.token) {
+      if (response.data.status === 200) {
         toast.success(response.data.messsage);
         navigate("/");
       }
-      if(response.data.success === 200){
-        toast.success(response.data.message)
-        }
-        if (response.data.success === 400) {
-        toast.error(response.data.message)
-        console.log(response.data)
-        }
+
+      if (response.data.status === 400) {
+        toast.error(response.data.message);
+        console.log(response.data);
+      }
       // if (response.data.success === 400) {
       //   console.log(toast)
       //   toast.error(response.data.messsage);
