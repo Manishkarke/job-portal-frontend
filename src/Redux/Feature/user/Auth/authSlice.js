@@ -36,6 +36,7 @@ const authSlice = createSlice({
       state.error = null;
     });
     builder.addCase(userLogin.rejected, (state, action) => {
+      console.log(action.payload);
       state.isLoading = false;
       state.token = null;
       state.user = null;

@@ -12,8 +12,7 @@ export const userRegister = createAsyncThunk(
         password,
       });
 
-      if(response.data.status === 200) {
-        
+      if (response.data.status === 200) {
       }
       return response.data;
     } catch (err) {
@@ -24,23 +23,32 @@ export const userRegister = createAsyncThunk(
 
 export const userLogin = createAsyncThunk(
   "auth/login",
-  async ({ email, password }) => {
+  async ({ email, password, navigate, toast }) => {
     try {
       const response = await api.post("/user/login", {
         email,
         password,
-        navigate,
-        toast,
       });
       setDataInCookies("accessToken", response.data.token);
+
+      // TODO: Error Here Fixing needed
       if (response.data.token) {
         toast.success(response.data.messsage);
         navigate("/");
       }
-      if (response.data.status !== 200) {
-        toast.error(response.data.messsage);
-      }
-      console.log(response.data)
+      if(response.data.success === 200){
+        toast.success(response.data.message)
+        }
+        if (response.data.success === 400) {
+        toast.error(response.data.message)
+        console.log(response.data)
+        }
+      // if (response.data.success === 400) {
+      //   console.log(toast)
+      //   toast.error(response.data.messsage);
+      //   console.log(response.data);
+      // }
+      console.log(response.data);
       return response.data;
     } catch (err) {
       console.log(err);

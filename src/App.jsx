@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Login from "./components/Login/Login";
 import AppRoutes from "./Router/Links";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
           return <Route key={index} {...rest} element={element} />;
         })}
       </Routes>
+      <ToastContainer />
     </>
   );
 }
