@@ -4,11 +4,10 @@ import {
   getDataFromLocalStorage,
   setDataInLocalStorage,
 } from "../../../../utils/localStorage";
-import { toast } from "react-toastify";
 
 export const userRegister = createAsyncThunk(
   "auth/register",
-  async ({ email, name, password }) => {
+  async ({ email, name, password, navigate, toast }) => {
     try {
       const response = await api.post("/user/register", {
         name,
@@ -17,6 +16,12 @@ export const userRegister = createAsyncThunk(
       });
 
       if (response.data.status === 200) {
+        toast.success(response.data.message);
+        console.log(response.data.message);
+        navigate("/login");
+      }
+      if (response.data.status !== 200) {
+        toast.error(response.data.message);
       }
       return response.data;
     } catch (err) {
@@ -27,7 +32,7 @@ export const userRegister = createAsyncThunk(
 
 export const userLogin = createAsyncThunk(
   "auth/login",
-  async ({ email, password, navigate }) => {
+  async ({ email, password, navigate, toast }) => {
     try {
       const response = await api.post("/user/login", {
         email,
@@ -35,9 +40,8 @@ export const userLogin = createAsyncThunk(
       });
       setDataInLocalStorage("accessToken", response.data.token);
 
-      // TODO: Error Here Fixing needed
       if (response.data.status === 200) {
-        toast.success(response.data.messsage);
+        toast.success(response.data.message);
         navigate("/");
       }
 

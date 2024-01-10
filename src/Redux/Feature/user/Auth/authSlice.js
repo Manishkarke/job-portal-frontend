@@ -24,19 +24,27 @@ const authSlice = createSlice({
     builder.addCase(userRegister.pending, (state) => {
       state.isLoading = true;
     });
+    builder.addCase(userRegister.fulfilled, (state) => {
+      state.isLoading = false;
+    });
+
+    builder.addCase(userRegister.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload.message;
+    });
     builder.addCase(userLogin.pending, (state) => {
       state.isLoading = true;
       state.error = null;
       state.token = null;
     });
     builder.addCase(userLogin.fulfilled, (state, action) => {
+      console.log(action)
       state.isLoading = false;
       // state.user = action.payload.user;
       state.token = action.payload.token;
       state.error = null;
     });
     builder.addCase(userLogin.rejected, (state, action) => {
-      console.log(action.payload);
       state.isLoading = false;
       state.token = null;
       state.user = null;

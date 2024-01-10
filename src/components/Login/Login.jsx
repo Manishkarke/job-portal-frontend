@@ -29,7 +29,7 @@ export default function Login() {
       toast.error("Please enter all fields");
     } else {
       const { email, password } = formData;
-      dispatch(userLogin({ email, password, navigate }));
+      dispatch(userLogin({ email, password, navigate, toast }));
     }
   };
   return (

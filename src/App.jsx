@@ -1,12 +1,11 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import "./App.css";
-import Login from "./components/Login/Login";
-import AppRoutes from "./Router/Links";
+import { HashRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import Router from "./Router/Router";
+import "react-toastify/dist/ReactToastify.css";
 
-function App() {
+function RouterManager() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <ToastContainer
         position="top-right"
         autoClose={5000}
@@ -17,19 +16,14 @@ function App() {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="light"
       />
-      <Routes>
-        <>
-          {/* yesari nagara AppRoutes ma uta hera Route.jsx ma kasari gareko cha hera ani testo gara + App.jsx pani hera */}
-          {AppRoutes.map(({ element, ...rest }, index) => {
-            return <Route key={index} {...rest} element={element} />;
-          })}
-        </>
-      </Routes>
-      <ToastContainer />
-    </BrowserRouter>
+      <Router />
+    </HashRouter>
   );
+}
+
+function App() {
+  return RouterManager();
 }
 
 export default App;
