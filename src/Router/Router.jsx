@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { getDataFromLocalStorage } from "../utils/localStorage";
 import Dashboard from "../Pages/Users/Dashboard/Dashboard";
@@ -6,18 +6,29 @@ import { JobList } from "../Pages/Users/Jobs/JobList";
 import { Profile } from "../Pages/Users/Profile/Profile";
 import { AdminDashboard } from "../Pages/Admin/Dashboard/AdminDashboard";
 import { VendorDashboard } from "../Pages/Vendor/Dashboard/VendorDashboard";
-import Login from '../Pages/Common/Login/Login';
+import Login from "../Pages/Common/Login/Login";
 import Register from "../Pages/Common/Register/Register";
 
 export default function Router() {
+  const [userType, setUserType] = useState(null);
+  useEffect(() => {
+    setUserType(getDataFromLocalStorage("role"));
+  }, [userType]);
   return (
     <>
       <Routes>
-        <Route path="/" element={<Dashboard />} />
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute userType={userType} allowedUserType={"user"}>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/profile"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute userType={userType} allowedUserType="user">
               <Profile />
             </ProtectedRoute>
           }
@@ -30,7 +41,7 @@ export default function Router() {
         <Route
           path="/vendor"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute userType={userType} allowedUserType="vendor">
               <VendorDashboard />
             </ProtectedRoute>
           }
@@ -42,7 +53,7 @@ export default function Router() {
         <Route
           path="/admin"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute userType={userType} allowedUserType="admin">
               <AdminDashboard />
             </ProtectedRoute>
           }
@@ -58,10 +69,12 @@ export default function Router() {
   );
 }
 
-const ProtectedRoute = ({ children }) => {
+const ProtectedRoute = ({ children, allowedUserType, userType }) => {
   const token = getDataFromLocalStorage("accessToken");
   if (token === null) {
     return <Navigate to={"/login"} />;
   }
-  return token && children;
+  if (allowedUserType.includes(userType)) {
+    return children;
+  }
 };

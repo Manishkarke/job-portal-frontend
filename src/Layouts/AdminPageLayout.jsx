@@ -3,10 +3,12 @@ import { AdminNavigation } from "../Components/Navigations/Admin/AdminNavigation
 
 export const AdminPageLayout = ({ children }) => {
   return (
-    <main className="page-layout">
-      <AdminNavigation className="navigation admin" />
+    <main className="grid grid-cols-2 mt-8">
+      <AdminNavigation />
 
-      <section className="page-content">{children}</section>
+      <section className="fixed left-52 container border border-solid mx-auto">
+        {children}
+      </section>
     </main>
   );
 };
