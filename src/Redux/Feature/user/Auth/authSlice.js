@@ -16,6 +16,7 @@ const authSlice = createSlice({
   reducers: {
     logout: (state) => {
       state.isLoading = false;
+      state.user = null;
       state.token = null;
       removeDataFromLocalStorage("accessToken");
     },
@@ -38,9 +39,8 @@ const authSlice = createSlice({
       state.token = null;
     });
     builder.addCase(userLogin.fulfilled, (state, action) => {
-      console.log(action)
       state.isLoading = false;
-      // state.user = action.payload.user;
+      state.user = action.payload.emailExists;
       state.token = action.payload.token;
       state.error = null;
     });
@@ -66,5 +66,5 @@ const authSlice = createSlice({
   },
 });
 
-// export const { }
+export const { logout } = authSlice.actions;
 export const authReducer = authSlice.reducer;

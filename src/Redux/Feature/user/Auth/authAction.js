@@ -38,23 +38,24 @@ export const userLogin = createAsyncThunk(
         email,
         password,
       });
-      setDataInLocalStorage("accessToken", response.data.token);
 
       if (response.data.status === 200) {
         toast.success(response.data.message);
-        navigate("/");
+        setDataInLocalStorage("accessToken", response.data.token);
+        setDataInLocalStorage("role", response.data.role);
+        if (response.data.role === "user") {
+          navigate("/");
+        } else if (response.data.role === "admin") {
+          navigate("/admin");
+        } else if (response.data.role === "vendor") {
+          navigate("/vendor");
+        }
       }
 
       if (response.data.status === 400) {
         toast.error(response.data.message);
         console.log(response.data);
       }
-      // if (response.data.success === 400) {
-      //   console.log(toast)
-      //   toast.error(response.data.messsage);
-      //   console.log(response.data);
-      // }
-      console.log(response.data);
       return response.data;
     } catch (err) {
       console.log(err);
