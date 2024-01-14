@@ -19,7 +19,7 @@ const tailwindClass = {
 export const AdminNavigation = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+
   const logoutHandler = () => {
     dispatch(logout());
     navigate("/login");
