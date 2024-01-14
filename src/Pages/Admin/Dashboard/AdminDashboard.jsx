@@ -1,9 +1,10 @@
 import React from "react";
+import { AdminPageLayout } from "../../../Layouts/AdminPageLayout";
 
 export const AdminDashboard = () => {
   return (
-    <div>
-      Admin Dashboard
-    </div>
+    <AdminPageLayout>
+      <div>Admin Dashboard</div>
+    </AdminPageLayout>
   );
 };
