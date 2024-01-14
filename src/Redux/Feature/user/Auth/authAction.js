@@ -43,18 +43,10 @@ export const userLogin = createAsyncThunk(
         toast.success(response.data.message);
         setDataInLocalStorage("accessToken", response.data.token);
         setDataInLocalStorage("role", response.data.role);
-        if (response.data.role === "user") {
-          navigate("/");
-        } else if (response.data.role === "admin") {
-          navigate("/admin");
-        } else if (response.data.role === "vendor") {
-          navigate("/vendor");
-        }
       }
 
       if (response.data.status === 400) {
         toast.error(response.data.message);
-        console.log(response.data);
       }
       return response.data;
     } catch (err) {

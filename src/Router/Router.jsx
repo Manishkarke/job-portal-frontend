@@ -12,8 +12,11 @@ import Register from "../Pages/Common/Register/Register";
 export default function Router() {
   const [userType, setUserType] = useState(null);
   useEffect(() => {
-    setUserType(getDataFromLocalStorage("role"));
-  }, [userType]);
+    const storedUserType = getDataFromLocalStorage("role");
+    if (storedUserType) {
+      setUserType(storedUserType);
+    }
+  }, []);
   return (
     <>
       <Routes>

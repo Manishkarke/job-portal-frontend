@@ -1,7 +1,8 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { logout } from "../../../Redux/Feature/user/Auth/authSlice";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 logout;
 
 const tailwindClass = {
@@ -17,9 +18,14 @@ const tailwindClass = {
 };
 export const AdminNavigation = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  
   const logoutHandler = () => {
     dispatch(logout());
+    navigate("/login");
+    toast.success("Logged Out Successfully");
   };
+
   return (
     <nav className={`${tailwindClass.container} ${tailwindClass.flex}`}>
       <h1 className={`${tailwindClass.logo} ${tailwindClass.fullWidth}`}>

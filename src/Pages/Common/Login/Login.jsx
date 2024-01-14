@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, redirect, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { userLogin } from "../../../Redux/Feature/user/Auth/authAction";
 import { Navigation } from "../../../Components/Navigations/User/Navigation";
+import { userLogin } from "../../../Redux/Feature/user/Auth/authAction";
+import { getDataFromLocalStorage } from "../../../utils/localStorage";
 
 // Tailwind Class Name
 const tailwindClass = {
@@ -29,6 +30,11 @@ export default function Login() {
     email: "",
     password: "",
   });
+  const [role, setRole] = useState(null);
+
+  useEffect(() => {
+    setRole(getDataFromLocalStorage("role"))
+  }, [role]);
 
   // State handling Functions
   const emailChangeHandler = (e) => {
@@ -50,6 +56,14 @@ export default function Login() {
     } else {
       const { email, password } = formData;
       dispatch(userLogin({ email, password, navigate, toast }));
+
+      if (role === "user") {
+        navigate("/");
+      } else if (role === "admin") {
+        navigate("/admin");
+      } else if (role === "vendor") {
+        navigate("/vendor");
+      }
     }
   };
 
