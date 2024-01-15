@@ -1,7 +1,10 @@
-import React from 'react'
+import React from "react";
+import { AdminPageLayout } from "../../../Layouts/AdminPageLayout";
 
 export const UserList = () => {
   return (
-    <div>UserList</div>
-  )
-}
+    <AdminPageLayout>
+      <div>UserList</div>
+    </AdminPageLayout>
+  );
+};

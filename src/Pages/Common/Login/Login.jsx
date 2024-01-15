@@ -2,8 +2,8 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { userLogin } from "../../../Redux/Feature/user/Auth/authAction";
 import { Navigation } from "../../../Components/Navigations/User/Navigation";
+import { userLogin } from "../../../Redux/Feature/user/Auth/authAction";
 
 // Tailwind Class Name
 const tailwindClass = {
@@ -49,7 +49,19 @@ export default function Login() {
       toast.error("Please enter all fields");
     } else {
       const { email, password } = formData;
-      dispatch(userLogin({ email, password, navigate, toast }));
+      dispatch(userLogin({ email, password, toast })).then((response) => {
+        if (response.payload.status === 200) {
+          toast.success(response.payload.message);
+
+          if (response.payload.emailExists.role === "user") {
+            navigate("/");
+          } else if (response.payload.emailExists.role === "admin") {
+            navigate("/admin");
+          } else if (response.payload.emailExists.role === "vendor") {
+            navigate("/vendor");
+          }
+        }
+      });
     }
   };
 
