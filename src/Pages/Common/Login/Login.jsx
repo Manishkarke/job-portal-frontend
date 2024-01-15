@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
-import { Link, redirect, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Navigation } from "../../../Components/Navigations/User/Navigation";
 import { userLogin } from "../../../Redux/Feature/user/Auth/authAction";
-import { getDataFromLocalStorage } from "../../../utils/localStorage";
 
 // Tailwind Class Name
 const tailwindClass = {
@@ -30,11 +29,6 @@ export default function Login() {
     email: "",
     password: "",
   });
-  const [role, setRole] = useState(null);
-
-  useEffect(() => {
-    setRole(getDataFromLocalStorage("role"))
-  }, [role]);
 
   // State handling Functions
   const emailChangeHandler = (e) => {
@@ -55,15 +49,19 @@ export default function Login() {
       toast.error("Please enter all fields");
     } else {
       const { email, password } = formData;
-      dispatch(userLogin({ email, password, navigate, toast }));
+      dispatch(userLogin({ email, password, toast })).then((response) => {
+        if (response.payload.status === 200) {
+          toast.success(response.payload.message);
 
-      if (role === "user") {
-        navigate("/");
-      } else if (role === "admin") {
-        navigate("/admin");
-      } else if (role === "vendor") {
-        navigate("/vendor");
-      }
+          if (response.payload.emailExists.role === "user") {
+            navigate("/");
+          } else if (response.payload.emailExists.role === "admin") {
+            navigate("/admin");
+          } else if (response.payload.emailExists.role === "vendor") {
+            navigate("/vendor");
+          }
+        }
+      });
     }
   };
 
