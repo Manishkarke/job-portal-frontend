@@ -1,11 +1,11 @@
-import { HashRouter } from "react-router-dom";
+import { BrowserRouter, HashRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import Router from "./Router/Router";
 import "react-toastify/dist/ReactToastify.css";
 
 function RouterManager() {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <ToastContainer
         position="top-right"
         autoClose={5000}
@@ -18,7 +18,7 @@ function RouterManager() {
         pauseOnHover
       />
       <Router />
-    </HashRouter>
+    </BrowserRouter>
   );
 }
 

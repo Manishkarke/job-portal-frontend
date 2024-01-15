@@ -20,14 +20,7 @@ export default function Router() {
   return (
     <>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <ProtectedRoute userType={userType} allowedUserType={"user"}>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/" element={<JobList />} />
         <Route
           path="/profile"
           element={

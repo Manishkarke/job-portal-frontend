@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { fetchProfile } from "../../../Redux/Feature/user/Auth/authAction";
-import { DropdownMenu } from "./DropdownMenu";
 import { getDataFromLocalStorage } from "../../../utils/localStorage";
+import { DropdownMenu } from "./DropdownMenu";
 
-export const Navigation = () => {
+export const Navigation = ({ className }) => {
   // States
   const [showDropdown, setShowDropdown] = useState(false);
   const user = useSelector((state) => state.auth.user);
@@ -21,30 +21,40 @@ export const Navigation = () => {
 
   // Tailwind css class
   const tailwindClass = {
-    link: "px-4 py-2 border border-solid",
-    avatar: "w-14 rounded-full cursor-pointer",
+    link: "px-4 py-2 border-solid font-medium hover:bg-orange-200 hover:text-white transition-all",
+    avatar: "w-14 rounded-full cursor-pointer object-cover shadow-md",
+    button:
+      "px-4 py-2 flex justify-center w-full text-white font-semibold bg-violet-400 rounded-sm transition-all",
   };
 
   const handleAvatarClick = () => {
     setShowDropdown(!showDropdown);
   };
   return (
-    <nav className="flex justify-center items-center capitalize mb-8">
+    <nav className={className}>
       {/* Logo */}
       <h1 className="font-semibold text-lg">
         Job-<span className="text-orange-400">portal</span>
       </h1>
 
       {/* Nav Items */}
-      <ul className="flex ml-auto items-center gap-2 basis-6/12">
+      <ul className="flex ml-auto items-center basis-6/12">
         <li className="">
-          <NavLink className={tailwindClass.link} to={"/"}>
+          <NavLink className={`${tailwindClass.link} border-r-2`} to={"/"}>
             home
           </NavLink>
         </li>
         <li>
-          <NavLink className={tailwindClass.link} to={"#"}>
-            category
+          <NavLink className={`${tailwindClass.link} border-r-2`} to={"/jobs"}>
+            jobs
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            className={`${tailwindClass.link} border-r-0`}
+            to={"/category"}
+          >
+            link 1
           </NavLink>
         </li>
         <li className="ml-auto">
@@ -62,7 +72,10 @@ export const Navigation = () => {
               {showDropdown && <DropdownMenu />}
             </div>
           ) : (
-            <NavLink className={tailwindClass.link} to={"/login"}>
+            <NavLink
+              className={`${tailwindClass.link} ${tailwindClass.button}`}
+              to={"/login"}
+            >
               log in
             </NavLink>
           )}
