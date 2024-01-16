@@ -1,13 +1,15 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Navigation } from "../../../Components/Navigations/User/Navigation";
 import { userLogin } from "../../../Redux/Feature/user/Auth/authAction";
+import { UserLayout } from "../../../Layouts/UserLayout";
+import { RegisterPageLayout } from "../../../Layouts/RegisterPageLayout";
 
 // Tailwind Class Name
 const tailwindClass = {
-  box: "max-w-lg mt-10 mx-auto border border-solid rounded-lg shadow flex min-h-full flex-col justify-center align-center px-6 py-12 lg:px-8",
+  box: "max-w-lg mt-10 mx-auto border border-solid rounded-lg shadow flex flex-col justify-center align-center px-6 py-12 lg:px-8",
   inputField:
     "block w-full p-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6",
   label: "block text-sm font-medium leading-6 text-gray-900",
@@ -66,8 +68,7 @@ export default function Login() {
   };
 
   return (
-    <>
-      <Navigation />
+    <RegisterPageLayout>
       <div className={tailwindClass.box}>
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className={tailwindClass.title}>Sign in to your account</h2>
@@ -135,6 +136,6 @@ export default function Login() {
           </p>
         </div>
       </div>
-    </>
+    </RegisterPageLayout>
   );
 }

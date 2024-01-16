@@ -1,11 +1,10 @@
 import React from "react";
-import { Navigation } from "../../../Components/Navigations/User/Navigation";
+import { UserLayout } from "../../../Layouts/UserLayout";
 
 export default function Dashboard() {
   return (
-    <>
-      <Navigation />
+    <UserLayout>
       dash board
-    </>
+    </UserLayout>
   );
 }

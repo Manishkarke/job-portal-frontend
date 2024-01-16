@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button } from "../../../Components/Button";
 import { Navigation } from "../../../Components/Navigations/User/Navigation";
 import { getJobs } from "../../../Redux/Feature/user/Jobs/jobAction";
+import { UserLayout } from "../../../Layouts/UserLayout";
 
 export const JobList = () => {
   const jobs = useSelector((state) => state.jobs.jobs);
@@ -11,17 +12,5 @@ export const JobList = () => {
     dispatch(getJobs());
     console.log(jobs);
   }, []);
-  return (
-    <>
-      <Navigation />
-      <div>
-        <Button type={"button"} />
-        <ul className="grid">
-          {jobs.map((job) => {
-            return <h2>{job.title}</h2>;
-          })}
-        </ul>
-      </div>
-    </>
-  );
+  return <UserLayout>Job List page</UserLayout>;
 };

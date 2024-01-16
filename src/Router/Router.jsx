@@ -8,6 +8,7 @@ import { AdminDashboard } from "../Pages/Admin/Dashboard/AdminDashboard";
 import { VendorDashboard } from "../Pages/Vendor/Dashboard/VendorDashboard";
 import Login from "../Pages/Common/Login/Login";
 import Register from "../Pages/Common/Register/Register";
+import { AdminCategory } from "../Pages/Admin/Category/AdminCategory";
 
 export default function Router() {
   const [userType, setUserType] = useState(null);
@@ -20,14 +21,7 @@ export default function Router() {
   return (
     <>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <ProtectedRoute userType={userType} allowedUserType={"user"}>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/" element={<JobList />} />
         <Route
           path="/profile"
           element={
@@ -58,6 +52,14 @@ export default function Router() {
           element={
             <ProtectedRoute userType={userType} allowedUserType="admin">
               <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/category/"
+          element={
+            <ProtectedRoute userType={userType} allowedUserType="admin">
+              <AdminCategory />
             </ProtectedRoute>
           }
         />
