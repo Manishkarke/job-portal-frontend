@@ -9,7 +9,6 @@ export const AdminPageLayout = ({ children }) => {
   return (
     <main className="grid grid-cols-2 mt-4 relative">
       <AdminNavigation className={tailwindCLass.sidebar} />
-
       <section id="content" className={tailwindCLass.content}>
         {children}
       </section>

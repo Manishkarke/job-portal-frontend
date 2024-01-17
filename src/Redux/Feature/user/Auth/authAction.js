@@ -32,7 +32,7 @@ export const userRegister = createAsyncThunk(
 
 export const userLogin = createAsyncThunk(
   "auth/login",
-  async ({ email, password, toast }) => {
+  async ({ email, password, navigate, toast }) => {
     try {
       const response = await api.post("/user/login", {
         email,
@@ -42,15 +42,24 @@ export const userLogin = createAsyncThunk(
       if (response.data.status === 200) {
         setDataInLocalStorage("accessToken", response.data.token);
         setDataInLocalStorage("role", response.data.role);
+        toast.success(response.data.message);
       }
 
-      // if (response.data.role === "user") {
-      //   navigate("/");
-      // } else if (response.data.role === "admin") {
-      //   navigate("/admin");
-      // } else if (response.data.role === "vendor") {
-      //   navigate("/vendor");
-      // }
+      if (response.data.role === "user") {
+        try {
+          navigate("/");
+        } catch (error) {
+          console.log("niot error", error.size);
+        }
+      } else if (response.data.role === "admin") {
+        try {
+          navigate("/admin");
+        } catch (e) {
+          console.log("error");
+        }
+      } else if (response.data.role === "vendor") {
+        navigate("/vendor");
+      }
 
       if (response.data.status === 400) {
         toast.error(response.data.message);

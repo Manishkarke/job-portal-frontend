@@ -16,7 +16,7 @@ const tailwindClass = {
     "text-center text-2xl font-bold leading-9 tracking-tight text-gray-900",
 };
 
-export const FormModal = ({ closeModal }) => {
+export const FormModal = ({ closeModal, uploading }) => {
   const dispatch = useDispatch();
   const imageInputRef = useRef(null);
   const [imagePreview, setImagePreview] = useState(null);
@@ -69,8 +69,7 @@ export const FormModal = ({ closeModal }) => {
   // Form Submit Handler
   const formSubmitHandler = (event) => {
     event.preventDefault();
-    dispatch(createCategory({ formData, toast }));
-    closeModal(true);
+    dispatch(createCategory({ formData, toast, uploading, closeModal }));
   };
   return (
     <section className={tailwindClass.box}>

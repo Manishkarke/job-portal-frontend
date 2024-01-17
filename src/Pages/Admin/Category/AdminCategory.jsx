@@ -17,13 +17,16 @@ const tailwindCLass = {
 
 export const AdminCategory = () => {
   const [showModal, setShowModal] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [deleting, setDeleting] = useState(false);
   const dispatch = useDispatch();
-
-  const categories = useSelector((state) => state.admin.categories);
 
   useEffect(() => {
     dispatch(getAllCategory());
-  }, []);
+    setUploading(false);
+    setDeleting(false);
+  }, [dispatch, uploading, showModal, deleting]);
+  const categories = useSelector((state) => state.admin.categories);
 
   return (
     <AdminPageLayout>
@@ -47,7 +50,12 @@ export const AdminCategory = () => {
             {categories.map(({ _id, image, category }) => {
               return (
                 <li className="w-fit" key={_id}>
-                  <AdminCategoryCard image={image} category={category} />
+                  <AdminCategoryCard
+                    id={_id}
+                    image={image}
+                    category={category}
+                    DeleteCategory={setDeleting}
+                  />
                 </li>
               );
             })}
@@ -56,7 +64,7 @@ export const AdminCategory = () => {
       </section>
       {showModal && (
         <ModalLayout closeModal={setShowModal}>
-          <FormModal closeModal={setShowModal} />
+          <FormModal closeModal={setShowModal} uploading={setUploading} />
         </ModalLayout>
       )}
     </AdminPageLayout>

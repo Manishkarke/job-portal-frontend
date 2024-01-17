@@ -21,9 +21,8 @@ export const getAllVendor = createAsyncThunk("admin/getAllVendor", async () => {
 
 export const createCategory = createAsyncThunk(
   "admin/createCategory",
-  async ({ formData, toast }) => {
+  async ({ formData, toast, uploading, closeModal }) => {
     try {
-      console.log(toast);
       const response = await apiImage.post("/admin/category", formData, {
         headers: {
           Authorization: "Bearer " + token,
@@ -32,6 +31,8 @@ export const createCategory = createAsyncThunk(
 
       if (response.data.status === 200) {
         toast.success(response.data.message);
+        uploading(true);
+        closeModal(false);
       } else if (response.data.status === 400) {
         toast.error(response.data.message);
       }
@@ -61,7 +62,7 @@ export const getAllCategory = createAsyncThunk(
 
 export const deleteCategory = createAsyncThunk(
   "admin/deleteCategory",
-  async ({ id, toast }) => {
+  async ({ id, DeleteCategory, toast }) => {
     try {
       const response = await api.delete(`/admin/category/${id}`, {
         headers: {
@@ -71,6 +72,7 @@ export const deleteCategory = createAsyncThunk(
 
       if (response.data.status === 200) {
         toast.success(response.data.message);
+        DeleteCategory(true);
       }
       if (response.data.status === 400) {
         toast.error(response.data.message);
