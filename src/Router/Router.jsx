@@ -8,6 +8,8 @@ import { JobList } from "../Pages/Users/Jobs/JobList";
 import { Profile } from "../Pages/Users/Profile/Profile";
 import { VendorDashboard } from "../Pages/Vendor/Dashboard/VendorDashboard";
 import { getDataFromLocalStorage } from "../utils/localStorage";
+import { VendorList } from "../Pages/Admin/VendorList/VendorList";
+import { VendorRequests } from "../Pages/Admin/VendorList/VendorRequests";
 
 export default function Router() {
   const [userType, setUserType] = useState("");
@@ -62,10 +64,26 @@ export default function Router() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/admin/vendors/"
+          element={
+            <ProtectedRoute userType={userType} allowedUserType="admin">
+              <VendorList />
+            </ProtectedRoute>
+          }
+        />
 
-        {/* Common ROutes  */}
-        {/* Common ROutes  */}
-        {/* Common ROutes  */}
+        <Route
+          path="/admin/vendors/requests/"
+          element={
+            <ProtectedRoute userType={userType} allowedUserType="admin">
+              <VendorRequests />
+            </ProtectedRoute>
+          }
+        />
+        {/* Common Routes  */}
+        {/* Common Routes  */}
+        {/* Common Routes  */}
         <Route
           path="/login"
           element={

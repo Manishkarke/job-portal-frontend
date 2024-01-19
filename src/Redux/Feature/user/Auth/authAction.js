@@ -42,23 +42,20 @@ export const userLogin = createAsyncThunk(
       if (response.data.status === 200) {
         setDataInLocalStorage("accessToken", response.data.token);
         setDataInLocalStorage("role", response.data.role);
-        toast.success(response.data.message);
       }
 
       if (response.data.role === "user") {
-        try {
-          navigate("/");
-        } catch (error) {
-          console.log("niot error", error.size);
-        }
+        console.log("before navigating");
+        navigate("/");
+        console.log("after navigating");
       } else if (response.data.role === "admin") {
-        try {
-          navigate("/admin");
-        } catch (e) {
-          console.log("error");
-        }
+        console.log("before navigating");
+        navigate("/admin");
+        console.log("after navigating");
       } else if (response.data.role === "vendor") {
+        console.log("before navigating");
         navigate("/vendor");
+        console.log("after navigating");
       }
 
       if (response.data.status === 400) {

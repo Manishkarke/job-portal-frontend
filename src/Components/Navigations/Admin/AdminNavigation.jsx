@@ -29,7 +29,6 @@ export const AdminNavigation = ({ className }) => {
       <h1 className={`${tailwindClass.logo} ${tailwindClass.fullWidth}`}>
         Job-<span className="text-orange-400">portal</span>
       </h1>
-
       <ul
         className={`${tailwindClass.navItems} ${tailwindClass.fullWidth} ${tailwindClass.flex}`}
       >
@@ -50,8 +49,11 @@ export const AdminNavigation = ({ className }) => {
           </NavLink>
         </li>
         <li className={tailwindClass.fullWidth}>
-          <NavLink className={`${tailwindClass.flex} ${tailwindClass.navItem}`}>
-            home
+          <NavLink
+            className={`${tailwindClass.flex} ${tailwindClass.navItem}`}
+            to={"/admin/vendors/"}
+          >
+            vendors
           </NavLink>
         </li>
         <li className={`${tailwindClass.fullWidth} mt-auto`}>
