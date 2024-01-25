@@ -39,6 +39,38 @@ export default function Router() {
           }
         />
         <Route path="/jobs" element={<JobList />} />
+        {/* User Routes */}
+        {/* User Routes */}
+        <Route path="/" element={<UserLayout />}>
+          <Route index={true} element={<JobList />} />
+          <Route path="user" element={<ProfilePageLayout />}>
+            <Route
+              path="profile"
+              element={
+                <ProtectedRoute userType={userType} allowedUserType="user">
+                  <Profile />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="appliedJobs"
+              element={
+                <ProtectedRoute userType={userType} allowedUserType="user">
+                  <AppliedJobs />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="registerAsVendor"
+              element={
+                <ProtectedRoute userType={userType} allowedUserType="user">
+                  <VendorRegister />
+                </ProtectedRoute>
+              }
+            />
+          </Route>
+        </Route>
 
         {/* Vendor ROutes */}
         {/* Vendor ROutes */}
