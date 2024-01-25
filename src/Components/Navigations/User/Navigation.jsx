@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { fetchProfile } from "../../../Redux/Feature/user/Auth/authAction";
 import { getDataFromLocalStorage } from "../../../utils/localStorage";
 import { DropdownMenu } from "./DropdownMenu";
@@ -9,13 +9,18 @@ export const Navigation = ({ className }) => {
   // States
   const [showDropdown, setShowDropdown] = useState(false);
   const user = useSelector((state) => state.auth.user);
-
+  const navigate = useNavigate();
   // Fetching userdata
   const dispatch = useDispatch();
   useEffect(() => {
     const token = getDataFromLocalStorage("accessToken");
-    if (token) {
+    const role = getDataFromLocalStorage("role");
+    if (token && role === "user") {
       dispatch(fetchProfile());
+    } else if (token && role === "vendor") {
+      navigate("/vendor");
+    } else if (token && role === "admin") {
+      navigate("/admin");
     }
   }, []);
 
