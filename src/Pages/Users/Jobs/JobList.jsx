@@ -1,7 +1,5 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button } from "../../../Components/Button";
-import { Navigation } from "../../../Components/Navigations/User/Navigation";
 import { getJobs } from "../../../Redux/Feature/user/Jobs/jobAction";
 import { UserLayout } from "../../../Layouts/UserLayout";
 

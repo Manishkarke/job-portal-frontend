@@ -9,6 +9,8 @@ import { VendorDashboard } from "../Pages/Vendor/Dashboard/VendorDashboard";
 import Login from "../Pages/Common/Login/Login";
 import Register from "../Pages/Common/Register/Register";
 import { AdminCategory } from "../Pages/Admin/Category/AdminCategory";
+import { UserLayout } from "../Layouts/UserLayout";
+import { ProfilePageLayout } from "../Layouts/ProfilePageLayout";
 
 export default function Router() {
   const [userType, setUserType] = useState(null);
@@ -21,16 +23,19 @@ export default function Router() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<JobList />} />
-        <Route
-          path="/profile"
-          element={
-            <ProtectedRoute userType={userType} allowedUserType="user">
-              <Profile />
-            </ProtectedRoute>
-          }
-        />
-        <Route path="/jobs" element={<JobList />} />
+        <Route path="/" element={<UserLayout />}>
+          <Route index={true} element={<JobList />} />
+          <Route path="user" element={<ProfilePageLayout />}>
+            <Route
+              path="profile"
+              element={
+                <ProtectedRoute userType={userType} allowedUserType="user">
+                  <Profile />
+                </ProtectedRoute>
+              }
+            />
+          </Route>
+        </Route>
 
         {/* Vendor ROutes */}
         {/* Vendor ROutes */}
