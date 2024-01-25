@@ -15,7 +15,8 @@ import { Profile } from "../Pages/Users/Profile/Profile";
 import { VendorRegister } from "../Pages/Users/Profile/VendorRegister";
 import { VendorDashboard } from "../Pages/Vendor/Dashboard/VendorDashboard";
 import { getDataFromLocalStorage } from "../utils/localStorage";
-import { VendorPageLayout } from "../Layouts/VendorPageLayout";
+import { VendorList } from "../Pages/Admin/VendorList/VendorList";
+import { VendorRequests } from "../Pages/Admin/VendorList/VendorRequests";
 
 export default function Router() {
   const [userType, setUserType] = useState("");
@@ -28,37 +29,16 @@ export default function Router() {
   return (
     <>
       <Routes>
-        {/* User Routes */}
-        <Route path="/" element={<UserLayout />}>
-          <Route index={true} element={<JobList />} />
-          <Route path="user" element={<ProfilePageLayout />}>
-            <Route
-              path="profile"
-              element={
-                <ProtectedRoute userType={userType} allowedUserType="user">
-                  <Profile />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="appliedJobs"
-              element={
-                <ProtectedRoute userType={userType} allowedUserType="user">
-                  <AppliedJobs />
-                </ProtectedRoute>
-              }
-            />
-
-            <Route
-              path="registerAsVendor"
-              element={
-                <ProtectedRoute userType={userType} allowedUserType="user">
-                  <VendorRegister />
-                </ProtectedRoute>
-              }
-            />
-          </Route>
-        </Route>
+        <Route path="/" element={<JobList />} />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute userType={userType} allowedUserType="user">
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/jobs" element={<JobList />} />
 
         {/* Vendor ROutes */}
         {/* Vendor ROutes */}
