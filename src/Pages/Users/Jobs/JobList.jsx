@@ -12,5 +12,5 @@ export const JobList = () => {
     dispatch(getJobs());
     console.log(jobs);
   }, []);
-  return <UserLayout>Job List page</UserLayout>;
+  return <h1> Hello this is job list page </h1>;
 };

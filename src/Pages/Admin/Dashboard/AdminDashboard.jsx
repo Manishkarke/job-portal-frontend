@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { AdminPageLayout } from "../../../Layouts/AdminPageLayout";
 
 export const AdminDashboard = () => {
   useEffect(() => {
@@ -9,8 +8,8 @@ export const AdminDashboard = () => {
     };
   }, []);
   return (
-    <AdminPageLayout>
+    <>
       <div>Admin Dashboard</div>
-    </AdminPageLayout>
+    </>
   );
 };

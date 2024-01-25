@@ -49,11 +49,7 @@ export const Navigation = ({ className }) => {
             home
           </NavLink>
         </li>
-        <li>
-          <NavLink className={`${tailwindClass.link} border-r-2`} to={"/jobs"}>
-            jobs
-          </NavLink>
-        </li>
+        
         <li>
           <NavLink
             className={`${tailwindClass.link} border-r-0`}

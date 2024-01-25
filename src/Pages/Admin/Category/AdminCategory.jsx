@@ -29,7 +29,7 @@ export const AdminCategory = () => {
   const categories = useSelector((state) => state.admin.categories);
 
   return (
-    <AdminPageLayout>
+    <>
       <section className={tailwindCLass.section}>
         <div className="flex justify-between px-10 py-2 shadow-lg rounded-lg sticky top-0 bg-white">
           <h2 className={tailwindCLass.pageHeader}>categories</h2>
@@ -67,6 +67,6 @@ export const AdminCategory = () => {
           <FormModal closeModal={setShowModal} uploading={setUploading} />
         </ModalLayout>
       )}
-    </AdminPageLayout>
+    </>
   );
 };

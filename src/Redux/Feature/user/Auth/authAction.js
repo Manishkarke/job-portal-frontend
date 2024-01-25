@@ -80,3 +80,45 @@ export const fetchProfile = createAsyncThunk("get/profile", async () => {
     console.log(err);
   }
 });
+
+export const requestToBeVendor = createAsyncThunk(
+  "auth/requestToBeVendor",
+  async ({
+    name,
+    email,
+    designation,
+    service,
+    contact,
+    address,
+    toast,
+    navigate,
+  }) => {
+    try {
+      const response = await api.post(
+        "/user/registerAsVendor/",
+        {
+          name,
+          email,
+          designation,
+          service,
+          contact,
+          address,
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + getDataFromLocalStorage("accessToken"),
+          },
+        }
+      );
+
+      if (response.data.status === 200) {
+        toast.success(response.data.message);
+        navigate("/");
+      } else if (response.data.status === 400) {
+        toast.error(response.data.message);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
