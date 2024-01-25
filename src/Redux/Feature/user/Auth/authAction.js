@@ -32,7 +32,7 @@ export const userRegister = createAsyncThunk(
 
 export const userLogin = createAsyncThunk(
   "auth/login",
-  async ({ email, password, toast }) => {
+  async ({ email, password, navigate, toast }) => {
     try {
       const response = await api.post("/user/login", {
         email,
@@ -44,13 +44,19 @@ export const userLogin = createAsyncThunk(
         setDataInLocalStorage("role", response.data.role);
       }
 
-      // if (response.data.role === "user") {
-      //   navigate("/");
-      // } else if (response.data.role === "admin") {
-      //   navigate("/admin");
-      // } else if (response.data.role === "vendor") {
-      //   navigate("/vendor");
-      // }
+      if (response.data.role === "user") {
+        console.log("before navigating");
+        navigate("/");
+        console.log("after navigating");
+      } else if (response.data.role === "admin") {
+        console.log("before navigating");
+        navigate("/admin");
+        console.log("after navigating");
+      } else if (response.data.role === "vendor") {
+        console.log("before navigating");
+        navigate("/vendor");
+        console.log("after navigating");
+      }
 
       if (response.data.status === 400) {
         toast.error(response.data.message);

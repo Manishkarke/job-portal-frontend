@@ -51,19 +51,9 @@ export default function Login() {
       toast.error("Please enter all fields");
     } else {
       const { email, password } = formData;
-      dispatch(userLogin({ email, password, toast })).then((response) => {
-        if (response.payload.status === 200) {
-          toast.success(response.payload.message);
+      dispatch(userLogin({ email, password, navigate, toast }));
 
-          if (response.payload.emailExists.role === "user") {
-            navigate("/");
-          } else if (response.payload.emailExists.role === "admin") {
-            navigate("/admin");
-          } else if (response.payload.emailExists.role === "vendor") {
-            navigate("/vendor");
-          }
-        }
-      });
+      navigate("/admin");
     }
   };
 

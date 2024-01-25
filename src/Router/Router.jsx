@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { getDataFromLocalStorage } from "../utils/localStorage";
-import Dashboard from "../Pages/Users/Dashboard/Dashboard";
-import { JobList } from "../Pages/Users/Jobs/JobList";
-import { Profile } from "../Pages/Users/Profile/Profile";
+import { AdminCategory } from "../Pages/Admin/Category/AdminCategory";
 import { AdminDashboard } from "../Pages/Admin/Dashboard/AdminDashboard";
-import { VendorDashboard } from "../Pages/Vendor/Dashboard/VendorDashboard";
 import Login from "../Pages/Common/Login/Login";
 import Register from "../Pages/Common/Register/Register";
-import { AdminCategory } from "../Pages/Admin/Category/AdminCategory";
+import { JobList } from "../Pages/Users/Jobs/JobList";
+import { Profile } from "../Pages/Users/Profile/Profile";
+import { VendorDashboard } from "../Pages/Vendor/Dashboard/VendorDashboard";
+import { getDataFromLocalStorage } from "../utils/localStorage";
+import { VendorList } from "../Pages/Admin/VendorList/VendorList";
+import { VendorRequests } from "../Pages/Admin/VendorList/VendorRequests";
 
 export default function Router() {
-  const [userType, setUserType] = useState(null);
+  const [userType, setUserType] = useState("");
   useEffect(() => {
     const storedUserType = getDataFromLocalStorage("role");
     if (storedUserType) {
@@ -63,12 +64,42 @@ export default function Router() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/admin/vendors/"
+          element={
+            <ProtectedRoute userType={userType} allowedUserType="admin">
+              <VendorList />
+            </ProtectedRoute>
+          }
+        />
 
-        {/* Common ROutes  */}
-        {/* Common ROutes  */}
-        {/* Common ROutes  */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route
+          path="/admin/vendors/requests/"
+          element={
+            <ProtectedRoute userType={userType} allowedUserType="admin">
+              <VendorRequests />
+            </ProtectedRoute>
+          }
+        />
+        {/* Common Routes  */}
+        {/* Common Routes  */}
+        {/* Common Routes  */}
+        <Route
+          path="/login"
+          element={
+            <RestrictFromFormComponent>
+              <Login />
+            </RestrictFromFormComponent>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <RestrictFromFormComponent>
+              <Register />
+            </RestrictFromFormComponent>
+          }
+        />
       </Routes>
     </>
   );
@@ -79,7 +110,22 @@ const ProtectedRoute = ({ children, allowedUserType, userType }) => {
   if (token === null) {
     return <Navigate to={"/login"} />;
   }
-  if (allowedUserType.includes(userType)) {
+  if (allowedUserType === userType) {
     return children;
+  }
+};
+
+const RestrictFromFormComponent = ({ children }) => {
+  const token = getDataFromLocalStorage("accessToken");
+  const role = getDataFromLocalStorage("role");
+
+  if (!token) {
+    return children;
+  } else if (token && role === "admin") {
+    return <Navigate to={"/admin"} />;
+  } else if (token && role === "vendor") {
+    return <Navigate to={"/vendor"} />;
+  } else if (token && role === "user") {
+    return <Navigate to={"/"} />;
   }
 };

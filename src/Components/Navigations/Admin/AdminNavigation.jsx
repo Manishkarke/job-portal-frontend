@@ -6,8 +6,6 @@ import { toast } from "react-toastify";
 logout;
 
 const tailwindClass = {
-  container:
-    "h-5/6 w-52 flex-col fixed top-4 left-0 shadow-lg capitalize rounded-b-xl",
   flex: "flex justify-center items-center",
   logo: "font-semibold text-lg pt-4 text-center",
   navItems: "flex-col h-full",
@@ -16,7 +14,7 @@ const tailwindClass = {
   button:
     "px-4 py-2 text-white	 flex justify-center rounded-xl bg-violet-400 rounded-sm transition-all ",
 };
-export const AdminNavigation = () => {
+export const AdminNavigation = ({ className }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -27,27 +25,35 @@ export const AdminNavigation = () => {
   };
 
   return (
-    <nav className={`${tailwindClass.container} ${tailwindClass.flex}`}>
+    <nav className={`${className} ${tailwindClass.flex}`}>
       <h1 className={`${tailwindClass.logo} ${tailwindClass.fullWidth}`}>
         Job-<span className="text-orange-400">portal</span>
       </h1>
-
       <ul
         className={`${tailwindClass.navItems} ${tailwindClass.fullWidth} ${tailwindClass.flex}`}
       >
         <li className={`${tailwindClass.fullWidth} mt-auto`}>
-          <NavLink className={`${tailwindClass.flex} ${tailwindClass.navItem}`}>
+          <NavLink
+            className={`${tailwindClass.flex} ${tailwindClass.navItem}`}
+            to="/admin"
+          >
             home
           </NavLink>
         </li>
         <li className={tailwindClass.fullWidth}>
-          <NavLink className={`${tailwindClass.flex} ${tailwindClass.navItem}`}>
+          <NavLink
+            className={`${tailwindClass.flex} ${tailwindClass.navItem}`}
+            to="/admin/category/"
+          >
             categories
           </NavLink>
         </li>
         <li className={tailwindClass.fullWidth}>
-          <NavLink className={`${tailwindClass.flex} ${tailwindClass.navItem}`}>
-            home
+          <NavLink
+            className={`${tailwindClass.flex} ${tailwindClass.navItem}`}
+            to={"/admin/vendors/"}
+          >
+            vendors
           </NavLink>
         </li>
         <li className={`${tailwindClass.fullWidth} mt-auto`}>
