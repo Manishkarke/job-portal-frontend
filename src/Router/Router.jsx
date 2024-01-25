@@ -29,6 +29,7 @@ export default function Router() {
     <>
       <Routes>
         {/* User Routes */}
+        {/* User Routes */}
         <Route path="/" element={<UserLayout />}>
           <Route index={true} element={<JobList />} />
           <Route path="user" element={<ProfilePageLayout />}>
