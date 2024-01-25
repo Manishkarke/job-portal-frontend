@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchProfile, userLogin, userRegister } from "./authAction";
+import {
+  fetchProfile,
+  requestToBeVendor,
+  userLogin,
+  userRegister,
+} from "./authAction";
 import {
   getDataFromLocalStorage,
   removeDataFromLocalStorage,
@@ -63,6 +68,16 @@ const authSlice = createSlice({
     builder.addCase(fetchProfile.rejected, (state, action) => {
       state.isLoading = false;
       state.user = null;
+    });
+    // Reducer for register as vendor
+    builder.addCase(requestToBeVendor.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(requestToBeVendor.fulfilled, (state, action) => {
+      state.isLoading = false;
+    });
+    builder.addCase(requestToBeVendor.rejected, (state) => {
+      state.isLoading = false;
     });
   },
 });

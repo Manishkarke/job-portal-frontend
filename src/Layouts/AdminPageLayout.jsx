@@ -1,5 +1,6 @@
 import React from "react";
 import { AdminNavigation } from "../Components/Navigations/Admin/AdminNavigation";
+import { Outlet } from "react-router-dom";
 
 export const AdminPageLayout = ({ children }) => {
   const tailwindCLass = {
@@ -13,8 +14,10 @@ export const AdminPageLayout = ({ children }) => {
       <main className="grid grid-cols-2 mt-4 relative">
         <AdminNavigation className={tailwindCLass.sidebar} />
         <section id="content" className={tailwindCLass.content}>
-          <p className="text-center text-white bg-gray-500 py-3 font-semibold">Job portal admin dashboard</p>
-          {children}
+          <p className="text-center text-white bg-gray-500 py-3 font-semibold">
+            Job portal admin dashboard
+          </p>
+          <Outlet />
         </section>
       </main>
     </>

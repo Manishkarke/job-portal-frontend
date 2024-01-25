@@ -1,5 +1,6 @@
 import React from "react";
 import { Navigation } from "../Components/Navigations/User/Navigation";
+import { Outlet } from "react-router-dom";
 
 export const UserLayout = ({ children }) => {
   const tailwindClass = {
@@ -12,7 +13,9 @@ export const UserLayout = ({ children }) => {
   return (
     <main className={tailwindClass.mainContainer}>
       <Navigation className={tailwindClass.navigation} />
-      <section className={tailwindClass.contentSection}>{children}</section>
+      <section className={tailwindClass.contentSection}>
+        <Outlet />
+      </section>
     </main>
   );
 };

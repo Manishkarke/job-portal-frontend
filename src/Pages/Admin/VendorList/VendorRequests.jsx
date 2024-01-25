@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { AdminPageLayout } from "../../../Layouts/AdminPageLayout";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllVendor } from "../../../Redux/Feature/admin/adminAction";
@@ -34,7 +33,7 @@ export const VendorRequests = () => {
   );
   console.log("vendor Requests", vendorRequests);
   return (
-    <AdminPageLayout>
+    <>
       <section className={`${tailwindCLass.section}`}>
         <div className="flex justify-between px-10 py-2 shadow-lg bg-white z-10 rounded-lg sticky top-0 ">
           <h2 className={tailwindCLass.pageHeader}>vendor requests</h2>
@@ -73,6 +72,6 @@ export const VendorRequests = () => {
           <p>No vendor requests</p>
         )}
       </section>
-    </AdminPageLayout>
+    </>
   );
 };

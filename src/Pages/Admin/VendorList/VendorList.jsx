@@ -27,10 +27,10 @@ export const VendorList = () => {
     }
   }, [dispatch, refresh]);
   return (
-    <AdminPageLayout>
+    <>
       <section>
         <div className="flex justify-between px-10 py-2 shadow-lg bg-white z-10 rounded-lg sticky top-0 ">
-          <h2 className={tailwindCLass.pageHeader}>categories</h2>
+          <h2 className={tailwindCLass.pageHeader}>vendors</h2>
           <button
             type="button"
             className={tailwindCLass.button}
@@ -67,6 +67,6 @@ export const VendorList = () => {
           <p>No vendors here</p>
         )}
       </section>
-    </AdminPageLayout>
+    </>
   );
 };

@@ -11,7 +11,7 @@ export const DropdownMenu = () => {
     container:
       "absolute top-100 right-0 bg-blue-50 py-4 px-3 w-40 capitalize rounded-lg",
     links:
-      "px-4 py-2 flex justify-center w-full rounded-sm transition-all border-b border-solid border-slate-400 hover:bg-violet-200",
+      `px-4 py-2 flex justify-center w-full rounded-sm transition-all border-b border-solid border-slate-400 hover:bg-violet-200`,
     button:
       "px-4 py-2 flex justify-center w-full bg-violet-400 rounded-sm transition-all ",
   };
@@ -22,12 +22,14 @@ export const DropdownMenu = () => {
   return (
     <ul className={tailwindClass.container}>
       <li>
-        <NavLink to="/profile" className={tailwindClass.links}>
+        <NavLink to="/user/profile" className={tailwindClass.links}>
           profile
         </NavLink>
       </li>
       <li>
-        <NavLink className={tailwindClass.links}>applied jobs</NavLink>
+        <NavLink className={tailwindClass.links} to="/user/appliedJobs">
+          applied jobs
+        </NavLink>
       </li>
       <li>
         <button
