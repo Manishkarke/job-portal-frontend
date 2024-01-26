@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { userRegister } from "../../../Redux/Feature/user/Auth/authAction";
 import { toast } from "react-toastify";
 import { RegisterPageLayout } from "../../../Layouts/RegisterPageLayout";
+import { registrationValidator } from "../../../utils/ErrorHandler";
 
 // Tailwind Class Name
 const tailwindClass = {
@@ -17,6 +18,7 @@ const tailwindClass = {
     "flex w-full justify-center capitalize rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600",
   title:
     " text-center text-2xl font-bold leading-9 tracking-tight text-gray-900",
+  error: "text-red-600 capitalize text-sm",
 };
 
 function Register() {
@@ -32,27 +34,27 @@ function Register() {
     confirmPassword: "",
   });
 
+  const [isFormSubmitted, setFormSubmitted] = React.useState(false);
+  const [errors, setErrors] = React.useState({});
+
+  let isFormValid = true;
+  React.useEffect(() => {
+    for (const error in errors) {
+      if (errors[error]) {
+        isFormValid = false;
+        break;
+      }
+    }
+    if (!isFormValid) {
+      toast.error("Enter all fields correctly");
+    }
+  }, [errors, isFormValid, isFormSubmitted]);
+
   // State Handling functions
-  const fullNameChangeHandler = (e) => {
+  const inputFieldChangeHandler = (e) => {
+    const { name, value } = e.target;
     setFormData((prevFormData) => {
-      return { ...prevFormData, name: e.target.value };
-    });
-  };
-  const emailChangeHandler = (e) => {
-    setFormData((prevFormData) => {
-      return { ...prevFormData, email: e.target.value };
-    });
-  };
-
-  const passwordChangeHandler = (e) => {
-    setFormData((prevFormData) => {
-      return { ...prevFormData, password: e.target.value };
-    });
-  };
-
-  const confirmPasswordChangeHandler = (e) => {
-    setFormData((prevFormData) => {
-      return { ...prevFormData, confirmPassword: e.target.value };
+      return { ...prevFormData, [name]: value };
     });
   };
 
@@ -60,16 +62,13 @@ function Register() {
   const formSubmitHandler = (e) => {
     e.preventDefault();
 
-    if (
-      formData.password.trim() === "" ||
-      formData.confirmPassword.trim() === ""
-    ) {
-      toast.error("Please enter the password");
-    } else if (formData.confirmPassword !== formData.password) {
-      toast.error("Passwords do not match");
-    } else {
+    registrationValidator(formData, setErrors);
+    setFormSubmitted(true);
+
+    if (isFormValid && isFormSubmitted) {
       const { name, email, password } = formData;
       dispatch(userRegister({ name, email, password, navigate, toast }));
+      setFormSubmitted(false);
     }
   };
 
@@ -93,14 +92,17 @@ function Register() {
               <div className="mt-2">
                 <input
                   id="fullName"
-                  name="fullName"
+                  name="name"
                   type="text"
                   value={formData.name}
-                  onChange={fullNameChangeHandler}
+                  onChange={inputFieldChangeHandler}
                   autoComplete="fullName"
                   className={tailwindClass.inputField}
                 />
               </div>
+              {errors.name && (
+                <span className={tailwindClass.error}>{errors.name}</span>
+              )}
             </div>
             <div>
               <label htmlFor="email" className={tailwindClass.label}>
@@ -112,11 +114,14 @@ function Register() {
                   name="email"
                   type="email"
                   value={formData.email}
-                  onChange={emailChangeHandler}
+                  onChange={inputFieldChangeHandler}
                   autoComplete="email"
                   className={tailwindClass.inputField}
                 />
               </div>
+              {errors.email && (
+                <span className={tailwindClass.error}>{errors.email}</span>
+              )}
             </div>
 
             <div>
@@ -131,11 +136,14 @@ function Register() {
                   name="password"
                   type="password"
                   value={formData.password}
-                  onChange={passwordChangeHandler}
+                  onChange={inputFieldChangeHandler}
                   autoComplete="current-password"
                   className={tailwindClass.inputField}
                 />
               </div>
+              {errors.password && (
+                <span className={tailwindClass.error}>{errors.password}</span>
+              )}
             </div>
             <div>
               <div className="flex items-center justify-between">
@@ -152,11 +160,16 @@ function Register() {
                   name="confirmPassword"
                   type="password"
                   value={formData.confirmPassword}
-                  onChange={confirmPasswordChangeHandler}
+                  onChange={inputFieldChangeHandler}
                   autoComplete="current-password"
                   className={tailwindClass.inputField}
                 />
               </div>
+              {errors.confirmPassword && (
+                <span className={tailwindClass.error}>
+                  {errors.confirmPassword}
+                </span>
+              )}
             </div>
 
             <div>

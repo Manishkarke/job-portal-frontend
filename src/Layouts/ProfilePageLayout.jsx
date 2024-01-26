@@ -6,9 +6,9 @@ export const ProfilePageLayout = () => {
   return (
     <>
       <ProfileNavigation />
-      <section>
+      <>
         <Outlet />
-      </section>
+      </>
     </>
   );
 };

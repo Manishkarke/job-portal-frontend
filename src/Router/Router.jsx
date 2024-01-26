@@ -15,31 +15,20 @@ import { Profile } from "../Pages/Users/Profile/Profile";
 import { VendorRegister } from "../Pages/Users/Profile/VendorRegister";
 import { VendorDashboard } from "../Pages/Vendor/Dashboard/VendorDashboard";
 import { getDataFromLocalStorage } from "../utils/localStorage";
-import { VendorList } from "../Pages/Admin/VendorList/VendorList";
-import { VendorRequests } from "../Pages/Admin/VendorList/VendorRequests";
+import { VendorPageLayout } from "../Layouts/VendorPageLayout";
+import { PageNotFound } from "../Pages/Common/PageNotFound";
 
 export default function Router() {
-  const [userType, setUserType] = useState("");
+  const userType = getDataFromLocalStorage("role");
   useEffect(() => {
-    const storedUserType = getDataFromLocalStorage("role");
-    if (storedUserType) {
-      setUserType(storedUserType);
-    }
+    // const storedUserType = getDataFromLocalStorage("role");
+    // if (storedUserType) {
+    //   setUserType(storedUserType);
+    // }
   }, []);
   return (
     <>
       <Routes>
-        <Route path="/" element={<JobList />} />
-        <Route
-          path="/profile"
-          element={
-            <ProtectedRoute userType={userType} allowedUserType="user">
-              <Profile />
-            </ProtectedRoute>
-          }
-        />
-        <Route path="/jobs" element={<JobList />} />
-        {/* User Routes */}
         {/* User Routes */}
         <Route path="/" element={<UserLayout />}>
           <Route index={true} element={<JobList />} />
@@ -71,11 +60,7 @@ export default function Router() {
             />
           </Route>
         </Route>
-
         {/* Vendor ROutes */}
-        {/* Vendor ROutes */}
-        {/* Vendor ROutes */}
-
         <Route path="/vendor" element={<VendorPageLayout />}>
           <Route
             index={true}
@@ -86,8 +71,6 @@ export default function Router() {
             }
           />
         </Route>
-        {/* Admin ROutes */}
-        {/* Admin ROutes */}
         {/* Admin ROutes */}
         <Route path="/admin" element={<AdminPageLayout />}>
           <Route
@@ -124,8 +107,7 @@ export default function Router() {
             }
           />
         </Route>
-        {/* Common Routes  */}
-        {/* Common Routes  */}
+
         {/* Common Routes  */}
         <Route
           path="/login"
@@ -143,6 +125,9 @@ export default function Router() {
             </RestrictFromFormComponent>
           }
         />
+
+        {/* Page not found route */}
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </>
   );

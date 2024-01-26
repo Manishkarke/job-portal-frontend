@@ -8,7 +8,6 @@ export const JobList = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getJobs());
-    console.log(jobs);
   }, []);
   return <h1> Hello this is job list page </h1>;
 };

@@ -9,6 +9,7 @@ export const userRegister = createAsyncThunk(
   "auth/register",
   async ({ email, name, password, navigate, toast }) => {
     try {
+      console.log("I am being called");
       const response = await api.post("/user/register", {
         name,
         email,
@@ -42,6 +43,10 @@ export const userLogin = createAsyncThunk(
       if (response.data.status === 200) {
         setDataInLocalStorage("accessToken", response.data.token);
         setDataInLocalStorage("role", response.data.role);
+        setDataInLocalStorage(
+          "user",
+          JSON.stringify(response.data.emailExists)
+        );
       }
 
       if (response.data.role === "user") {
@@ -83,33 +88,18 @@ export const fetchProfile = createAsyncThunk("get/profile", async () => {
 
 export const requestToBeVendor = createAsyncThunk(
   "auth/requestToBeVendor",
-  async ({
-    name,
-    email,
-    designation,
-    service,
-    contact,
-    address,
-    toast,
-    navigate,
-  }) => {
+  async (
+    // { name, email, designation, service, contact, address },
+    { formData, toast, navigate }
+  ) => {
     try {
-      const response = await api.post(
-        "/user/registerAsVendor/",
-        {
-          name,
-          email,
-          designation,
-          service,
-          contact,
-          address,
+      const response = await api.post("/user/registerAsVendor/", formData, {
+        headers: {
+          Authorization: "Bearer " + getDataFromLocalStorage("accessToken"),
         },
-        {
-          headers: {
-            Authorization: "Bearer " + getDataFromLocalStorage("accessToken"),
-          },
-        }
-      );
+      });
+
+      console.log(" I am running as a vendor");
 
       if (response.data.status === 200) {
         toast.success(response.data.message);

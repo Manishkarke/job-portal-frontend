@@ -18,13 +18,13 @@ export const VendorDataRow = ({
   service,
   contact,
   address,
-  checkVendor,
+  setRefresh,
 }) => {
   const dispatch = useDispatch();
   useEffect(() => {}, []);
   const deleteVendor = () => {
     dispatch(deleteAVendor({ id, toast, checkVendor }));
-    checkVendor(true);
+    setRefresh(true);
   };
   return (
     <tr>

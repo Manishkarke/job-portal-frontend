@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { requestToBeVendor } from "../../../Redux/Feature/user/Auth/authAction";
+import { toast } from "react-toastify";
+import { getDataFromLocalStorage } from "../../../utils/localStorage";
+
+
 const tailwindClass = {
   formBox:
-    "border border-solid rounded-lg shadow grid md:grid-cols-2 gap-x-4 gap-y-4 min-h-full px-6 py-12 lg:px-8",
+    "border border-solid rounded-lg shadow grid gap-x-4 gap-y-4 min-h-full px-6 py-12 lg:px-8",
   inputField:
     "block w-full p-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6",
   label: "block text-sm font-medium leading-6 capitalize text-gray-900",
@@ -13,12 +20,51 @@ const tailwindClass = {
     " text-center text-2xl font-bold leading-9 tracking-tight text-gray-900",
 };
 export const VendorRegister = () => {
-  console.log("Vendor register is running");
+  const user = JSON.parse(getDataFromLocalStorage("user"));
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({
+    name: user.name,
+    email: user.email,
+    designation: "",
+    service: "",
+    contact: "",
+    address: "",
+  });
+
+  const handleInputFieldChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => {
+      return {
+        ...prevFormData,
+        [name]: value,
+      };
+    });
+  };
+
+  const formSubmitHandler = (event) => {
+    event.preventDefault();
+    if (
+      !formData.address.trim() &&
+      !formData.designation.trim() &&
+      !formData.service.trim() &&
+      !formData.contact.trim()
+    ) {
+      toast.error("Fields cannot be empty");
+    } else {
+      dispatch(requestToBeVendor({ formData, toast, navigate }));
+    }
+  };
   return (
     <section>
       <h2 className={tailwindClass.title}>Fill up the form for registration</h2>
 
-      <form action="POST" className={tailwindClass.formBox}>
+      <form
+        action="POST"
+        className={tailwindClass.formBox}
+        onSubmit={formSubmitHandler}
+      >
         <div>
           <label htmlFor="name" className={tailwindClass.label}>
             name
@@ -27,7 +73,10 @@ export const VendorRegister = () => {
             type="text"
             name="name"
             id="name"
-            className={tailwindClass.inputField}
+            value={formData.name}
+            className={`${tailwindClass.inputField} cursor-not-allowed`}
+            onChange={handleInputFieldChange}
+            disabled
           />
         </div>
 
@@ -39,7 +88,10 @@ export const VendorRegister = () => {
             type="email"
             name="email"
             id="email"
-            className={tailwindClass.inputField}
+            value={formData.email}
+            className={`${tailwindClass.inputField} cursor-not-allowed`}
+            onChange={handleInputFieldChange}
+            disabled
           />
         </div>
 
@@ -51,7 +103,9 @@ export const VendorRegister = () => {
             type="text"
             name="designation"
             id="designation"
+            value={formData.designation}
             className={tailwindClass.inputField}
+            onChange={handleInputFieldChange}
           />
         </div>
 
@@ -63,7 +117,9 @@ export const VendorRegister = () => {
             type="text"
             name="service"
             id="service"
+            value={formData.service}
             className={tailwindClass.inputField}
+            onChange={handleInputFieldChange}
           />
         </div>
 
@@ -75,7 +131,9 @@ export const VendorRegister = () => {
             type="text"
             name="contact"
             id="contact"
+            value={formData.contact}
             className={tailwindClass.inputField}
+            onChange={handleInputFieldChange}
           />
         </div>
 
@@ -87,7 +145,9 @@ export const VendorRegister = () => {
             type="text"
             name="address"
             id="address"
+            value={formData.address}
             className={tailwindClass.inputField}
+            onChange={handleInputFieldChange}
           />
         </div>
 

@@ -23,8 +23,15 @@ export const VendorRequests = () => {
   useEffect(() => {
     dispatch(getAllVendor());
 
+    console.log("Refresh In Vendor requests", refresh);
+
     if (refresh) {
+      console.log("Refresh In Vendor requests if it is true", refresh);
       setRefresh(false);
+      console.log(
+        "Refresh In Vendor requests if changing it to false",
+        refresh
+      );
     }
   }, [dispatch, refresh]);
 

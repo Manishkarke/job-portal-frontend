@@ -1,22 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
-import { fetchProfile } from "../../../Redux/Feature/user/Auth/authAction";
 import { getDataFromLocalStorage } from "../../../utils/localStorage";
 import { DropdownMenu } from "./DropdownMenu";
 
 export const Navigation = ({ className }) => {
   // States
   const [showDropdown, setShowDropdown] = useState(false);
-  const user = useSelector((state) => state.auth.user);
+  const user = JSON.parse(getDataFromLocalStorage("user"));
   const navigate = useNavigate();
-  // Fetching userdata
-  const dispatch = useDispatch();
+  
   useEffect(() => {
     const token = getDataFromLocalStorage("accessToken");
     const role = getDataFromLocalStorage("role");
     if (token && role === "user") {
-      dispatch(fetchProfile());
+      console.log("I am a user");
     } else if (token && role === "vendor") {
       navigate("/vendor");
     } else if (token && role === "admin") {
@@ -49,7 +46,7 @@ export const Navigation = ({ className }) => {
             home
           </NavLink>
         </li>
-        
+
         <li>
           <NavLink
             className={`${tailwindClass.link} border-r-0`}
