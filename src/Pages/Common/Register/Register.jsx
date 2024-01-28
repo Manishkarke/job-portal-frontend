@@ -3,17 +3,16 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { RegisterPageLayout } from "../../../Layouts/RegisterPageLayout";
+import { Button } from "../../../Components/Button";
 
 // Tailwind Class Name
 const tailwindClass = {
-  box: "grid gap-5 border border-solid rounded-lg shadow flex min-h-full flex-col justify-center align-center px-6 py-12 lg:px-8",
+  box: "grid gap-5 border border-solid rounded-lg shadow flex min-h-full flex-col justify-center align-center px-6 py-6 lg:px-8",
   inputField:
     "block w-full p-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6",
   label: "block text-sm font-medium leading-6 capitalize text-gray-900",
   links:
-    "font-semibold capitalize ml-1 leading-6 text-indigo-600 hover:text-indigo-500",
-  button:
-    "flex w-full justify-center capitalize rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600",
+    "font-semibold capitalize ml-1 leading-6 text-orange-600 hover:text-orange-500",
   title:
     " text-center text-2xl font-bold leading-9 tracking-tight text-gray-900",
   error: "text-red-600 capitalize text-sm",
@@ -127,7 +126,7 @@ function Register() {
     <RegisterPageLayout>
       <div className={tailwindClass.box}>
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h2 className={tailwindClass.title}>Register new account</h2>
+          <h2 className={tailwindClass.title}>Create new account</h2>
         </div>
 
         <div className="grid gap-5 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -223,9 +222,9 @@ function Register() {
               )}
             </div>
 
-            <button type="submit" className={tailwindClass.button}>
+            <Button type="submit" fullWidth={true}>
               sign up
-            </button>
+            </Button>
           </form>
 
           <p className="text-center text-sm text-gray-500">

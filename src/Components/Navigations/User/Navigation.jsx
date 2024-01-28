@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { getDataFromLocalStorage } from "../../../utils/localStorage";
 import { DropdownMenu } from "./DropdownMenu";
+import { Button } from "../../Button";
 
 export const Navigation = ({ className }) => {
   // States
@@ -70,12 +71,7 @@ export const Navigation = ({ className }) => {
               {showDropdown && <DropdownMenu />}
             </div>
           ) : (
-            <NavLink
-              className={`${tailwindClass.link} ${tailwindClass.button}`}
-              to={"/login"}
-            >
-              log in
-            </NavLink>
+            <Button type="button" fullWidth={false} navigateTo={"/login"}>log in</Button>
           )}
         </li>
       </ul>

@@ -1,15 +1,16 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Button } from "../Components/Button";
 
 export const RegisterPageLayout = ({ children }) => {
   return (
     <section className="min-h-screen grid place-content-center relative ">
-      <NavLink
-        to={"/"}
-        className="capitalize shadow-xl rounded-xl py-2 px-4 absolute top-4 left-4 text-xl font-semibold"
+      <Button
+        type="button"
+        navigateTo="/"
+        customization="absolute top-4 left-4 shadow-2xl"
       >
         home
-      </NavLink>
+      </Button>
       {children}
     </section>
   );

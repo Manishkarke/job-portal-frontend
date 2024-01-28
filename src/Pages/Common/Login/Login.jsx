@@ -1,20 +1,17 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Navigation } from "../../../Components/Navigations/User/Navigation";
-import { userLogin } from "../../../Redux/Feature/user/Auth/authAction";
-import { UserLayout } from "../../../Layouts/UserLayout";
+import { Button } from "../../../Components/Button";
 import { RegisterPageLayout } from "../../../Layouts/RegisterPageLayout";
+import { userLogin } from "../../../Redux/Feature/user/Auth/authAction";
 
 // Tailwind Class Name
 const tailwindClass = {
-  box: "max-w-lg mx-auto border border-solid rounded-lg shadow grid gap-5 align-center px-6 py-12 lg:px-8",
+  box: "max-w-lg mx-auto border border-solid rounded-lg shadow grid gap-5 align-center p-6 lg:px-8",
   inputField: `block w-full p-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`,
   label: "block text-sm font-medium leading-6 text-gray-900",
-  links: `font-semibold capitalize ml-1 leading-6 text-indigo-600 hover:text-indigo-500`,
-  button:
-    "flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600",
+  links: `font-semibold capitalize ml-1 leading-6 text-orange-600 hover:text-orange-500`,
   title:
     "text-center text-2xl font-bold leading-9 tracking-tight text-gray-900",
   error: "text-red-600 capitalize",
@@ -177,11 +174,9 @@ export default function Login() {
               )}
             </div>
 
-            <div>
-              <button type="submit" className={tailwindClass.button}>
-                Sign in
-              </button>
-            </div>
+            <Button type="submit" fullWidth={true}>
+              sign in
+            </Button>
           </form>
 
           <p className="text-center text-sm text-gray-500">
