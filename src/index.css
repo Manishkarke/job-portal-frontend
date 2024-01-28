@@ -4,12 +4,14 @@
 body {
   height: 100vh;
 }
-body > div {
-  height: 100%;
-}
 
 #content::-webkit-scrollbar {
   display: none;
+}
+
+.user-content-container {
+  margin-top: 74px;
+  height: calc(100vh - 74px);
 }
 
 @tailwind base;

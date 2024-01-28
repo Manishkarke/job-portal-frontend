@@ -21,12 +21,14 @@ const tailwindClass = {
   error: "text-red-600 capitalize text-sm",
 };
 
+// TODO: CHanges starts here
+
 function Register() {
   // hooks functions
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // Component states
+  // Component form state states
   const [formData, setFormData] = React.useState({
     name: "",
     email: "",
@@ -34,20 +36,26 @@ function Register() {
     confirmPassword: "",
   });
 
-  const [isFormSubmitted, setFormSubmitted] = React.useState(false);
-  const [errors, setErrors] = React.useState({});
+  // For FOrm validation
+  const [isFormSubmitted, setFormSubmitted] = React.useState(false); // to check if submit button is clicked
+  const [errors, setErrors] = React.useState({}); // to store error states
+  const [isFormValid, setIsFormValid] = React.useState(true); // to check if form is valid
 
-  let isFormValid = true;
   React.useEffect(() => {
     for (const error in errors) {
       if (errors[error]) {
-        isFormValid = false;
+        setIsFormValid(false); // if There is any error then
         break;
+      } else {
+        setIsFormValid(true);
       }
     }
-    if (!isFormValid) {
-      toast.error("Enter all fields correctly");
-    }
+    console.log(
+      "form submision values: " +
+        isFormSubmitted +
+        " is FormValid ? " +
+        isFormValid
+    );
   }, [errors, isFormValid, isFormSubmitted]);
 
   // State Handling functions
@@ -62,12 +70,22 @@ function Register() {
   const formSubmitHandler = (e) => {
     e.preventDefault();
 
-    registrationValidator(formData, setErrors);
+    registrationValidator(formData, setErrors); //Form Validator function
     setFormSubmitted(true);
 
     if (isFormValid && isFormSubmitted) {
       const { name, email, password } = formData;
-      dispatch(userRegister({ name, email, password, navigate, toast }));
+      dispatch(
+        userRegister({
+          name,
+          email,
+          password,
+          navigate,
+          toast,
+          setFormSubmitted,
+        })
+      );
+    } else if (isFormSubmitted) {
       setFormSubmitted(false);
     }
   };

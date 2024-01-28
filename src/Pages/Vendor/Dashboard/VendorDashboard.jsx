@@ -1,7 +1,10 @@
-import React from 'react'
+import React from "react";
+import { Banner } from "../../../Components/Banner";
 
 export const VendorDashboard = () => {
   return (
-    <div>VendorDashboard</div>
-  )
-}
+    <>
+      <Banner moto="where jobs meet talent" />
+    </>
+  );
+};

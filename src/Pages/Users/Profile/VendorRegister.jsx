@@ -5,7 +5,6 @@ import { requestToBeVendor } from "../../../Redux/Feature/user/Auth/authAction";
 import { toast } from "react-toastify";
 import { getDataFromLocalStorage } from "../../../utils/localStorage";
 
-
 const tailwindClass = {
   formBox:
     "border border-solid rounded-lg shadow grid gap-x-4 gap-y-4 min-h-full px-6 py-12 lg:px-8",
@@ -33,6 +32,19 @@ export const VendorRegister = () => {
     address: "",
   });
 
+  // For Error handling
+  const [errors, setErrors] = useState({});
+  const [isFormSubmitted, setFormSubmitted] = useState(false);
+  let isFormValid = true;
+
+  React.useEffect(() => {
+    for (let error in errors) {
+      if (errors[error]) {
+        isFormValid = false;
+        break;
+      }
+    }
+  }, [errors, isFormSubmitted, isFormValid]);
   const handleInputFieldChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => {
@@ -45,14 +57,8 @@ export const VendorRegister = () => {
 
   const formSubmitHandler = (event) => {
     event.preventDefault();
-    if (
-      !formData.address.trim() &&
-      !formData.designation.trim() &&
-      !formData.service.trim() &&
-      !formData.contact.trim()
-    ) {
-      toast.error("Fields cannot be empty");
-    } else {
+    setFormSubmitted(false);
+    if (isFormSubmitted && isFormValid) {
       dispatch(requestToBeVendor({ formData, toast, navigate }));
     }
   };

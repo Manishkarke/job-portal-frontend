@@ -5,9 +5,12 @@ import {
   setDataInLocalStorage,
 } from "../../../../utils/localStorage";
 
+
+// TODO: If changes happens then starts from here
+
 export const userRegister = createAsyncThunk(
   "auth/register",
-  async ({ email, name, password, navigate, toast }) => {
+  async ({ email, name, password, navigate, toast, setFormSubmitted }) => {
     try {
       console.log("I am being called");
       const response = await api.post("/user/register", {
@@ -19,6 +22,7 @@ export const userRegister = createAsyncThunk(
       if (response.data.status === 200) {
         toast.success(response.data.message);
         console.log(response.data.message);
+        setFormSubmitted(false);
         navigate("/login");
       }
       if (response.data.status !== 200) {
