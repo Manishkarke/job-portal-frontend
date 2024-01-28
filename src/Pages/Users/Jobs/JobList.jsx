@@ -12,7 +12,7 @@ export const JobList = () => {
   }, []);
   return (
     <>
-      <Banner moto={"where you can find your dream jobs"} />
+      <Banner moto={"where you can find your dream jobs"} buttonText="find jobs" />
     </>
   );
 };

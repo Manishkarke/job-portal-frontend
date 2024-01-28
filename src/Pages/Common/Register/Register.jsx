@@ -1,14 +1,12 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { userRegister } from "../../../Redux/Feature/user/Auth/authAction";
 import { toast } from "react-toastify";
 import { RegisterPageLayout } from "../../../Layouts/RegisterPageLayout";
-import { registrationValidator } from "../../../utils/ErrorHandler";
 
 // Tailwind Class Name
 const tailwindClass = {
-  box: "border border-solid rounded-lg shadow flex min-h-full flex-col justify-center align-center px-6 py-12 lg:px-8",
+  box: "grid gap-5 border border-solid rounded-lg shadow flex min-h-full flex-col justify-center align-center px-6 py-12 lg:px-8",
   inputField:
     "block w-full p-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6",
   label: "block text-sm font-medium leading-6 capitalize text-gray-900",
@@ -67,27 +65,62 @@ function Register() {
   };
 
   // Form submission handler function
-  const formSubmitHandler = (e) => {
-    e.preventDefault();
+  // const formSubmitHandler = (e) => {
+  //   e.preventDefault();
 
-    registrationValidator(formData, setErrors); //Form Validator function
-    setFormSubmitted(true);
+  //   registrationValidator(formData, setErrors); //Form Validator function
+  //   setFormSubmitted(true);
 
-    if (isFormValid && isFormSubmitted) {
-      const { name, email, password } = formData;
+  //   if (isFormValid && isFormSubmitted) {
+  //     const { name, email, password } = formData;
+  //     dispatch(
+  //       userRegister({
+  //         name,
+  //         email,
+  //         password,
+  //         navigate,
+  //         toast,
+  //         setFormSubmitted,
+  //       })
+  //     );
+  //   } else if (isFormSubmitted) {
+  //     setFormSubmitted(false);
+  //   }
+  // };
+  // Handle form submission
+  const formSubmitHandler = (event) => {
+    event.preventDefault();
+
+    // Reset errors
+    setError({ email: "", password: "" });
+
+    // Check for empty fields
+    if (formData.email.trim() === "") {
+      setError((prevError) => ({ ...prevError, email: "Email is required." }));
+    }
+
+    if (formData.password.trim() === "") {
+      setError((prevError) => ({
+        ...prevError,
+        password: "Password is required.",
+      }));
+    }
+
+    // Check if there are no errors
+    if (!error.email && !error.password) {
+      console.log("Form submitted");
       dispatch(
-        userRegister({
-          name,
-          email,
-          password,
+        userLogin({
+          email: formData.email,
+          password: formData.password,
           navigate,
           toast,
-          setFormSubmitted,
         })
       );
-    } else if (isFormSubmitted) {
-      setFormSubmitted(false);
     }
+
+    // Set form as submitted
+    setFormSubmitted(true);
   };
 
   return (
@@ -97,9 +130,9 @@ function Register() {
           <h2 className={tailwindClass.title}>Register new account</h2>
         </div>
 
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <div className="grid gap-5 sm:mx-auto sm:w-full sm:max-w-sm">
           <form
-            className="space-y-6"
+            className="grid gap-4"
             method="POST"
             onSubmit={formSubmitHandler}
           >
@@ -190,14 +223,12 @@ function Register() {
               )}
             </div>
 
-            <div>
-              <button type="submit" className={tailwindClass.button}>
-                sign up
-              </button>
-            </div>
+            <button type="submit" className={tailwindClass.button}>
+              sign up
+            </button>
           </form>
 
-          <p className="mt-10 text-center text-sm text-gray-500">
+          <p className="text-center text-sm text-gray-500">
             already have an account?
             <Link to={"/login"} className={tailwindClass.links}>
               sign in

@@ -23,10 +23,10 @@ export const Navigation = ({ className }) => {
 
   // Tailwind css class
   const tailwindClass = {
-    link: "px-4 py-2 border-solid font-medium hover:bg-orange-200 hover:text-white transition-all",
+    link: "px-4 py-2 border-solid font-medium hover:bg-orange-400 hover:text-white transition-all",
     avatar: "w-14 rounded-full cursor-pointer object-cover shadow-md",
     button:
-      "px-4 py-2 flex justify-center w-full text-white font-semibold bg-violet-400 rounded-sm transition-all",
+      "px-4 py-2 flex justify-center w-full text-white font-semibold bg-orange-400 rounded-sm transition-all",
   };
 
   const handleAvatarClick = () => {
