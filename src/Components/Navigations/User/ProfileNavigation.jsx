@@ -1,11 +1,10 @@
 import React from "react";
-import { UserLayout } from "../../../Layouts/UserLayout";
 import { NavLink } from "react-router-dom";
 
 const tailwindClass = {
   navContainer:
-    "bg-gray-400 flex justify-center gap-4 text-white font-semibold capitalize",
-  navLink: `flex py-2 px-4 border-r-2 border-solid`,
+    "flex justify-center gap-4 text-white font-semibold capitalize border-b border-solid py-2",
+  navLink: `flex py-2 text-black px-4 border-r-2 border-solid`,
 };
 
 export const ProfileNavigation = () => {
@@ -13,12 +12,16 @@ export const ProfileNavigation = () => {
     <aside>
       <ul className={tailwindClass.navContainer}>
         <li>
-          <NavLink className={tailwindClass.navLink} to={"/user/profile/"}>
+          <NavLink className={tailwindClass.navLink} to={"/user/profile"}>
             profile
           </NavLink>
         </li>
         <li>
-          <NavLink className={tailwindClass.navLink} to={"/user/appliedJobs/"}>
+          <NavLink
+            end
+            className={tailwindClass.navLink}
+            to={"/user/appliedJobs"}
+          >
             applied jobs
           </NavLink>
         </li>

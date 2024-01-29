@@ -81,8 +81,6 @@ export const registrationValidator = (
   }
 };
 
-// TODO: Changess starts here
-
 // log in form validator
 export const loginValidator = ({ email, password }, setErrors) => {
   if (!email?.trim()) {
@@ -153,4 +151,25 @@ export const vendorRegistrationValidator = (
       return { ...prevErrors, address: "" };
     });
   }
+};
+
+export const categoryFormValidation = ({ category, image }, setErrors) => {
+  if (!category.trim())
+    setErrors((prevErrors) => {
+      return { ...prevErrors, category: "Category is required" };
+    });
+  else
+    setErrors((prevErrors) => {
+      return { ...prevErrors, category: "" };
+    });
+
+  // Checking if there is a image or not
+  if (!image)
+    setErrors((prevErrors) => {
+      return { ...prevErrors, image: "Image is required" };
+    });
+  else
+    setErrors((prevErrors) => {
+      return { ...prevErrors, image: "" };
+    });
 };

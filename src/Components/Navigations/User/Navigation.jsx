@@ -9,7 +9,7 @@ export const Navigation = ({ className }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const user = JSON.parse(getDataFromLocalStorage("user"));
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     const token = getDataFromLocalStorage("accessToken");
     const role = getDataFromLocalStorage("role");
@@ -43,7 +43,7 @@ export const Navigation = ({ className }) => {
       {/* Nav Items */}
       <ul className="flex ml-auto items-center basis-6/12">
         <li className="">
-          <NavLink className={`${tailwindClass.link} border-r-2`} to={"/"}>
+          <NavLink end className={`${tailwindClass.link} border-r-2`} to={"/"}>
             home
           </NavLink>
         </li>
@@ -71,7 +71,9 @@ export const Navigation = ({ className }) => {
               {showDropdown && <DropdownMenu />}
             </div>
           ) : (
-            <Button type="button" fullWidth={false} navigateTo={"/login"}>log in</Button>
+            <Button type="button" fullWidth={false} navigateTo={"/login"}>
+              log in
+            </Button>
           )}
         </li>
       </ul>

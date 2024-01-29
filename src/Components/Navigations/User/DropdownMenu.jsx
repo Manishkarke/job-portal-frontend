@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { logout } from "../../../Redux/Feature/user/Auth/authSlice";
+import { Button } from "../../Button";
 
 export const DropdownMenu = () => {
   const dispatch = useDispatch();
@@ -10,10 +11,7 @@ export const DropdownMenu = () => {
   const tailwindClass = {
     container:
       "absolute top-100 right-0 bg-blue-50 py-4 px-3 w-40 capitalize rounded-lg",
-    links:
-      `px-4 py-2 flex justify-center w-full rounded-sm transition-all border-b border-solid border-slate-400 hover:bg-violet-200`,
-    button:
-      "px-4 py-2 flex justify-center w-full bg-violet-400 rounded-sm transition-all ",
+    links: `px-4 py-2 flex justify-center w-full rounded-sm transition-all border-b border-solid hover:bg-orange-200`,
   };
 
   const logoutHandler = () => {
@@ -32,13 +30,16 @@ export const DropdownMenu = () => {
         </NavLink>
       </li>
       <li>
-        <button
+        {/* <button
           type="button"
           className={tailwindClass.button}
           onClick={logoutHandler}
         >
           log out
-        </button>
+        </button> */}
+        <Button type="button" onClick={logoutHandler} customization="w-full">
+          log out
+        </Button>
       </li>
     </ul>
   );

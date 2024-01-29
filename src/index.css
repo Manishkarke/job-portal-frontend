@@ -9,6 +9,10 @@ body {
   display: none;
 }
 
+a.active {
+  color: #ea580c;
+}
+
 .user-content-container {
   margin-top: 74px;
   height: calc(100vh - 74px);

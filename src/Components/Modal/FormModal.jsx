@@ -3,6 +3,8 @@ import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { createCategory } from "../../Redux/Feature/admin/adminAction";
 import imgUpload from "../../assets/images/imgUpload.png";
+import { Button } from "../Button";
+import { categoryFormValidation } from "../../utils/ErrorHandler";
 const tailwindClass = {
   box: "max-w-lg mx-auto flex flex-col justify-center align-center px-6 py-12 lg:px-8",
   inputField:
@@ -10,8 +12,6 @@ const tailwindClass = {
   imageInputField:
     "w-full flex flex-col gap-2 cursor-pointer capitalize justify-center p-4 items-center rounded-md h-full border-2 border-dashed",
   label: "block capitalize text-sm font-medium leading-6 text-gray-900",
-  button:
-    "flex w-full justify-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 capitalize",
   title:
     "text-center text-2xl font-bold leading-9 tracking-tight text-gray-900",
 };
@@ -24,6 +24,14 @@ export const FormModal = ({ closeModal, uploading }) => {
     category: "",
     image: null,
   });
+
+  // For Error handling
+  const [errors, setErrors] = useState({
+    category: "",
+    image: "",
+  });
+  let isFormValid = true;
+  const [isFormSubmitted, setFormSubmitted] = useState(false);
 
   // Category Name
   const categoryNameChangeHandler = (event) => {
@@ -69,8 +77,23 @@ export const FormModal = ({ closeModal, uploading }) => {
   // Form Submit Handler
   const formSubmitHandler = (event) => {
     event.preventDefault();
-    dispatch(createCategory({ formData, toast, uploading, closeModal }));
+    categoryFormValidation(formData, setErrors);
+    setFormSubmitted(true);
   };
+
+  React.useEffect(() => {
+    for (const error in errors) {
+      if (errors[error]) {
+        isFormValid = false;
+        break;
+      }
+    }
+
+    if (isFormValid && isFormSubmitted)
+      dispatch(createCategory({ formData, toast, uploading, closeModal }));
+
+    if (isFormSubmitted) setFormSubmitted(false);
+  }, [isFormSubmitted, isFormValid]);
   return (
     <section className={tailwindClass.box}>
       <h2 className={tailwindClass.title}>Add Category</h2>
@@ -145,9 +168,7 @@ export const FormModal = ({ closeModal, uploading }) => {
           </div>
         </div>
 
-        <button type="submit" className={tailwindClass.button}>
-          add category
-        </button>
+        <Button type="submit">add category</Button>
       </form>
     </section>
   );
