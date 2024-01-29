@@ -1,11 +1,12 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { logout } from "../../../Redux/Feature/user/Auth/authSlice";
 import { Button } from "../../Button";
 
 export const DropdownMenu = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // DropdownMenu tailwind classes
   const tailwindClass = {
@@ -14,9 +15,12 @@ export const DropdownMenu = () => {
     links: `px-4 py-2 flex justify-center w-full rounded-sm transition-all border-b border-solid hover:bg-orange-200`,
   };
 
-  const logoutHandler = () => {
+  const handleLogout = () => {
     dispatch(logout());
+    navigate("/");
+    toast.success("Logged Out Successfully");
   };
+
   return (
     <ul className={tailwindClass.container}>
       <li>
@@ -33,7 +37,7 @@ export const DropdownMenu = () => {
         {/* <button
           type="button"
           className={tailwindClass.button}
-          onClick={logoutHandler}
+          onClick={handleLogout}
         >
           log out
         </button> */}

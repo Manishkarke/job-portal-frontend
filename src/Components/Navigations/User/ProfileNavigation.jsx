@@ -1,5 +1,6 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { UserLayout } from "../../../Layouts/UserLayout";
+import { NavLink, Outlet } from "react-router-dom";
 
 const tailwindClass = {
   navContainer:

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { AdminPageLayout } from "../Layouts/AdminPageLayout";
-import { ProfilePageLayout } from "../Layouts/ProfilePageLayout";
 import { UserLayout } from "../Layouts/UserLayout";
 import { AdminCategory } from "../Pages/Admin/Category/AdminCategory";
 import { AdminDashboard } from "../Pages/Admin/Dashboard/AdminDashboard";
@@ -17,6 +16,7 @@ import { VendorDashboard } from "../Pages/Vendor/Dashboard/VendorDashboard";
 import { getDataFromLocalStorage } from "../utils/localStorage";
 import { VendorPageLayout } from "../Layouts/VendorPageLayout";
 import { PageNotFound } from "../Pages/Common/PageNotFound";
+import { ProfileNavigation } from "../Components/Navigations/User/ProfileNavigation";
 
 export default function Router() {
   const userType = getDataFromLocalStorage("role");
@@ -32,7 +32,7 @@ export default function Router() {
         {/* User Routes */}
         <Route path="/" element={<UserLayout />}>
           <Route index={true} element={<JobList />} />
-          <Route path="user" element={<ProfilePageLayout />}>
+          <Route path="user" element={<ProfileNavigation />}>
             <Route
               path="profile"
               element={
