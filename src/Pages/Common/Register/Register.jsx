@@ -17,12 +17,10 @@ const tailwindClass = {
     "font-semibold capitalize ml-1 leading-6 text-orange-600 hover:text-orange-500",
   title:
     " text-center text-2xl font-bold leading-9 tracking-tight text-gray-900",
-  error: "text-red-600 capitalize text-sm",
+  error: "text-red-600 text-sm",
   showPasswordIcon:
     "h-full border-l border-solid w-10 grid text-orange-600 hover:text-orange-500 place-content-center absolute top-0 right-0",
 };
-
-// TODO: CHanges starts here
 
 function Register() {
   // hooks functions

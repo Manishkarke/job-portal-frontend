@@ -5,7 +5,6 @@ import {
   setDataInLocalStorage,
 } from "../../../../utils/localStorage";
 
-// TODO: If changes happens then starts from here
 
 export const userRegister = createAsyncThunk(
   "auth/register",
