@@ -5,14 +5,12 @@ import {
   setDataInLocalStorage,
 } from "../../../../utils/localStorage";
 
-
 // TODO: If changes happens then starts from here
 
 export const userRegister = createAsyncThunk(
   "auth/register",
-  async ({ email, name, password, navigate, toast, setFormSubmitted }) => {
+  async ({ email, name, password, navigate, toast }) => {
     try {
-      console.log("I am being called");
       const response = await api.post("/user/register", {
         name,
         email,
@@ -21,8 +19,6 @@ export const userRegister = createAsyncThunk(
 
       if (response.data.status === 200) {
         toast.success(response.data.message);
-        console.log(response.data.message);
-        setFormSubmitted(false);
         navigate("/login");
       }
       if (response.data.status !== 200) {
@@ -39,6 +35,7 @@ export const userLogin = createAsyncThunk(
   "auth/login",
   async ({ email, password, navigate, toast }) => {
     try {
+      console.log("calling log in function");
       const response = await api.post("/user/login", {
         email,
         password,
@@ -51,20 +48,15 @@ export const userLogin = createAsyncThunk(
           "user",
           JSON.stringify(response.data.emailExists)
         );
+        toast.success(response.data.message);
       }
 
       if (response.data.role === "user") {
-        console.log("before navigating");
         navigate("/");
-        console.log("after navigating");
       } else if (response.data.role === "admin") {
-        console.log("before navigating");
         navigate("/admin");
-        console.log("after navigating");
       } else if (response.data.role === "vendor") {
-        console.log("before navigating");
         navigate("/vendor");
-        console.log("after navigating");
       }
 
       if (response.data.status === 400) {

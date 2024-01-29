@@ -85,11 +85,11 @@ export const registrationValidator = (
 
 // log in form validator
 export const loginValidator = ({ email, password }, setErrors) => {
-  if (!email.trim()) {
+  if (!email?.trim()) {
     setErrors((prevErrors) => {
       return { ...prevErrors, email: "Email is required" };
     });
-  } else if (!email.match(emailRegex)) {
+  } else if (!email?.match(emailRegex)) {
     setErrors((prevErrors) => {
       return { ...prevErrors, email: "Email is not valid" };
     });
@@ -99,7 +99,7 @@ export const loginValidator = ({ email, password }, setErrors) => {
     });
   }
 
-  if (!password.trim()) {
+  if (!password?.trim()) {
     setErrors((prevErrors) => {
       return { ...prevErrors, password: "Password is required" };
     });

@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { RegisterPageLayout } from "../../../Layouts/RegisterPageLayout";
 import { Button } from "../../../Components/Button";
+import { registrationValidator } from "../../../utils/ErrorHandler";
+import { userRegister } from "../../../Redux/Feature/user/Auth/authAction";
 
 // Tailwind Class Name
 const tailwindClass = {
@@ -36,24 +38,7 @@ function Register() {
   // For FOrm validation
   const [isFormSubmitted, setFormSubmitted] = React.useState(false); // to check if submit button is clicked
   const [errors, setErrors] = React.useState({}); // to store error states
-  const [isFormValid, setIsFormValid] = React.useState(true); // to check if form is valid
-
-  React.useEffect(() => {
-    for (const error in errors) {
-      if (errors[error]) {
-        setIsFormValid(false); // if There is any error then
-        break;
-      } else {
-        setIsFormValid(true);
-      }
-    }
-    console.log(
-      "form submision values: " +
-        isFormSubmitted +
-        " is FormValid ? " +
-        isFormValid
-    );
-  }, [errors, isFormValid, isFormSubmitted]);
+  let isFormValid = true; // to check if form is valid
 
   // State Handling functions
   const inputFieldChangeHandler = (e) => {
@@ -64,63 +49,37 @@ function Register() {
   };
 
   // Form submission handler function
-  // const formSubmitHandler = (e) => {
-  //   e.preventDefault();
+  const formSubmitHandler = (e) => {
+    e.preventDefault();
 
-  //   registrationValidator(formData, setErrors); //Form Validator function
-  //   setFormSubmitted(true);
+    registrationValidator(formData, setErrors); //Form Validator function
+    setFormSubmitted(true);
+  };
 
-  //   if (isFormValid && isFormSubmitted) {
-  //     const { name, email, password } = formData;
-  //     dispatch(
-  //       userRegister({
-  //         name,
-  //         email,
-  //         password,
-  //         navigate,
-  //         toast,
-  //         setFormSubmitted,
-  //       })
-  //     );
-  //   } else if (isFormSubmitted) {
-  //     setFormSubmitted(false);
-  //   }
-  // };
-  // Handle form submission
-  const formSubmitHandler = (event) => {
-    event.preventDefault();
-
-    // Reset errors
-    setError({ email: "", password: "" });
-
-    // Check for empty fields
-    if (formData.email.trim() === "") {
-      setError((prevError) => ({ ...prevError, email: "Email is required." }));
+  React.useEffect(() => {
+    for (const error in errors) {
+      if (errors[error]) {
+        isFormValid = false; // if There is any error then
+        break;
+      }
     }
 
-    if (formData.password.trim() === "") {
-      setError((prevError) => ({
-        ...prevError,
-        password: "Password is required.",
-      }));
-    }
-
-    // Check if there are no errors
-    if (!error.email && !error.password) {
-      console.log("Form submitted");
+    if (isFormValid && isFormSubmitted) {
+      const { name, email, password } = formData;
       dispatch(
-        userLogin({
-          email: formData.email,
-          password: formData.password,
+        userRegister({
+          name,
+          email,
+          password,
           navigate,
           toast,
         })
       );
     }
-
-    // Set form as submitted
-    setFormSubmitted(true);
-  };
+    if (isFormSubmitted) {
+      setFormSubmitted(false);
+    }
+  }, [isFormValid, isFormSubmitted]);
 
   return (
     <RegisterPageLayout>

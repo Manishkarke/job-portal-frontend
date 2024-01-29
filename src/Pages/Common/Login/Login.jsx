@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { Button } from "../../../Components/Button";
 import { RegisterPageLayout } from "../../../Layouts/RegisterPageLayout";
 import { userLogin } from "../../../Redux/Feature/user/Auth/authAction";
+import { loginValidator } from "../../../utils/ErrorHandler";
 
 // Tailwind Class Name
 const tailwindClass = {
@@ -28,17 +29,13 @@ export default function Login() {
     password: "",
   });
 
-  const [error, setError] = React.useState({});
-  // const [isFormReady, setFormReady] = React.useState(false);
+  const [errors, setErrors] = React.useState({
+    email: "",
+    password: "",
+  });
+  let isFormValid = true;
   const [isFormSubmitted, setFormSubmitted] = React.useState(false);
 
-  // React.useEffect(() => {
-  //   if (isFormSubmitted && !error.email && !error.password) {
-  //     // Set the form ready to submit
-  //     setFormReady(true);
-  //     setFormSubmitted(true);
-  //   }
-  // }, [error.email, error.password, isFormSubmitted]);
   // State handling Functions
   const inputChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -48,71 +45,28 @@ export default function Login() {
   };
 
   // Handle form submission
-  // const formSubmitHandler = (event) => {
-  //   event.preventDefault();
-
-  //   if (isFormReady) {
-  //     const { email, password } = formData;
-  //     console.log("form submitted");
-  //     dispatch(userLogin({ email, password, navigate, toast }));
-  //   } else {
-  //     if (formData.email.trim() === "") {
-  //       setError((prevError) => {
-  //         return { ...prevError, email: "email is required." };
-  //       });
-  //     } else {
-  //       setError((prevError) => {
-  //         return { ...prevError, email: "" };
-  //       });
-  //     }
-
-  //     if (formData.password.trim() === "") {
-  //       setError((prevError) => {
-  //         return { ...prevError, password: "password is required." };
-  //       });
-  //     } else {
-  //       setError((prevError) => {
-  //         return { ...prevError, password: "" };
-  //       });
-  //     }
-  //     setFormSubmitted(true);
-  //   }
-  // };
-  // Handle form submission
   const formSubmitHandler = (event) => {
     event.preventDefault();
 
-    // Reset errors
-    setError({ email: "", password: "" });
-
-    // Check for empty fields
-    if (formData.email.trim() === "") {
-      setError((prevError) => ({ ...prevError, email: "Email is required." }));
-    }
-
-    if (formData.password.trim() === "") {
-      setError((prevError) => ({
-        ...prevError,
-        password: "Password is required.",
-      }));
-    }
-
-    // Check if there are no errors
-    if (!error.email && !error.password) {
-      console.log("Form submitted");
-      dispatch(
-        userLogin({
-          email: formData.email,
-          password: formData.password,
-          navigate,
-          toast,
-        })
-      );
-    }
-
-    // Set form as submitted
+    loginValidator(formData, setErrors);
     setFormSubmitted(true);
   };
+
+  React.useEffect(() => {
+    for (const error in errors) {
+      if (errors[error]) {
+        isFormValid = false;
+        break;
+      }
+    }
+
+    if (isFormValid && isFormSubmitted) {
+      const { email, password } = formData;
+      dispatch(userLogin({ email, password, navigate, toast }));
+    }
+
+    if (isFormSubmitted) setFormSubmitted(false);
+  }, [isFormSubmitted, isFormValid]);
 
   return (
     <RegisterPageLayout>
@@ -142,8 +96,8 @@ export default function Login() {
                   className={`${tailwindClass.inputField}`}
                 />
               </div>
-              {error.email && (
-                <span className={tailwindClass.error}>{error.email}</span>
+              {errors.email && (
+                <span className={tailwindClass.error}>{errors.email}</span>
               )}
             </div>
 
@@ -169,8 +123,8 @@ export default function Login() {
                   className={tailwindClass.inputField}
                 />
               </div>
-              {error.password && (
-                <span className={tailwindClass.error}>{error.password}</span>
+              {errors.password && (
+                <span className={tailwindClass.error}>{errors.password}</span>
               )}
             </div>
 
