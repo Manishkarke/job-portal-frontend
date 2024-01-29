@@ -1,22 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { requestToBeVendor } from "../../../Redux/Feature/user/Auth/authAction";
 import { toast } from "react-toastify";
 import { getDataFromLocalStorage } from "../../../utils/localStorage";
+import { Button } from "../../../Components/Button";
+import { vendorRegistrationValidator } from "../../../utils/ErrorHandler";
 
 const tailwindClass = {
   formBox:
-    "border border-solid rounded-lg shadow grid gap-x-4 gap-y-4 min-h-full px-6 py-12 lg:px-8",
+    "rounded-lg shadow grid gap-4 md:grid-cols-2 min-h-full px-6 py-6 lg:px-8",
   inputField:
-    "block w-full p-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6",
+    "block w-full p-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6",
   label: "block text-sm font-medium leading-6 capitalize text-gray-900",
   links:
     "font-semibold capitalize ml-1 leading-6 text-indigo-600 hover:text-indigo-500",
-  button:
-    "flex w-full col-span-2  max-w-52 justify-center capitalize rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600",
   title:
     " text-center text-2xl font-bold leading-9 tracking-tight text-gray-900",
+  error: "text-red-600 text-sm",
 };
 export const VendorRegister = () => {
   const user = JSON.parse(getDataFromLocalStorage("user"));
@@ -37,14 +38,7 @@ export const VendorRegister = () => {
   const [isFormSubmitted, setFormSubmitted] = useState(false);
   let isFormValid = true;
 
-  React.useEffect(() => {
-    for (let error in errors) {
-      if (errors[error]) {
-        isFormValid = false;
-        break;
-      }
-    }
-  }, [errors, isFormSubmitted, isFormValid]);
+  // Input field change handler
   const handleInputFieldChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => {
@@ -57,15 +51,27 @@ export const VendorRegister = () => {
 
   const formSubmitHandler = (event) => {
     event.preventDefault();
-    setFormSubmitted(false);
-    if (isFormSubmitted && isFormValid) {
-      dispatch(requestToBeVendor({ formData, toast, navigate }));
-    }
+    vendorRegistrationValidator(formData, setErrors);
+    setFormSubmitted(true);
   };
+
+  React.useEffect(() => {
+    for (let error in errors) {
+      if (errors[error]) {
+        isFormValid = false;
+        break;
+      }
+    }
+
+    if (isFormSubmitted && isFormValid)
+      dispatch(requestToBeVendor({ formData, toast, navigate }));
+
+    if (isFormSubmitted) setFormSubmitted(false);
+  }, [isFormSubmitted, isFormValid]);
+
   return (
     <section>
       <h2 className={tailwindClass.title}>Fill up the form for registration</h2>
-
       <form
         action="POST"
         className={tailwindClass.formBox}
@@ -113,6 +119,9 @@ export const VendorRegister = () => {
             className={tailwindClass.inputField}
             onChange={handleInputFieldChange}
           />
+          {errors.designation && (
+            <span className={tailwindClass.error}>{errors.designation}</span>
+          )}
         </div>
 
         <div>
@@ -127,6 +136,9 @@ export const VendorRegister = () => {
             className={tailwindClass.inputField}
             onChange={handleInputFieldChange}
           />
+          {errors.service && (
+            <span className={tailwindClass.error}>{errors.service}</span>
+          )}
         </div>
 
         <div>
@@ -141,6 +153,9 @@ export const VendorRegister = () => {
             className={tailwindClass.inputField}
             onChange={handleInputFieldChange}
           />
+          {errors.contact && (
+            <span className={tailwindClass.error}>{errors.contact}</span>
+          )}
         </div>
 
         <div>
@@ -155,11 +170,17 @@ export const VendorRegister = () => {
             className={tailwindClass.inputField}
             onChange={handleInputFieldChange}
           />
+          {errors.address && (
+            <span className={tailwindClass.error}>{errors.address}</span>
+          )}
         </div>
 
-        <button type="submit" className={tailwindClass.button}>
+        <Button
+          type="submit"
+          customization="w-fit justify-self-center md:col-span-2 md:justify-self-end"
+        >
           register as vendor
-        </button>
+        </Button>
       </form>
     </section>
   );

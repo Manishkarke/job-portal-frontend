@@ -95,8 +95,6 @@ export const requestToBeVendor = createAsyncThunk(
         },
       });
 
-      console.log(" I am running as a vendor");
-
       if (response.data.status === 200) {
         toast.success(response.data.message);
         navigate("/");

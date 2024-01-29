@@ -10,31 +10,35 @@ const tailwindClass = {
 
 export const ProfileNavigation = () => {
   return (
-    <aside>
-      <ul className={tailwindClass.navContainer}>
-        <li>
-          <NavLink className={tailwindClass.navLink} to={"/user/profile"}>
-            profile
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            end
-            className={tailwindClass.navLink}
-            to={"/user/appliedJobs"}
-          >
-            applied jobs
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            className={tailwindClass.navLink}
-            to={"/user/registerAsVendor"}
-          >
-            vendor register
-          </NavLink>
-        </li>
-      </ul>
-    </aside>
+    <>
+      <aside>
+        <ul className={tailwindClass.navContainer}>
+          <li>
+            <NavLink className={tailwindClass.navLink} to={"/user/profile"}>
+              profile
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              end
+              className={tailwindClass.navLink}
+              to={"/user/appliedJobs"}
+            >
+              applied jobs
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              className={tailwindClass.navLink}
+              to={"/user/registerAsVendor"}
+            >
+              vendor register
+            </NavLink>
+          </li>
+        </ul>
+      </aside>
+
+      <Outlet />
+    </>
   );
 };

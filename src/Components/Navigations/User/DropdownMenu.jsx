@@ -18,7 +18,6 @@ export const DropdownMenu = () => {
   const handleLogout = () => {
     dispatch(logout());
     navigate("/");
-    toast.success("Logged Out Successfully");
   };
 
   return (
@@ -34,14 +33,7 @@ export const DropdownMenu = () => {
         </NavLink>
       </li>
       <li>
-        {/* <button
-          type="button"
-          className={tailwindClass.button}
-          onClick={handleLogout}
-        >
-          log out
-        </button> */}
-        <Button type="button" onClick={logoutHandler} customization="w-full">
+        <Button type="button" onClick={handleLogout} customization="w-full">
           log out
         </Button>
       </li>

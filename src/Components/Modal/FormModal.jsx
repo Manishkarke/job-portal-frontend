@@ -14,6 +14,7 @@ const tailwindClass = {
   label: "block capitalize text-sm font-medium leading-6 text-gray-900",
   title:
     "text-center text-2xl font-bold leading-9 tracking-tight text-gray-900",
+  error: "text-red-600 text-sm",
 };
 
 export const FormModal = ({ closeModal, uploading }) => {
@@ -119,6 +120,9 @@ export const FormModal = ({ closeModal, uploading }) => {
               className={tailwindClass.inputField}
             />
           </div>
+          {errors.category && (
+            <span className={tailwindClass.error}>{errors.category}</span>
+          )}
         </div>
 
         <div>
@@ -166,6 +170,10 @@ export const FormModal = ({ closeModal, uploading }) => {
               )}
             </div>
           </div>
+
+          {errors.image && (
+            <span className={tailwindClass.error}>{errors.image}</span>
+          )}
         </div>
 
         <Button type="submit">add category</Button>

@@ -4,6 +4,9 @@
 body {
   height: 100vh;
 }
+input {
+  outline: 0;
+}
 
 #content::-webkit-scrollbar {
   display: none;

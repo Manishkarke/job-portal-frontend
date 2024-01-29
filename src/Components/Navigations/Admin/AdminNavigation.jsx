@@ -22,7 +22,6 @@ export const AdminNavigation = ({ className }) => {
   const logoutHandler = () => {
     dispatch(logout());
     navigate("/login");
-    toast.success("Logged Out Successfully");
   };
 
   return (
@@ -53,7 +52,6 @@ export const AdminNavigation = ({ className }) => {
         </li>
         <li className={tailwindClass.fullWidth}>
           <NavLink
-            end
             className={`${tailwindClass.flex} ${tailwindClass.navItem}`}
             to={"/admin/vendors/"}
           >

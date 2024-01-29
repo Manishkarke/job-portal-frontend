@@ -5,6 +5,7 @@ import { VendorDataRow } from "../../../Components/Tables/VendorDataRow";
 import { VendorsTableHeader } from "../../../Components/Tables/VendorsTableHeader";
 import { AdminPageLayout } from "../../../Layouts/AdminPageLayout";
 import { getAllVendor } from "../../../Redux/Feature/admin/adminAction";
+import { Button } from "../../../Components/Button";
 
 // Tailwind Classes
 const tailwindCLass = {
@@ -22,31 +23,22 @@ export const VendorList = () => {
   const navigate = useNavigate();
   useEffect(() => {
     dispatch(getAllVendor());
-    console.log("Refresh In Vendor requests", refresh);
 
-    if (refresh) {
-      console.log("Refresh In Vendor requests if it is true", refresh);
-      setRefresh(false);
-      console.log(
-        "Refresh In Vendor requests if changing it to false",
-        refresh
-      );
-    }
+    if (refresh) setRefresh(false);
   }, [dispatch, refresh]);
   return (
     <>
       <section>
-        <div className="flex justify-between px-10 py-2 shadow-lg bg-white z-10 rounded-lg sticky top-0 ">
+        <div className="flex justify-between items-center px-10 py-2 shadow-lg bg-white z-10 rounded-lg sticky top-0 ">
           <h2 className={tailwindCLass.pageHeader}>vendors</h2>
-          <button
+          <Button
             type="button"
-            className={tailwindCLass.button}
             onClick={() => {
               navigate("/admin/vendors/requests/");
             }}
           >
             vendor requests
-          </button>
+          </Button>
         </div>
         {vendors ? (
           <table className="w-full capitalize relative overflow-x-scroll">
