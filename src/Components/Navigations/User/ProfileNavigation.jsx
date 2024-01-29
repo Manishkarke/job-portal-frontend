@@ -1,6 +1,6 @@
 import React from "react";
 import { UserLayout } from "../../../Layouts/UserLayout";
-import { NavLink } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 
 const tailwindClass = {
   navContainer:
@@ -10,27 +10,33 @@ const tailwindClass = {
 
 export const ProfileNavigation = () => {
   return (
-    <aside>
-      <ul className={tailwindClass.navContainer}>
-        <li>
-          <NavLink className={tailwindClass.navLink} to={"/user/profile/"}>
-            profile
-          </NavLink>
-        </li>
-        <li>
-          <NavLink className={tailwindClass.navLink} to={"/user/appliedJobs/"}>
-            applied jobs
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            className={tailwindClass.navLink}
-            to={"/user/registerAsVendor"}
-          >
-            vendor register
-          </NavLink>
-        </li>
-      </ul>
-    </aside>
+    <>
+      <aside>
+        <ul className={tailwindClass.navContainer}>
+          <li>
+            <NavLink className={tailwindClass.navLink} to={"/user/profile/"}>
+              profile
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              className={tailwindClass.navLink}
+              to={"/user/appliedJobs/"}
+            >
+              applied jobs
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              className={tailwindClass.navLink}
+              to={"/user/registerAsVendor"}
+            >
+              vendor register
+            </NavLink>
+          </li>
+        </ul>
+      </aside>
+      <Outlet />
+    </>
   );
 };

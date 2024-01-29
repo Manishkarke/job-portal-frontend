@@ -134,7 +134,7 @@ export default function Login() {
           </form>
 
           <p className="text-center text-sm text-gray-500">
-            don't have an account?
+            don&apos;t have an account?
             <Link to={"/register"} className={tailwindClass.links}>
               register
             </Link>
