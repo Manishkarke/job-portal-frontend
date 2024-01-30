@@ -12,6 +12,7 @@ export const VendorDropdownMenu = ({ user }) => {
   const tailwindClass = {
     container:
       "absolute top-100 right-0 bg-blue-50 py-4 px-3 w-40 capitalize rounded-lg text-center",
+    links: `px-4 py-2 flex justify-center w-full rounded-sm transition-all border-y-2 border-solid mb-2`,
   };
 
   const handleLogout = () => {
@@ -21,16 +22,17 @@ export const VendorDropdownMenu = ({ user }) => {
 
   return (
     <ul className={tailwindClass.container}>
-      <li className="mb-2 font-medium">
+      <li className="py-2 font-medium">
         <h3>
-          hello
-          <span className="flex justify-center text-indigo-950 font-extrabold text-lg">
+          hello <span className="text-indigo-950 font-extrabold text-lg">
             {user.name}
           </span>
         </h3>
-        {/* <NavLink to="/vendor/profile" className={tailwindClass.links}>
-          profile
-        </NavLink> */}
+      </li>
+      <li>
+        <NavLink end to="" className={tailwindClass.links}>
+          dashboard
+        </NavLink>
       </li>
 
       <li>

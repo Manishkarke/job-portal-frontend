@@ -29,8 +29,8 @@ function VendorNavigation({ className }) {
       {/* Nav Items */}
       <ul className="flex ml-auto items-center basis-6/12">
         <li>
-          <NavLink end className={`${tailwindClass.link} border-r-2`} to="">
-            home
+          <NavLink end className={`${tailwindClass.link} border-r-2`} to="jobs">
+            my jobs
           </NavLink>
         </li>
 

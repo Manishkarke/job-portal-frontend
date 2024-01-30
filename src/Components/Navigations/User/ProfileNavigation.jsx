@@ -1,5 +1,4 @@
 import React from "react";
-import { UserLayout } from "../../../Layouts/UserLayout";
 import { NavLink, Outlet } from "react-router-dom";
 
 const tailwindClass = {

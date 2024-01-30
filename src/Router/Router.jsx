@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { AdminPageLayout } from "../Layouts/AdminPageLayout";
 import { UserLayout } from "../Layouts/UserLayout";
 import { AdminCategory } from "../Pages/Admin/Category/AdminCategory";
@@ -44,30 +44,9 @@ export default function Router() {
       >
         <Route index element={<JobList />} />
         <Route path="user" element={<ProfileNavigation />}>
-          <Route
-            path="profile"
-            element={
-              // <ProtectedRoute userType={userType} allowedUserType="user">
-              <Profile />
-              // </ProtectedRoute>
-            }
-          />
-          <Route
-            path="appliedJobs"
-            element={
-              // <ProtectedRoute userType={userType} allowedUserType="user">
-              <AppliedJobs />
-              // </ProtectedRoute>
-            }
-          />
-          <Route
-            path="registerAsVendor"
-            element={
-              // <ProtectedRoute userType={userType} allowedUserType="user">
-              <VendorRegister />
-              // </ProtectedRoute>
-            }
-          />
+          <Route path="profile" element={<Profile />} />
+          <Route path="appliedJobs" element={<AppliedJobs />} />
+          <Route path="registerAsVendor" element={<VendorRegister />} />
         </Route>
       </Route>
 
@@ -80,14 +59,12 @@ export default function Router() {
           </AuthWraper>
         }
       >
-        <Route
-          index
-          element={
-            // <ProtectedRoute userType={userType} allowedUserType="vendor">
-            <VendorDashboard />
-            // </ProtectedRoute>
-          }
-        />
+        <Route index element={<VendorDashboard />} />
+        <Route path="jobs" element={<PostedJobList />} />
+        <Route path="jobs/:id" element={<JobDetailPage />} />
+        <Route path="applicants" element={<ApplicantLists />} />
+        <Route path="applicants/:id" element={<ApplicantDetail />} />
+        <Route path="createJobs" element={<CreateJob />} />
       </Route>
 
       {/* Admin Routes */}
@@ -99,55 +76,27 @@ export default function Router() {
           </AuthWraper>
         }
       >
-        <Route
-          index
-          element={
-            // <ProtectedRoute userType={userType} allowedUserType="admin">
-            <AdminDashboard />
-            // </ProtectedRoute>
-          }
-        />
-        <Route
-          path="category"
-          element={
-            // <ProtectedRoute userType={userType} allowedUserType="admin">
-            <AdminCategory />
-            // </ProtectedRoute>
-          }
-        />
-        <Route
-          path="vendors"
-          element={
-            // <ProtectedRoute userType={userType} allowedUserType="admin">
-            <VendorList />
-            // </ProtectedRoute>
-          }
-        />
-        <Route
-          path="vendors/requests"
-          element={
-            // <ProtectedRoute userType={userType} allowedUserType="admin">
-            <VendorRequests />
-            // </ProtectedRoute>
-          }
-        />
+        <Route index element={<AdminDashboard />} />
+        <Route path="category" element={<AdminCategory />} />
+        <Route path="vendors" element={<VendorList />} />
+        <Route path="vendors/requests" element={<VendorRequests />} />
       </Route>
 
       {/* Common Routes */}
       <Route
         path="/login"
         element={
-          // <RestrictFromFormComponent>
-          <Login />
-          // </RestrictFromFormComponent>
+          <RestrictFromFormComponent>
+            <Login />
+          </RestrictFromFormComponent>
         }
       />
       <Route
         path="/register"
         element={
-          // <RestrictFromFormComponent>
-          <Register />
-          // </RestrictFromFormComponent>
+          <RestrictFromFormComponent>
+            <Register />
+          </RestrictFromFormComponent>
         }
       />
 
@@ -157,41 +106,14 @@ export default function Router() {
   );
 }
 
-// const ProtectedRoute = ({ children, allowedUserType, userType }) => {
-//   const token = getDataFromLocalStorage("accessToken");
-//   const navigate = useNavigate();
+const RestrictFromFormComponent = ({ children }) => {
+  const token = getDataFromLocalStorage("accessToken");
 
-//   if (token === null) {
-//     navigate("/login");
-//     return null;
-//   }
-
-//   if (allowedUserType === userType) {
-//     return children;
-//   }
-
-//   return null;
-// };
-
-// const RestrictFromFormComponent = ({ children }) => {
-//   const token = getDataFromLocalStorage("accessToken");
-//   const role = getDataFromLocalStorage("role");
-//   const navigate = useNavigate();
-
-//   if (!token) {
-//     return children;
-//   }
-
-//   if (role === "admin") {
-//     navigate("/admin");
-//   } else if (role === "vendor") {
-//     navigate("/vendor");
-//   } else if (role === "user") {
-//     navigate("/");
-//   }
-
-//   return null;
-// };
+  if (token !== null) {
+    return <Navigate to="/" />;
+  }
+  return !token && children;
+};
 const AuthWraper = ({ children }) => {
   const token = localStorage.getItem("accessToken");
 
