@@ -12,11 +12,15 @@ import { JobList } from "../Pages/Users/Jobs/JobList";
 import { AppliedJobs } from "../Pages/Users/Profile/AppliedJobs";
 import { Profile } from "../Pages/Users/Profile/Profile";
 import { VendorRegister } from "../Pages/Users/Profile/VendorRegister";
-import { VendorDashboard } from "../Pages/Vendor/Dashboard/VendorDashboard";
 import { getDataFromLocalStorage } from "../utils/localStorage";
 import { VendorPageLayout } from "../Layouts/VendorPageLayout";
 import { PageNotFound } from "../Pages/Common/PageNotFound";
 import { ProfileNavigation } from "../Components/Navigations/User/ProfileNavigation";
+import { PostedJobList } from "../Pages/Vendor/Jobs/PostedJobList";
+import { CreateJob } from "../Pages/Vendor/Jobs/CreateJob";
+import { ApplicantLists } from "../Pages/Vendor/Applicants/ApplicantLists";
+import { ApplicantDetail } from "../Pages/Vendor/Applicants/ApplicantDetail";
+import { JobDetailPage } from "../Pages/Vendor/Jobs/JobDetailPage";
 
 export default function Router() {
   const userType = getDataFromLocalStorage("role");
@@ -66,7 +70,40 @@ export default function Router() {
             index={true}
             element={
               <ProtectedRoute userType={userType} allowedUserType="vendor">
-                <VendorDashboard />
+                <PostedJobList />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="job/:id"
+            element={
+              <ProtectedRoute userType={userType} allowedUserType="vendor">
+                <JobDetailPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="createJobs"
+            element={
+              <ProtectedRoute allowedUserType="vendor" userType={userType}>
+                <CreateJob />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="applicants"
+            element={
+              <ProtectedRoute userType={userType} allowedUserType="vendor">
+                <ApplicantLists />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="applicants/:id"
+            element={
+              <ProtectedRoute userType={userType} allowedUserType="vendor">
+                <ApplicantDetail />
               </ProtectedRoute>
             }
           />

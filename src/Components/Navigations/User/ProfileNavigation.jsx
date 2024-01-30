@@ -14,7 +14,7 @@ export const ProfileNavigation = () => {
       <aside>
         <ul className={tailwindClass.navContainer}>
           <li>
-            <NavLink className={tailwindClass.navLink} to={"/user/profile"}>
+            <NavLink className={tailwindClass.navLink} to={"profile"}>
               profile
             </NavLink>
           </li>
@@ -22,7 +22,7 @@ export const ProfileNavigation = () => {
             <NavLink
               end
               className={tailwindClass.navLink}
-              to={"/user/appliedJobs"}
+              to={"appliedJobs"}
             >
               applied jobs
             </NavLink>
@@ -30,7 +30,7 @@ export const ProfileNavigation = () => {
           <li>
             <NavLink
               className={tailwindClass.navLink}
-              to={"/user/registerAsVendor"}
+              to={"registerAsVendor"}
             >
               vendor register
             </NavLink>

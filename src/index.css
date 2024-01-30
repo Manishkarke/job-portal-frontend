@@ -20,6 +20,10 @@ a.active {
   margin-top: 74px;
   height: calc(100vh - 74px);
 }
+.vendor-content-container {
+  margin-top: 74px;
+  height: calc(100vh - 74px);
+}
 
 @tailwind base;
 @tailwind components;
