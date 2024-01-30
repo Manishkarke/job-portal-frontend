@@ -21,6 +21,7 @@ import { CreateJob } from "../Pages/Vendor/Jobs/CreateJob";
 import { ApplicantLists } from "../Pages/Vendor/Applicants/ApplicantLists";
 import { ApplicantDetail } from "../Pages/Vendor/Applicants/ApplicantDetail";
 import { JobDetailPage } from "../Pages/Vendor/Jobs/JobDetailPage";
+import { VendorDashboard } from "../Pages/Vendor/Profile/VendorDashboard";
 
 export default function Router() {
   const userType = getDataFromLocalStorage("role");
