@@ -21,6 +21,9 @@ export const DropdownMenu = () => {
     dispatch(logout());
     navigate("/");
     toast.success("Logged Out Successfully");
+    localStorage.removeItem("user");
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("role");
   };
 
   return (
