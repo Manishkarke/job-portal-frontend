@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { AdminPageLayout } from "../Layouts/AdminPageLayout";
 import { UserLayout } from "../Layouts/UserLayout";
 import { AdminCategory } from "../Pages/Admin/Category/AdminCategory";
@@ -21,6 +21,7 @@ import { CreateJob } from "../Pages/Vendor/Jobs/CreateJob";
 import { ApplicantLists } from "../Pages/Vendor/Applicants/ApplicantLists";
 import { ApplicantDetail } from "../Pages/Vendor/Applicants/ApplicantDetail";
 import { JobDetailPage } from "../Pages/Vendor/Jobs/JobDetailPage";
+import { VendorDashboard } from "../Pages/Vendor/Profile/VendorDashboard";
 
 export default function Router() {
   const userType = getDataFromLocalStorage("role");
@@ -31,166 +32,171 @@ export default function Router() {
     // }
   }, []);
   return (
-    <>
-      <Routes>
-        {/* User Routes */}
-        <Route path="/" element={<UserLayout />}>
-          <Route index={true} element={<JobList />} />
-          <Route path="user" element={<ProfileNavigation />}>
-            <Route
-              path="profile"
-              element={
-                <ProtectedRoute userType={userType} allowedUserType="user">
-                  <Profile />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="appliedJobs"
-              element={
-                <ProtectedRoute userType={userType} allowedUserType="user">
-                  <AppliedJobs />
-                </ProtectedRoute>
-              }
-            />
-
-            <Route
-              path="registerAsVendor"
-              element={
-                <ProtectedRoute userType={userType} allowedUserType="user">
-                  <VendorRegister />
-                </ProtectedRoute>
-              }
-            />
-          </Route>
-        </Route>
-        {/* Vendor ROutes */}
-        <Route path="/vendor" element={<VendorPageLayout />}>
+    <Routes>
+      {/* User Routes */}
+      <Route
+        path="/"
+        element={
+          <AuthWraper>
+            <UserLayout />
+          </AuthWraper>
+        }
+      >
+        <Route index element={<JobList />} />
+        <Route path="user" element={<ProfileNavigation />}>
           <Route
-            index={true}
+            path="profile"
             element={
-              <ProtectedRoute userType={userType} allowedUserType="vendor">
-                <PostedJobList />
-              </ProtectedRoute>
+              // <ProtectedRoute userType={userType} allowedUserType="user">
+              <Profile />
+              // </ProtectedRoute>
             }
           />
           <Route
-            path="job/:id"
+            path="appliedJobs"
             element={
-              <ProtectedRoute userType={userType} allowedUserType="vendor">
-                <JobDetailPage />
-              </ProtectedRoute>
+              // <ProtectedRoute userType={userType} allowedUserType="user">
+              <AppliedJobs />
+              // </ProtectedRoute>
             }
           />
           <Route
-            path="createJobs"
+            path="registerAsVendor"
             element={
-              <ProtectedRoute allowedUserType="vendor" userType={userType}>
-                <CreateJob />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
-            path="applicants"
-            element={
-              <ProtectedRoute userType={userType} allowedUserType="vendor">
-                <ApplicantLists />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="applicants/:id"
-            element={
-              <ProtectedRoute userType={userType} allowedUserType="vendor">
-                <ApplicantDetail />
-              </ProtectedRoute>
+              // <ProtectedRoute userType={userType} allowedUserType="user">
+              <VendorRegister />
+              // </ProtectedRoute>
             }
           />
         </Route>
-        {/* Admin ROutes */}
-        <Route path="/admin" element={<AdminPageLayout />}>
-          <Route
-            index={true}
-            element={
-              <ProtectedRoute userType={userType} allowedUserType="admin">
-                <AdminDashboard />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="category"
-            element={
-              <ProtectedRoute userType={userType} allowedUserType="admin">
-                <AdminCategory />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="vendors"
-            element={
-              <ProtectedRoute userType={userType} allowedUserType="admin">
-                <VendorList />
-              </ProtectedRoute>
-            }
-          />
+      </Route>
 
-          <Route
-            path="vendors/requests"
-            element={
-              <ProtectedRoute userType={userType} allowedUserType="admin">
-                <VendorRequests />
-              </ProtectedRoute>
-            }
-          />
-        </Route>
-
-        {/* Common Routes  */}
+      {/* Vendor Routes */}
+      <Route
+        path="/vendor"
+        element={
+          <AuthWraper>
+            <VendorPageLayout />
+          </AuthWraper>
+        }
+      >
         <Route
-          path="/login"
+          index
           element={
-            <RestrictFromFormComponent>
-              <Login />
-            </RestrictFromFormComponent>
+            // <ProtectedRoute userType={userType} allowedUserType="vendor">
+            <VendorDashboard />
+            // </ProtectedRoute>
+          }
+        />
+      </Route>
+
+      {/* Admin Routes */}
+      <Route
+        path="/admin"
+        element={
+          <AuthWraper>
+            <AdminPageLayout />
+          </AuthWraper>
+        }
+      >
+        <Route
+          index
+          element={
+            // <ProtectedRoute userType={userType} allowedUserType="admin">
+            <AdminDashboard />
+            // </ProtectedRoute>
           }
         />
         <Route
-          path="/register"
+          path="category"
           element={
-            <RestrictFromFormComponent>
-              <Register />
-            </RestrictFromFormComponent>
+            // <ProtectedRoute userType={userType} allowedUserType="admin">
+            <AdminCategory />
+            // </ProtectedRoute>
           }
         />
+        <Route
+          path="vendors"
+          element={
+            // <ProtectedRoute userType={userType} allowedUserType="admin">
+            <VendorList />
+            // </ProtectedRoute>
+          }
+        />
+        <Route
+          path="vendors/requests"
+          element={
+            // <ProtectedRoute userType={userType} allowedUserType="admin">
+            <VendorRequests />
+            // </ProtectedRoute>
+          }
+        />
+      </Route>
 
-        {/* Page not found route */}
-        <Route path="*" element={<PageNotFound />} />
-      </Routes>
-    </>
+      {/* Common Routes */}
+      <Route
+        path="/login"
+        element={
+          // <RestrictFromFormComponent>
+          <Login />
+          // </RestrictFromFormComponent>
+        }
+      />
+      <Route
+        path="/register"
+        element={
+          // <RestrictFromFormComponent>
+          <Register />
+          // </RestrictFromFormComponent>
+        }
+      />
+
+      {/* Page not found route */}
+      <Route path="*" element={<PageNotFound />} />
+    </Routes>
   );
 }
 
-const ProtectedRoute = ({ children, allowedUserType, userType }) => {
-  const token = getDataFromLocalStorage("accessToken");
+// const ProtectedRoute = ({ children, allowedUserType, userType }) => {
+//   const token = getDataFromLocalStorage("accessToken");
+//   const navigate = useNavigate();
+
+//   if (token === null) {
+//     navigate("/login");
+//     return null;
+//   }
+
+//   if (allowedUserType === userType) {
+//     return children;
+//   }
+
+//   return null;
+// };
+
+// const RestrictFromFormComponent = ({ children }) => {
+//   const token = getDataFromLocalStorage("accessToken");
+//   const role = getDataFromLocalStorage("role");
+//   const navigate = useNavigate();
+
+//   if (!token) {
+//     return children;
+//   }
+
+//   if (role === "admin") {
+//     navigate("/admin");
+//   } else if (role === "vendor") {
+//     navigate("/vendor");
+//   } else if (role === "user") {
+//     navigate("/");
+//   }
+
+//   return null;
+// };
+const AuthWraper = ({ children }) => {
+  const token = localStorage.getItem("accessToken");
+
   if (token === null) {
     return <Navigate to={"/login"} />;
   }
-  if (allowedUserType === userType) {
-    return children;
-  }
-};
-
-const RestrictFromFormComponent = ({ children }) => {
-  const token = getDataFromLocalStorage("accessToken");
-  const role = getDataFromLocalStorage("role");
-
-  if (!token) {
-    return children;
-  } else if (token && role === "admin") {
-    return <Navigate to={"/admin"} />;
-  } else if (token && role === "vendor") {
-    return <Navigate to={"/vendor"} />;
-  } else if (token && role === "user") {
-    return <Navigate to={"/"} />;
-  }
+  return token && children;
 };
