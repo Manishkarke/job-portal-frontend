@@ -10,12 +10,13 @@ import { loginValidator } from "../../../utils/ErrorHandler";
 // Tailwind Class Name
 const tailwindClass = {
   box: "max-w-lg mx-auto border border-solid rounded-lg shadow grid gap-5 align-center p-6 lg:px-8",
-  inputField: `block w-full p-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`,
+  inputField: `block p-1.5 w-full h-9 border-solid text-gray-900 shadow-sm sm:text-sm sm:leading-6 rounded-md ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring focus:ring-indigo-600`,
+  input: "h-full px-2",
   label: "block text-sm font-medium leading-6 text-gray-900",
   links: `font-semibold capitalize ml-1 leading-6 text-orange-600 hover:text-orange-500`,
   title:
     "text-center text-2xl font-bold leading-9 tracking-tight text-gray-900",
-  error: "text-red-600 capitalize",
+  error: "text-red-600 capitalize text-sm",
 };
 
 export default function Login() {
@@ -28,6 +29,7 @@ export default function Login() {
     email: "",
     password: "",
   });
+  const [showPassword, setShowPassword] = React.useState(false);
 
   const [errors, setErrors] = React.useState({
     email: "",
@@ -85,7 +87,7 @@ export default function Login() {
               <label htmlFor="email" className={tailwindClass.label}>
                 Email address
               </label>
-              <div className="mt-2">
+              <div className={`${tailwindClass.inputField}`}>
                 <input
                   id="email"
                   name="email"
@@ -93,7 +95,7 @@ export default function Login() {
                   value={formData.email}
                   onChange={inputChangeHandler}
                   autoComplete="email"
-                  className={`${tailwindClass.inputField}`}
+                  className={`${tailwindClass.input} w-full`}
                 />
               </div>
               {errors.email && (
@@ -112,16 +114,26 @@ export default function Login() {
                   </a>
                 </div>
               </div>
-              <div className="mt-2">
+              <div className={`${tailwindClass.inputField} relative flex`}>
                 <input
                   id="password"
                   name="password"
-                  type="password"
+                  type={`${showPassword ? "text" : "password"}`}
                   value={formData.password}
                   onChange={inputChangeHandler}
                   autoComplete="current-password"
-                  className={tailwindClass.inputField}
+                  className={`${tailwindClass.input}`}
                 />
+                <span
+                  className="h-full border-l border-solid w-10 grid text-orange-600 hover:text-orange-500 place-content-center absolute top-0 right-0"
+                  onClick={() => {
+                    setShowPassword(!showPassword);
+                  }}
+                >
+                  <i
+                    class={`fa-solid fa-${showPassword ? "eye-slash" : "eye"}`}
+                  ></i>
+                </span>
               </div>
               {errors.password && (
                 <span className={tailwindClass.error}>{errors.password}</span>

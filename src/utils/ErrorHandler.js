@@ -1,7 +1,5 @@
 const emailRegex =
   /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-const passwordRegex =
-  /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
 // Registration form validator
 export const registrationValidator = (
@@ -49,16 +47,31 @@ export const registrationValidator = (
         password: "Password must be at least 8 character long",
       };
     });
-  }
-  // else if (!password.match(passwordRegex)) {
-  //   setErrors((prevErrors) => {
-  //     return {
-  //       ...prevErrors,
-  //       password: "Password must have atleast one spacial character",
-  //     };
-  //   });
-  // }
-  else {
+  } else if (!password.match(/[A-Z]/)) {
+    // Check if password contains a uppercase letter
+    setErrors((prevErrors) => {
+      return {
+        ...prevErrors,
+        password: "Password must have atleast one uppercase letter",
+      };
+    });
+  } else if (!password.match(/[a-z]/)) {
+    // above condition check if password contains a lowercase letter
+    setErrors((prevErrors) => {
+      return {
+        ...prevErrors,
+        password: "Password must have atleast one lowercase letter",
+      };
+    });
+  } else if (!password.match(/[0-9]/)) {
+    // above condition check if password contains any numbers
+    setErrors((prevErrors) => {
+      return {
+        ...prevErrors,
+        password: "Password must have atleast one digit",
+      };
+    });
+  } else {
     setErrors((prevErrors) => {
       return { ...prevErrors, password: "" };
     });
@@ -80,8 +93,6 @@ export const registrationValidator = (
     });
   }
 };
-
-// TODO: Changess starts here
 
 // log in form validator
 export const loginValidator = ({ email, password }, setErrors) => {
@@ -153,4 +164,25 @@ export const vendorRegistrationValidator = (
       return { ...prevErrors, address: "" };
     });
   }
+};
+
+export const categoryFormValidation = ({ category, image }, setErrors) => {
+  if (!category.trim())
+    setErrors((prevErrors) => {
+      return { ...prevErrors, category: "Category is required" };
+    });
+  else
+    setErrors((prevErrors) => {
+      return { ...prevErrors, category: "" };
+    });
+
+  // Checking if there is a image or not
+  if (!image)
+    setErrors((prevErrors) => {
+      return { ...prevErrors, image: "Image is required" };
+    });
+  else
+    setErrors((prevErrors) => {
+      return { ...prevErrors, image: "" };
+    });
 };

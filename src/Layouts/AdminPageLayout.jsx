@@ -17,7 +17,9 @@ export const AdminPageLayout = ({ children }) => {
           <p className="text-center text-white bg-gray-500 py-3 font-semibold">
             Job portal admin dashboard
           </p>
+
           <Outlet />
+          
         </section>
       </main>
     </>

@@ -9,6 +9,7 @@ import {
   getDataFromLocalStorage,
   removeDataFromLocalStorage,
 } from "../../../../utils/localStorage";
+import { toast } from "react-toastify";
 
 const authSlice = createSlice({
   name: "auth",
@@ -25,6 +26,8 @@ const authSlice = createSlice({
       state.token = null;
       removeDataFromLocalStorage("accessToken");
       removeDataFromLocalStorage("role");
+
+      toast.success("Logged out successfully");
     },
   },
   extraReducers: (builder) => {

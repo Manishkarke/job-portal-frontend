@@ -10,17 +10,17 @@ import { userRegister } from "../../../Redux/Feature/user/Auth/authAction";
 // Tailwind Class Name
 const tailwindClass = {
   box: "grid gap-5 border border-solid rounded-lg shadow flex min-h-full flex-col justify-center align-center px-6 py-6 lg:px-8",
-  inputField:
-    "block w-full p-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6",
+  inputField: `block p-1.5 w-full h-9 border-solid text-gray-900 shadow-sm sm:text-sm sm:leading-6 rounded-md ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring focus:ring-indigo-600`,
+  input: "h-full px-2",
   label: "block text-sm font-medium leading-6 capitalize text-gray-900",
   links:
     "font-semibold capitalize ml-1 leading-6 text-orange-600 hover:text-orange-500",
   title:
     " text-center text-2xl font-bold leading-9 tracking-tight text-gray-900",
-  error: "text-red-600 capitalize text-sm",
+  error: "text-red-600 text-sm",
+  showPasswordIcon:
+    "h-full border-l border-solid w-10 grid text-orange-600 hover:text-orange-500 place-content-center absolute top-0 right-0",
 };
-
-// TODO: CHanges starts here
 
 function Register() {
   // hooks functions
@@ -34,6 +34,10 @@ function Register() {
     password: "",
     confirmPassword: "",
   });
+  const [showPassword, setShowPassword] = React.useState({
+    password: false,
+    confirmPassword: false,
+  });
 
   // For FOrm validation
   const [isFormSubmitted, setFormSubmitted] = React.useState(false); // to check if submit button is clicked
@@ -45,6 +49,22 @@ function Register() {
     const { name, value } = e.target;
     setFormData((prevFormData) => {
       return { ...prevFormData, [name]: value };
+    });
+  };
+
+  // Show Passwords
+  const showPassordNormal = () => {
+    setShowPassword((prevShowPassword) => {
+      return { ...prevShowPassword, password: !prevShowPassword.password };
+    });
+  };
+
+  const showConfirmPassword = () => {
+    setShowPassword((prevShowPassword) => {
+      return {
+        ...prevShowPassword,
+        confirmPassword: !prevShowPassword.confirmPassword,
+      };
     });
   };
 
@@ -98,7 +118,7 @@ function Register() {
               <label htmlFor="fullName" className={tailwindClass.label}>
                 full name
               </label>
-              <div className="mt-2">
+              <div className={`${tailwindClass.inputField}`}>
                 <input
                   id="fullName"
                   name="name"
@@ -106,7 +126,7 @@ function Register() {
                   value={formData.name}
                   onChange={inputFieldChangeHandler}
                   autoComplete="fullName"
-                  className={tailwindClass.inputField}
+                  className={tailwindClass.input}
                 />
               </div>
               {errors.name && (
@@ -117,7 +137,7 @@ function Register() {
               <label htmlFor="email" className={tailwindClass.label}>
                 Email address
               </label>
-              <div className="mt-2">
+              <div className={`${tailwindClass.inputField}`}>
                 <input
                   id="email"
                   name="email"
@@ -125,7 +145,7 @@ function Register() {
                   value={formData.email}
                   onChange={inputFieldChangeHandler}
                   autoComplete="email"
-                  className={tailwindClass.inputField}
+                  className={tailwindClass.input}
                 />
               </div>
               {errors.email && (
@@ -139,16 +159,26 @@ function Register() {
                   Password
                 </label>
               </div>
-              <div className="mt-2">
+              <div className={`${tailwindClass.inputField} flex relative`}>
                 <input
                   id="password"
                   name="password"
-                  type="password"
+                  type={`${showPassword.password ? "text" : "password"}`}
                   value={formData.password}
                   onChange={inputFieldChangeHandler}
                   autoComplete="current-password"
-                  className={tailwindClass.inputField}
+                  className={tailwindClass.input}
                 />
+                <span
+                  className={tailwindClass.showPasswordIcon}
+                  onClick={showPassordNormal}
+                >
+                  <i
+                    class={`fa-solid fa-${
+                      showPassword.password ? "eye-slash" : "eye"
+                    }`}
+                  ></i>
+                </span>
               </div>
               {errors.password && (
                 <span className={tailwindClass.error}>{errors.password}</span>
@@ -163,16 +193,27 @@ function Register() {
                   confirm password
                 </label>
               </div>
-              <div className="mt-2">
+              <div className={`${tailwindClass.inputField} flex relative`}>
                 <input
                   id="confirmPassword"
                   name="confirmPassword"
-                  type="password"
+                  type={`${showPassword.confirmPassword ? "text" : "password"}`}
                   value={formData.confirmPassword}
                   onChange={inputFieldChangeHandler}
                   autoComplete="current-password"
-                  className={tailwindClass.inputField}
+                  className={tailwindClass.input}
                 />
+
+                <span
+                  className={tailwindClass.showPasswordIcon}
+                  onClick={showConfirmPassword}
+                >
+                  <i
+                    class={`fa-solid fa-${
+                      showPassword.confirmPassword ? "eye-slash" : "eye"
+                    }`}
+                  ></i>
+                </span>
               </div>
               {errors.confirmPassword && (
                 <span className={tailwindClass.error}>

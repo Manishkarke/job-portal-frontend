@@ -4,38 +4,35 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { logout } from "../../../Redux/Feature/user/Auth/authSlice";
 import { Button } from "../../Button";
 
-export const DropdownMenu = () => {
+export const VendorDropdownMenu = ({ user }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   // DropdownMenu tailwind classes
   const tailwindClass = {
     container:
-      "absolute top-100 right-0 bg-blue-50 py-4 px-3 w-40 capitalize rounded-lg",
-    links: `px-4 py-2 flex justify-center w-full rounded-sm transition-all border-b border-solid hover:bg-orange-200`,
+      "absolute top-100 right-0 bg-blue-50 py-4 px-3 w-40 capitalize rounded-lg text-center",
   };
 
   const handleLogout = () => {
     dispatch(logout());
     navigate("/");
-    toast.success("Logged Out Successfully");
-    localStorage.removeItem("user");
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("role");
   };
 
   return (
     <ul className={tailwindClass.container}>
-      <li>
-        <NavLink to="/user/profile" className={tailwindClass.links}>
+      <li className="mb-2 font-medium">
+        <h3>
+          hello
+          <span className="flex justify-center text-indigo-950 font-extrabold text-lg">
+            {user.name}
+          </span>
+        </h3>
+        {/* <NavLink to="/vendor/profile" className={tailwindClass.links}>
           profile
-        </NavLink>
+        </NavLink> */}
       </li>
-      <li>
-        <NavLink className={tailwindClass.links} to="/user/appliedJobs">
-          applied jobs
-        </NavLink>
-      </li>
+
       <li>
         <Button type="button" onClick={handleLogout} customization="w-full">
           log out

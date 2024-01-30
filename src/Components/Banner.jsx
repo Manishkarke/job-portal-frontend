@@ -3,7 +3,7 @@ import { Button } from "./Button";
 
 export const Banner = ({ moto, buttonText, buttonLink, sectionId }) => {
   return (
-    <div className="py-8 grid place-content-center gap-4 shadow-lg h-full capitalize">
+    <div className="py-8 grid place-content-center gap-4  h-full capitalize">
       <h1 className="text-7xl font-serif font-bold text-center ">
         Welcome to job-<span className="text-orange-400">portal</span>
         <p className="text-2xl lowercase font-sans">{moto}</p>

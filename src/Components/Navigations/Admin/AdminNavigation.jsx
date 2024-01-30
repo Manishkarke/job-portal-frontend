@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { logout } from "../../../Redux/Feature/user/Auth/authSlice";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import { Button } from "../../Button";
 logout;
 
 const tailwindClass = {
@@ -21,7 +22,6 @@ export const AdminNavigation = ({ className }) => {
   const logoutHandler = () => {
     dispatch(logout());
     navigate("/login");
-    toast.success("Logged Out Successfully");
   };
 
   return (
@@ -34,6 +34,7 @@ export const AdminNavigation = ({ className }) => {
       >
         <li className={`${tailwindClass.fullWidth} mt-auto`}>
           <NavLink
+            end
             className={`${tailwindClass.flex} ${tailwindClass.navItem}`}
             to="/admin"
           >
@@ -42,6 +43,7 @@ export const AdminNavigation = ({ className }) => {
         </li>
         <li className={tailwindClass.fullWidth}>
           <NavLink
+            end
             className={`${tailwindClass.flex} ${tailwindClass.navItem}`}
             to="/admin/category/"
           >
@@ -57,13 +59,9 @@ export const AdminNavigation = ({ className }) => {
           </NavLink>
         </li>
         <li className={`${tailwindClass.fullWidth} mt-auto`}>
-          <button
-            type="button"
-            className={`${tailwindClass.button} ${tailwindClass.fullWidth}`}
-            onClick={logoutHandler}
-          >
+          <Button type="button" customization="w-full" onClick={logoutHandler}>
             log out
-          </button>
+          </Button>
         </li>
       </ul>
     </nav>

@@ -5,7 +5,6 @@ import {
   setDataInLocalStorage,
 } from "../../../../utils/localStorage";
 
-// TODO: If changes happens then starts from here
 
 export const userRegister = createAsyncThunk(
   "auth/register",
@@ -94,8 +93,6 @@ export const requestToBeVendor = createAsyncThunk(
           Authorization: "Bearer " + getDataFromLocalStorage("accessToken"),
         },
       });
-
-      console.log(" I am running as a vendor");
 
       if (response.data.status === 200) {
         toast.success(response.data.message);

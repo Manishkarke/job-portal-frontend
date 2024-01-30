@@ -7,6 +7,7 @@ export const Button = ({
   children,
   navigateTo,
   sectionId,
+  onClick,
   customization,
 }) => {
   const navigate = useNavigate();
@@ -27,6 +28,16 @@ export const Button = ({
   if (type === "submit")
     return (
       <button type={type} className={`${customization} ${buttonClass}`}>
+        {children}
+      </button>
+    );
+  if (type === "button" && onClick)
+    return (
+      <button
+        type={type}
+        className={`${buttonClass} ${customization}`}
+        onClick={() => onClick()}
+      >
         {children}
       </button>
     );

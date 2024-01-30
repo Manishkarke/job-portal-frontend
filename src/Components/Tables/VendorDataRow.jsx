@@ -23,7 +23,7 @@ export const VendorDataRow = ({
   const dispatch = useDispatch();
   useEffect(() => {}, []);
   const deleteVendor = () => {
-    dispatch(deleteAVendor({ id, toast, checkVendor }));
+    dispatch(deleteAVendor({ id, toast, setRefresh }));
     setRefresh(true);
   };
   return (

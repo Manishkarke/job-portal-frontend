@@ -4,12 +4,23 @@
 body {
   height: 100vh;
 }
+input {
+  outline: 0;
+}
 
 #content::-webkit-scrollbar {
   display: none;
 }
 
+a.active {
+  color: #ea580c;
+}
+
 .user-content-container {
+  margin-top: 74px;
+  height: calc(100vh - 74px);
+}
+.vendor-content-container {
   margin-top: 74px;
   height: calc(100vh - 74px);
 }

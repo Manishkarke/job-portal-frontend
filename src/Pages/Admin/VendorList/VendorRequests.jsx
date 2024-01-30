@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllVendor } from "../../../Redux/Feature/admin/adminAction";
 import { VendorsTableHeader } from "../../../Components/Tables/VendorsTableHeader";
 import { VendorRequestsRow } from "../../../Components/Tables/VendorRequestsRow";
+import { Button } from "../../../Components/Button";
 
 // Tailwind Classes
 const tailwindCLass = {
@@ -38,21 +39,19 @@ export const VendorRequests = () => {
   const vendorRequests = vendors?.filter(
     (vendor) => vendor.status === "pending"
   );
-  console.log("vendor Requests", vendorRequests);
   return (
     <>
       <section className={`${tailwindCLass.section}`}>
-        <div className="flex justify-between px-10 py-2 shadow-lg bg-white z-10 rounded-lg sticky top-0 ">
+        <div className="flex justify-between items-center px-10 py-2 shadow-lg bg-white z-10 rounded-lg sticky top-0 ">
           <h2 className={tailwindCLass.pageHeader}>vendor requests</h2>
-          <button
+          <Button
             type="button"
-            className={tailwindCLass.button}
             onClick={() => {
               navigate("/admin/vendors/");
             }}
           >
             back
-          </button>
+          </Button>
         </div>
         {vendorRequests ? (
           <table className="w-full capitalize relative overflow-x-scroll">
