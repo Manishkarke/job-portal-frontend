@@ -22,6 +22,7 @@ import { ApplicantLists } from "../Pages/Vendor/Applicants/ApplicantLists";
 import { ApplicantDetail } from "../Pages/Vendor/Applicants/ApplicantDetail";
 import { JobDetailPage } from "../Pages/Vendor/Jobs/JobDetailPage";
 import { VendorDashboard } from "../Pages/Vendor/Profile/VendorDashboard";
+import { VerificationForm } from "../Pages/Common/Verification/VerificationForm";
 
 export default function Router() {
   const userType = getDataFromLocalStorage("role");
@@ -96,6 +97,14 @@ export default function Router() {
         element={
           <RestrictFromFormComponent>
             <Register />
+          </RestrictFromFormComponent>
+        }
+      />
+      <Route
+        path="/verify"
+        element={
+          <RestrictFromFormComponent>
+            <VerificationForm />
           </RestrictFromFormComponent>
         }
       />

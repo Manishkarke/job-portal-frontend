@@ -4,6 +4,7 @@ import {
   requestToBeVendor,
   userLogin,
   userRegister,
+  verifyEmail,
 } from "./authAction";
 import {
   getDataFromLocalStorage,
@@ -42,6 +43,24 @@ const authSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload.message;
     });
+
+    builder.addCase(verifyEmail.pending, (state) => {
+      console.log("verifyEmail pending");
+      state.isLoading = true;
+    });
+
+    builder.addCase(verifyEmail.fulfilled, (state, action) => {
+      console.log("verifyEmail fullfilled");
+      state.isLoading = false;
+      state.error = null;
+    });
+
+    builder.addCase(verifyEmail.rejected, (state, action) => {
+      state.isLoading = false;
+      console.log("verifyEmail rejected");
+      state.error = action.payload;
+    });
+
     builder.addCase(userLogin.pending, (state) => {
       state.isLoading = true;
       state.error = null;
