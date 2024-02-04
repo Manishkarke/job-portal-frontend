@@ -2,13 +2,25 @@ import React, { useState } from "react";
 import { RegisterPageLayout } from "../../../Layouts/RegisterPageLayout";
 import { Button } from "../../../Components/Button";
 import { setDataInLocalStorage } from "../../../utils/localStorage";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { sendOtp } from "../../../Redux/Feature/user/Auth/authAction";
 
 export const ConfirmEmail = () => {
   const [email, setEmail] = useState("");
+  let error = useSelector((state) => state.auth.error);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
     setDataInLocalStorage("email", email);
+    if (!email.trim()) {
+      toast.error("this field is required.");
+    } else {
+      dispatch(sendOtp({ email, toast, navigate }));
+    }
   };
   return (
     <RegisterPageLayout>
@@ -35,7 +47,9 @@ export const ConfirmEmail = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            {/* {error && <span>{error}</span>} */}
+            {error && (
+              <span className="text-sm text-red-500 capitalize">{error}</span>
+            )}
           </div>
           <Button type="submit" customization="w-full py-3 px-6 text-lg">
             confirm email

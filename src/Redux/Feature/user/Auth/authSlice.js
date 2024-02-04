@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   fetchProfile,
   requestToBeVendor,
+  sendOtp,
   userLogin,
   userRegister,
   verifyEmail,
@@ -78,6 +79,18 @@ const authSlice = createSlice({
       state.token = null;
       state.user = null;
       state.error = action.payload.message;
+    });
+
+    builder.addCase(sendOtp.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(sendOtp.fulfilled, (state, action) => {
+      state.isLoading = false;
+    });
+    builder.addCase(sendOtp.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error.message;
+      console.log(state.error);
     });
     builder.addCase(fetchProfile.pending, (state) => {
       state.isLoading = true;
