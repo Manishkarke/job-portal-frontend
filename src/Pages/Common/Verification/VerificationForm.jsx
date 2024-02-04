@@ -5,18 +5,18 @@ import { Button } from "../../../Components/Button";
 import { useNavigate } from "react-router-dom";
 import { verifyEmail } from "../../../Redux/Feature/user/Auth/authAction";
 import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export const VerificationForm = () => {
   const email = getDataFromLocalStorage("email");
+  const [otp, setOtp] = React.useState("");
   const error = useSelector((state) => state.auth.error);
   const navigate = useNavigate();
-  const [otp, setOtp] = React.useState("");
+  const dispatch = useDispatch();
 
   const handleOtpSubmit = (e) => {
     e.preventDefault();
-    verifyEmail({ otp, email, navigate, toast });
-    console.log("verify")
+    dispatch(verifyEmail({ otp, email, navigate, toast }));
   };
 
   return (

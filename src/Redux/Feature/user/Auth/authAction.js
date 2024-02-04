@@ -5,7 +5,6 @@ import {
   removeDataFromLocalStorage,
   setDataInLocalStorage,
 } from "../../../../utils/localStorage";
-import { data } from "autoprefixer";
 
 export const userRegister = createAsyncThunk(
   "auth/register",
@@ -90,7 +89,9 @@ export const verifyEmail = createAsyncThunk(
   "auth/verify",
   async ({ otp, email, navigate, toast }) => {
     try {
+      console.log("The registration is successfully verified");
       const response = await api.post("/user/verifyEmail", { otp, email });
+      console.log("The registration is successfully verified");
 
       if (response.data.status === 200) {
         removeDataFromLocalStorage("email");

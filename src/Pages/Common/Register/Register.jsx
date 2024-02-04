@@ -2,10 +2,10 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { RegisterPageLayout } from "../../../Layouts/RegisterPageLayout";
 import { Button } from "../../../Components/Button";
-import { registrationValidator } from "../../../utils/ErrorHandler";
+import { RegisterPageLayout } from "../../../Layouts/RegisterPageLayout";
 import { userRegister } from "../../../Redux/Feature/user/Auth/authAction";
+import { registrationValidator } from "../../../utils/ErrorHandler";
 
 // Tailwind Class Name
 const tailwindClass = {
@@ -174,7 +174,7 @@ function Register() {
                   onClick={showPassordNormal}
                 >
                   <i
-                    class={`fa-solid fa-${
+                    className={`fa-solid fa-${
                       showPassword.password ? "eye-slash" : "eye"
                     }`}
                   ></i>
@@ -209,7 +209,7 @@ function Register() {
                   onClick={showConfirmPassword}
                 >
                   <i
-                    class={`fa-solid fa-${
+                    className={`fa-solid fa-${
                       showPassword.confirmPassword ? "eye-slash" : "eye"
                     }`}
                   ></i>

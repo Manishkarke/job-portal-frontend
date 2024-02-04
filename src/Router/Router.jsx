@@ -23,6 +23,7 @@ import { ApplicantDetail } from "../Pages/Vendor/Applicants/ApplicantDetail";
 import { JobDetailPage } from "../Pages/Vendor/Jobs/JobDetailPage";
 import { VendorDashboard } from "../Pages/Vendor/Profile/VendorDashboard";
 import { VerificationForm } from "../Pages/Common/Verification/VerificationForm";
+import { ConfirmEmail } from "../Pages/Common/Password reset/ConfirmEmail";
 
 export default function Router() {
   const userType = getDataFromLocalStorage("role");
@@ -105,6 +106,14 @@ export default function Router() {
         element={
           <RestrictFromFormComponent>
             <VerificationForm />
+          </RestrictFromFormComponent>
+        }
+      />
+      <Route
+        path="/confirm-email"
+        element={
+          <RestrictFromFormComponent>
+            <ConfirmEmail />
           </RestrictFromFormComponent>
         }
       />

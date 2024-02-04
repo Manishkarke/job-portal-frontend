@@ -27,6 +27,7 @@ const authSlice = createSlice({
       state.token = null;
       removeDataFromLocalStorage("accessToken");
       removeDataFromLocalStorage("role");
+      removeDataFromLocalStorage("user");
 
       toast.success("Logged out successfully");
     },
@@ -49,7 +50,7 @@ const authSlice = createSlice({
       state.isLoading = true;
     });
 
-    builder.addCase(verifyEmail.fulfilled, (state, action) => {
+    builder.addCase(verifyEmail.fulfilled, (state) => {
       console.log("verifyEmail fullfilled");
       state.isLoading = false;
       state.error = null;

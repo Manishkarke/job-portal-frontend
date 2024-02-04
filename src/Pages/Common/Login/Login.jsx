@@ -109,9 +109,9 @@ export default function Login() {
                   Password
                 </label>
                 <div className="text-sm">
-                  <a href="#" className={tailwindClass.links}>
+                  <Link to="/confirm-email" className={tailwindClass.links}>
                     Forgot password?
-                  </a>
+                  </Link>
                 </div>
               </div>
               <div className={`${tailwindClass.inputField} relative flex`}>
@@ -131,7 +131,7 @@ export default function Login() {
                   }}
                 >
                   <i
-                    class={`fa-solid fa-${showPassword ? "eye-slash" : "eye"}`}
+                    className={`fa-solid fa-${showPassword ? "eye-slash" : "eye"}`}
                   ></i>
                 </span>
               </div>
