@@ -3,7 +3,10 @@ import { Button } from "../Button";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import { verifyEmail } from "../../Redux/Feature/user/Auth/authAction";
+import {
+  verifyEmail,
+  verifyOtp,
+} from "../../Redux/Feature/user/Auth/authAction";
 import { getDataFromLocalStorage } from "../../utils/localStorage";
 import { RegisterPageLayout } from "../../Layouts/RegisterPageLayout";
 
@@ -18,8 +21,8 @@ export const OtpVerificationForm = ({ verificationFor }) => {
     e.preventDefault();
     if (verificationFor === "registration")
       dispatch(verifyEmail({ otp, email, navigate, toast }));
-    // else if (verificationFor === "resetpassword")
-    // dispatch()
+    else if (verificationFor === "resetpassword")
+      dispatch(verifyOtp({ email, otp, toast, navigate }));
   };
 
   return (
@@ -40,7 +43,9 @@ export const OtpVerificationForm = ({ verificationFor }) => {
         >
           <div>
             <input
-              className="border-2 text-2xl tracking-[.55em] rounded-lg max-w-40 text-center py-2 border-solid "
+              className={`border-2 ${
+                error ? "border-red-600" : ""
+              } text-2xl tracking-[.55em] rounded-lg max-w-40 text-center py-2 border-solid`}
               type="text"
               name="otp"
               id="otp"
@@ -48,7 +53,11 @@ export const OtpVerificationForm = ({ verificationFor }) => {
               onChange={(e) => setOtp(e.target.value)}
               maxLength={4}
             />
-            {error && <span>{error}</span>}
+            {error && (
+              <span className=" mt-2 flex text-sm text-red-600 font-medium">
+                {error}
+              </span>
+            )}
           </div>
           <Button type="submit" customization="w-full py-3 px-6 text-lg">
             verify

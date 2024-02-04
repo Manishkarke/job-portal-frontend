@@ -6,6 +6,7 @@ import {
   userLogin,
   userRegister,
   verifyEmail,
+  verifyOtp,
 } from "./authAction";
 import {
   getDataFromLocalStorage,
@@ -86,11 +87,23 @@ const authSlice = createSlice({
     });
     builder.addCase(sendOtp.fulfilled, (state, action) => {
       state.isLoading = false;
+      state.error = null;
     });
     builder.addCase(sendOtp.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.error.message;
-      console.log(state.error);
+    });
+
+    builder.addCase(verifyOtp.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(verifyOtp.fulfilled, (state) => {
+      state.isLoading = false;
+      state.error = null;
+    });
+    builder.addCase(verifyOtp.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error.message;
     });
     builder.addCase(fetchProfile.pending, (state) => {
       state.isLoading = true;

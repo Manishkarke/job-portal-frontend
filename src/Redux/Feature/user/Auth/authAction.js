@@ -105,6 +105,24 @@ export const sendOtp = createAsyncThunk(
   }
 );
 
+export const verifyOtp = createAsyncThunk(
+  "auth/verify-otp",
+  async ({ email, otp, toast, navigate }) => {
+    try {
+      const response = await api.post("/user/verify-otp", { email, otp });
+
+      if (response.data.status === 200) {
+        toast.success(response.data.message);
+        navigate("/reset-password");
+      } else if (response.data.status !== 200) {
+        throw new Error(response.data.message);
+      }
+    } catch (err) {
+      throw err;
+    }
+  }
+);
+
 export const verifyEmail = createAsyncThunk(
   "auth/verify",
   async ({ otp, email, navigate, toast }) => {

@@ -1,7 +1,10 @@
-import React from 'react'
+import React from "react";
+import { OtpVerificationForm } from "../../../Components/otpVerifyForm/OtpVerificationForm";
 
 export const OtpVerification = () => {
   return (
-    <div>OtpVerification</div>
-  )
-}
+    <>
+      <OtpVerificationForm verificationFor="resetpassword" />
+    </>
+  );
+};
