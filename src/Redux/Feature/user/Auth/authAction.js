@@ -113,7 +113,32 @@ export const verifyOtp = createAsyncThunk(
 
       if (response.data.status === 200) {
         toast.success(response.data.message);
+        setDataInLocalStorage("otp", otp);
         navigate("/reset-password");
+      } else if (response.data.status !== 200) {
+        throw new Error(response.data.message);
+      }
+    } catch (err) {
+      throw err;
+    }
+  }
+);
+
+export const resetPassword = createAsyncThunk(
+  "auth/resetPassword",
+  async ({ email, otp, password, navigate, toast }) => {
+    try {
+      const response = await api.post("/user/reset-password", {
+        otp,
+        email,
+        password,
+      });
+
+      if (response.data.status === 200) {
+        toast.success(response.data.message);
+        removeDataFromLocalStorage("email");
+        removeDataFromLocalStorage("otp");
+        navigate("/login");
       } else if (response.data.status !== 200) {
         throw new Error(response.data.message);
       }

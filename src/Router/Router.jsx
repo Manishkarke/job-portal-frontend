@@ -25,6 +25,7 @@ import { VendorDashboard } from "../Pages/Vendor/Profile/VendorDashboard";
 import { VerificationForm } from "../Pages/Common/Verification/VerificationForm";
 import { ConfirmEmail } from "../Pages/Common/Password reset/ConfirmEmail";
 import { OtpVerification } from "../Pages/Common/Password reset/OtpVerification";
+import { PasswordReset } from "../Pages/Common/Password reset/PasswordReset";
 
 export default function Router() {
   const userType = getDataFromLocalStorage("role");
@@ -126,6 +127,12 @@ export default function Router() {
           </RestrictFromFormComponent>
         }
       />
+
+      <Route path="/reset-password" element={
+        <RestrictFromFormComponent>
+          <PasswordReset />
+        </RestrictFromFormComponent>
+      } />
 
       {/* Page not found route */}
       <Route path="*" element={<PageNotFound />} />

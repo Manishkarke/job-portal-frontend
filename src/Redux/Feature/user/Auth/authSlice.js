@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   fetchProfile,
   requestToBeVendor,
+  resetPassword,
   sendOtp,
   userLogin,
   userRegister,
@@ -102,6 +103,19 @@ const authSlice = createSlice({
       state.error = null;
     });
     builder.addCase(verifyOtp.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error.message;
+    });
+
+    builder.addCase(resetPassword.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(resetPassword.fulfilled, (state) => {
+      state.isLoading = false;
+      state.error = null;
+    });
+    builder.addCase(resetPassword.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.error.message;
     });
