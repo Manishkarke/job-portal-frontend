@@ -186,3 +186,46 @@ export const categoryFormValidation = ({ category, image }, setErrors) => {
       return { ...prevErrors, image: "" };
     });
 };
+
+export const resetPasswordValidation = (
+  { password, confirmPassword },
+  setErrors
+) => {
+  if (!password.trim()) {
+    setErrors((prevErrors) => {
+      return { ...prevErrors, password: "Password is required." };
+    });
+  } else if (!password.match(/[A-Z]/)) {
+    setErrors((prevErrors) => {
+      return {
+        ...prevErrors,
+        password: "Atleast one uppercase letter is required.",
+      };
+    });
+  } else if (!password.match(/[a-z]/)) {
+    setErrors((prevErrors) => {
+      return {
+        ...prevErrors,
+        password: "Atleast one lowercase letter is required.",
+      };
+    });
+  } else if (!password.match(/[0-9]/)) {
+    setErrors((prevErrors) => {
+      return { ...prevErrors, password: "Atleast one number is required." };
+    });
+  } else {
+    setErrors((prevErrors) => {
+      return { ...prevErrors, password: "" };
+    });
+  }
+
+  if (password !== confirmPassword) {
+    setErrors((prevErrors) => {
+      return { ...prevErrors, confirmPassword: "Passwords did not match." };
+    });
+  } else {
+    setErrors((prevErrors) => {
+      return { ...prevErrors, confirmPassword: "" };
+    });
+  }
+};

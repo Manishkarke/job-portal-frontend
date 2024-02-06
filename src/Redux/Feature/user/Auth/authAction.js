@@ -131,7 +131,7 @@ export const resetPassword = createAsyncThunk(
       const response = await api.post("/user/reset-password", {
         otp,
         email,
-        password,
+        password,   
       });
 
       if (response.data.status === 200) {
