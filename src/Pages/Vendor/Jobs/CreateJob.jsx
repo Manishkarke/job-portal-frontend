@@ -129,7 +129,6 @@ export const CreateJob = () => {
             className={`${tailwindClass.inputField}`}
             onChange={inputFieldChangeHandler}
           >
-            
           </select>
         </div>
       </form>
