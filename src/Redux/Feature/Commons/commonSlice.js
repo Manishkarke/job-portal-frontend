@@ -1,21 +1,36 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getCategories } from "./commonAction";
+import { fetchProfile, getCategories } from "./commonAction";
 
 const commonSlice = createSlice({
-  initialState: { isLoading: false, categories: [], error: null },
+  name: "common",
+  initialState: { isLoading: false, user: {}, categories: [], error: null },
   reducers: {},
   extraReducers: (builder) => {
+    // Reducer for fetching profile
+    builder.addCase(fetchProfile.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(fetchProfile.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.user = action.payload;
+      state.error = null;
+    });
+    builder.addCase(fetchProfile.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error;
+    });
+    // Reducer for getting categories
     builder.addCase(getCategories.pending, (state) => {
       state.isLoading = true;
     });
-
     builder.addCase(getCategories.fulfilled, (state, action) => {
       state.isLoading = false;
       state.categories = action.payload;
-      console.log(action.payload);
+      state.error = null;
     });
-    builder.addCase(getCategories.rejected, (state) => {
+    builder.addCase(getCategories.rejected, (state, action) => {
       state.isLoading = false;
+      state.error = action.error;
     });
   },
 });

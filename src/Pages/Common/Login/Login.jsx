@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Button } from "../../../Components/Button";
 import { RegisterPageLayout } from "../../../Layouts/RegisterPageLayout";
-import { userLogin } from "../../../Redux/Feature/user/Auth/authAction";
+import { userLogin } from "../../../Redux/Feature/auth/authAction";
 import { loginValidator } from "../../../utils/ErrorHandler";
 
 // Tailwind Class Name

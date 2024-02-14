@@ -4,7 +4,6 @@ import {
   createCategory,
   deleteAVendor,
   deleteCategory,
-  getAllCategory,
   getAllVendor,
   rejectVendorRequest,
 } from "./adminAction";
@@ -95,22 +94,6 @@ const adminSlice = createSlice({
     builder.addCase(createCategory.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.payload?.error;
-    });
-
-    builder.addCase(getAllCategory.pending, (state) => {
-      state.isLoading = true;
-    });
-
-    builder.addCase(getAllCategory.fulfilled, (state, action) => {
-      state.isLoading = false;
-      state.categories = action.payload.categories;
-      state.error = null;
-    });
-
-    builder.addCase(getAllCategory.rejected, (state, action) => {
-      state.isLoading = false;
-      console.log("Something went wrong");
-      // state.error = null;
     });
 
     builder.addCase(deleteCategory.pending, (state) => {

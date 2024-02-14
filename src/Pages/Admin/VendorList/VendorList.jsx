@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { VendorDataRow } from "../../../Components/Tables/VendorDataRow";
 import { VendorsTableHeader } from "../../../Components/Tables/VendorsTableHeader";
-import { AdminPageLayout } from "../../../Layouts/AdminPageLayout";
 import { getAllVendor } from "../../../Redux/Feature/admin/adminAction";
 import { Button } from "../../../Components/Button";
 

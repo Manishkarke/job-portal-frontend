@@ -3,12 +3,12 @@ import { Button } from "../Button";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  verifyEmail,
-  verifyOtp,
-} from "../../Redux/Feature/user/Auth/authAction";
 import { getDataFromLocalStorage } from "../../utils/localStorage";
 import { RegisterPageLayout } from "../../Layouts/RegisterPageLayout";
+import {
+  verifyOtp,
+  verifyRegistration,
+} from "../../Redux/Feature/auth/authAction";
 
 export const OtpVerificationForm = ({ verificationFor }) => {
   const email = getDataFromLocalStorage("email");
@@ -20,7 +20,7 @@ export const OtpVerificationForm = ({ verificationFor }) => {
   const handleOtpSubmit = (e) => {
     e.preventDefault();
     if (verificationFor === "registration")
-      dispatch(verifyEmail({ otp, email, navigate, toast }));
+      dispatch(verifyRegistration({ otp, email, navigate, toast }));
     else if (verificationFor === "resetpassword")
       dispatch(verifyOtp({ email, otp, toast, navigate }));
   };

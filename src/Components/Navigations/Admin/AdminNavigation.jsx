@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { logout } from "../../../Redux/Feature/user/Auth/authSlice";
+import { logout } from "../../../Redux/Feature/auth/authSlice";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { Button } from "../../Button";

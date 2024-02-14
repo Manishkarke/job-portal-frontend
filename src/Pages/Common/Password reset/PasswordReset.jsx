@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { resetPasswordValidation } from "../../../utils/ErrorHandler";
 import { useNavigate } from "react-router-dom";
 import { getDataFromLocalStorage } from "../../../utils/localStorage";
-import { resetPassword } from "../../../Redux/Feature/user/Auth/authAction";
+import { resetPassword } from "../../../Redux/Feature/auth/authAction";
 import { toast } from "react-toastify";
 
 const tailwindClass = {

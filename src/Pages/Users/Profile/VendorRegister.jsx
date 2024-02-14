@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { requestToBeVendor } from "../../../Redux/Feature/user/Auth/authAction";
+import { requestToBeVendor } from "../../../Redux/Feature/user/userAction";
 import { toast } from "react-toastify";
 import { getDataFromLocalStorage } from "../../../utils/localStorage";
 import { Button } from "../../../Components/Button";

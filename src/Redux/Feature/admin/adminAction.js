@@ -105,23 +105,7 @@ export const createCategory = createAsyncThunk(
     }
   }
 );
-export const getAllCategory = createAsyncThunk(
-  "admin/getCategories",
-  async () => {
-    try {
-      const response = await api.get("/admin/category/", {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      });
-      if (response.data.status === 200) {
-        return response.data;
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  }
-);
+
 export const deleteCategory = createAsyncThunk(
   "admin/deleteCategory",
   async ({ id, DeleteCategory, toast }) => {

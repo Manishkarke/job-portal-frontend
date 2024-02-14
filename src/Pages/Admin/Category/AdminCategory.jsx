@@ -3,9 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { AdminCategoryCard } from "../../../Components/Cards/AdminCategoryCard";
 import { FormModal } from "../../../Components/Modal/FormModal";
 import { ModalLayout } from "../../../Components/Modal/ModalLayout";
-import { AdminPageLayout } from "../../../Layouts/AdminPageLayout";
-import { getAllCategory } from "../../../Redux/Feature/admin/adminAction";
 import { Button } from "../../../Components/Button";
+import { getCategories } from "../../../Redux/Feature/Commons/commonAction";
 
 const tailwindCLass = {
   section: "flex flex-col relative",
@@ -21,11 +20,11 @@ export const AdminCategory = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getAllCategory());
+    dispatch(getCategories());
     setUploading(false);
     setDeleting(false);
   }, [dispatch, uploading, showModal, deleting]);
-  const categories = useSelector((state) => state.admin.categories);
+  const categories = useSelector((state) => state.common.categories);
 
   return (
     <>

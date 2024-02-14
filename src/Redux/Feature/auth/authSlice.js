@@ -1,102 +1,90 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getDataFromLocalStorage } from "../../../utils/localStorage";
 import {
-  fetchProfile,
-  requestToBeVendor,
   resetPassword,
   sendOtp,
   userLogin,
   userRegister,
-  verifyEmail,
   verifyOtp,
+  verifyRegistration,
 } from "./authAction";
-import {
-  getDataFromLocalStorage,
-  removeDataFromLocalStorage,
-} from "../../../../utils/localStorage";
-import { toast } from "react-toastify";
 
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    isLoading: true,
-    user: [],
-    token: getDataFromLocalStorage("accessToken") || null,
+    isLoading: false,
     error: null,
   },
   reducers: {
-    logout: (state) => {
-      state.isLoading = false;
-      state.user = null;
-      state.token = null;
+    logout: () => {
       removeDataFromLocalStorage("accessToken");
       removeDataFromLocalStorage("role");
       removeDataFromLocalStorage("user");
-
       toast.success("Logged out successfully");
     },
   },
   extraReducers: (builder) => {
+    // Reducer for registration
     builder.addCase(userRegister.pending, (state) => {
       state.isLoading = true;
+      state.user = null;
+      state.error = null;
     });
-    builder.addCase(userRegister.fulfilled, (state) => {
+    builder.addCase(userRegister.fulfilled, (state, action) => {
       state.isLoading = false;
     });
-
     builder.addCase(userRegister.rejected, (state, action) => {
       state.isLoading = false;
-      state.error = action.payload.message;
+      state.error = action.error;
     });
 
-    builder.addCase(verifyEmail.pending, (state) => {
-      console.log("verifyEmail pending");
+    // Reducer for verifying registration
+    builder.addCase(verifyRegistration.pending, (state) => {
       state.isLoading = true;
+      state.error = null;
     });
-
-    builder.addCase(verifyEmail.fulfilled, (state) => {
-      console.log("verifyEmail fullfilled");
+    builder.addCase(verifyRegistration.fulfilled, (state) => {
       state.isLoading = false;
       state.error = null;
     });
-
-    builder.addCase(verifyEmail.rejected, (state, action) => {
+    builder.addCase(verifyRegistration.rejected, (state, action) => {
       state.isLoading = false;
-      console.log("verifyEmail rejected");
-      state.error = action.payload;
+      state.error = action.error;
     });
 
+    // Reducer for sign in
     builder.addCase(userLogin.pending, (state) => {
       state.isLoading = true;
       state.error = null;
-      state.token = null;
     });
     builder.addCase(userLogin.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.user = action.payload.emailExists;
-      state.token = action.payload.token;
       state.error = null;
+      console.log("action.payload: ", action.payload);
     });
     builder.addCase(userLogin.rejected, (state, action) => {
       state.isLoading = false;
-      state.token = null;
-      state.user = null;
-      state.error = action.payload.message;
+      state.error = action.error;
     });
 
+    // Reducer for sending otp
     builder.addCase(sendOtp.pending, (state) => {
       state.isLoading = true;
-    });
-    builder.addCase(sendOtp.fulfilled, (state, action) => {
-      state.isLoading = false;
       state.error = null;
+    });
+    builder.addCase(sendOtp.fulfilled, (state) => {
+      state.isLoading = false;
+      state.error = false;
     });
     builder.addCase(sendOtp.rejected, (state, action) => {
       state.isLoading = false;
-      state.error = action.error.message;
+      state.error = action.error;
     });
 
+    // Reducer for verifying otp
     builder.addCase(verifyOtp.pending, (state) => {
       state.isLoading = true;
+      state.error = null;
     });
     builder.addCase(verifyOtp.fulfilled, (state) => {
       state.isLoading = false;
@@ -104,9 +92,10 @@ const authSlice = createSlice({
     });
     builder.addCase(verifyOtp.rejected, (state, action) => {
       state.isLoading = false;
-      state.error = action.error.message;
+      state.error = action.error;
     });
 
+    // Reducer for reseting password
     builder.addCase(resetPassword.pending, (state) => {
       state.isLoading = true;
       state.error = null;
@@ -117,30 +106,7 @@ const authSlice = createSlice({
     });
     builder.addCase(resetPassword.rejected, (state, action) => {
       state.isLoading = false;
-      state.error = action.error.message;
-    });
-    builder.addCase(fetchProfile.pending, (state) => {
-      state.isLoading = true;
-      state.error = null;
-    });
-    builder.addCase(fetchProfile.fulfilled, (state, action) => {
-      state.isLoading = false;
-      state.user = action.payload.user;
-      state.error = null;
-    });
-    builder.addCase(fetchProfile.rejected, (state, action) => {
-      state.isLoading = false;
-      state.user = null;
-    });
-    // Reducer for register as vendor
-    builder.addCase(requestToBeVendor.pending, (state) => {
-      state.isLoading = true;
-    });
-    builder.addCase(requestToBeVendor.fulfilled, (state, action) => {
-      state.isLoading = false;
-    });
-    builder.addCase(requestToBeVendor.rejected, (state) => {
-      state.isLoading = false;
+      state.error = action.error;
     });
   },
 });

@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
-import { logout } from "../../../Redux/Feature/user/Auth/authSlice";
+import { logout } from "../../../Redux/Feature/auth/authSlice";
 import { Button } from "../../Button";
 
 export const VendorDropdownMenu = ({ user }) => {

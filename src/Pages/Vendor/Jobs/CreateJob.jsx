@@ -1,5 +1,7 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Button } from "../../../Components/Button";
+import { getCategories } from "../../../Redux/Feature/Commons/commonAction";
 
 // Tailwind Class Name
 const tailwindClass = {
@@ -23,9 +25,10 @@ export const CreateJob = () => {
     deadline: "",
     categoryId: "",
   });
+  const categories = useSelector((state) => state.categories);
+  const dispatch = useDispatch();
 
   const today = new Date().toISOString().split("T")[0];
-  console.log(today);
 
   // for error handling
   const [errors, setErrors] = React.useState();
@@ -38,8 +41,11 @@ export const CreateJob = () => {
     console.log(
       "name: " + [event.target.name] + " value: " + event.target.value
     );
-    console.log(typeof formData.deadline);
   };
+
+  React.useEffect(() => {
+    dispatch(getCategories());
+  }, [categories, dispatch]);
   return (
     <section>
       <div className="flex justify-between items-center p-4">
@@ -129,6 +135,11 @@ export const CreateJob = () => {
             className={`${tailwindClass.inputField}`}
             onChange={inputFieldChangeHandler}
           >
+            {categories?.map((category) => (
+              <option key={category._id} value={category._id}>
+                {category.category}
+              </option>
+            ))}
           </select>
         </div>
       </form>

@@ -5,7 +5,7 @@ import { setDataInLocalStorage } from "../../../utils/localStorage";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { sendOtp } from "../../../Redux/Feature/user/Auth/authAction";
+import { sendOtp } from "../../../Redux/Feature/auth/authAction";
 
 export const ConfirmEmail = () => {
   const [email, setEmail] = useState("");

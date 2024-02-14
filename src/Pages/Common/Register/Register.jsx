@@ -1,10 +1,10 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Button } from "../../../Components/Button";
 import { RegisterPageLayout } from "../../../Layouts/RegisterPageLayout";
-import { userRegister } from "../../../Redux/Feature/user/Auth/authAction";
+import { userRegister } from "../../../Redux/Feature/auth/authAction";
 import { registrationValidator } from "../../../utils/ErrorHandler";
 
 // Tailwind Class Name
@@ -71,7 +71,6 @@ function Register() {
   // Form submission handler function
   const formSubmitHandler = (e) => {
     e.preventDefault();
-
     registrationValidator(formData, setErrors); //Form Validator function
     setFormSubmitted(true);
   };
@@ -129,8 +128,8 @@ function Register() {
                   className={tailwindClass.input}
                 />
               </div>
-              {errors.name && (
-                <span className={tailwindClass.error}>{errors.name}</span>
+              {errors?.name && (
+                <span className={tailwindClass.error}>{errors?.name}</span>
               )}
             </div>
             <div>
@@ -148,8 +147,8 @@ function Register() {
                   className={tailwindClass.input}
                 />
               </div>
-              {errors.email && (
-                <span className={tailwindClass.error}>{errors.email}</span>
+              {errors?.email && (
+                <span className={tailwindClass.error}>{errors?.email}</span>
               )}
             </div>
 
@@ -180,8 +179,8 @@ function Register() {
                   ></i>
                 </span>
               </div>
-              {errors.password && (
-                <span className={tailwindClass.error}>{errors.password}</span>
+              {errors?.password && (
+                <span className={tailwindClass.error}>{errors?.password}</span>
               )}
             </div>
             <div>
@@ -215,9 +214,9 @@ function Register() {
                   ></i>
                 </span>
               </div>
-              {errors.confirmPassword && (
+              {errors?.confirmPassword && (
                 <span className={tailwindClass.error}>
-                  {errors.confirmPassword}
+                  {errors?.confirmPassword}
                 </span>
               )}
             </div>
