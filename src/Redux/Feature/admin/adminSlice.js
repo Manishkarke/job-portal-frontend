@@ -18,97 +18,84 @@ const adminSlice = createSlice({
   },
   reducers: {},
   extraReducers: (builder) => {
-    // Vendor reducers
+    // reducer for getting all vendors
     builder.addCase(getAllVendor.pending, (state) => {
       state.isLoading = true;
+      state.error = null;
     });
-
     builder.addCase(getAllVendor.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.vendors = action.payload.vendors;
-      state.error = null;
+      state.vendors = action.payload;
     });
-
-    builder.addCase(getAllVendor.rejected, (state) => {});
-
-    builder.addCase(deleteAVendor.pending, (state) => {
-      state.isLoading = true;
-    });
-
-    builder.addCase(deleteAVendor.fulfilled, (state, action) => {
+    builder.addCase(getAllVendor.rejected, (state, action) => {
       state.isLoading = false;
-      if (action.payload.status === 200) {
-        state.vendors = state.vendors.filter(
-          (vendor) => vendor.id !== action.payload.id
-        );
-      }
-      state.error = null;
+      state.error = action.error;
     });
 
-    builder.addCase(deleteAVendor.rejected, (state, action) => {
-      state.isLoading = false;
-      state.error = true;
-    });
-
+    // Reducer for rejecting a vendor request
     builder.addCase(rejectVendorRequest.pending, (state) => {
       state.isLoading = true;
+      state.error = null;
     });
-
     builder.addCase(rejectVendorRequest.fulfilled, (state, action) => {
       state.isLoading = false;
-      if (action.payload.status === 200) {
-        state.vendors = state.vendors.filter(
-          (vendor) => vendor.userId !== action.payload.userId
-        );
-      }
     });
-
     builder.addCase(rejectVendorRequest.rejected, (state) => {
       state.isLoading = false;
-      state.error = false;
+      state.error = action.error;
     });
 
+    // Reducer for accepting a vendor request
     builder.addCase(changeToVendor.pending, (state) => {
       state.isLoading = true;
+      state.error = null;
     });
-
     builder.addCase(changeToVendor.fulfilled, (state, action) => {
       state.isLoading = false;
     });
-
-    builder.addCase(changeToVendor.rejected, (state) => {
+    builder.addCase(changeToVendor.rejected, (state, action) => {
       state.isLoading = false;
-      state.error = true;
+      state.error = action.error;
     });
 
-    // Category Reducerss
-    builder.addCase(createCategory.pending, (state) => {
+    // Reducer for deleting a vendor
+    builder.addCase(deleteAVendor.pending, (state) => {
       state.isLoading = true;
+      state.error = null;
     });
-
-    builder.addCase(createCategory.fulfilled, (state, action) => {
+    builder.addCase(deleteAVendor.fulfilled, (state, action) => {
       state.isLoading = false;
       state.error = null;
     });
-
-    builder.addCase(createCategory.rejected, (state, action) => {
+    builder.addCase(deleteAVendor.rejected, (state, action) => {
       state.isLoading = false;
-      state.error = action.payload?.error;
+      state.error = action.error;
     });
 
+    // Reducer for creating new category
+    builder.addCase(createCategory.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(createCategory.fulfilled, (state, action) => {
+      state.isLoading = false;
+    });
+    builder.addCase(createCategory.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error;
+    });
+
+    // Reducer for deleting category
     builder.addCase(deleteCategory.pending, (state) => {
       state.isLoading = true;
+      state.error = null;
     });
     builder.addCase(deleteCategory.fulfilled, (state, action) => {
       state.isLoading = false;
-      if (action.payload.status === 200)
-        state.categories.filter(
-          (category) => category.id !== action.payload.id
-        );
-      state.error = null;
     });
-    builder.addCase(deleteCategory.rejected, (state) => {
+    builder.addCase(deleteCategory.rejected, (state, action) => {
       state.isLoading = false;
+      state.error = action.error;
     });
   },
 });

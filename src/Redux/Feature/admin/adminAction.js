@@ -3,7 +3,7 @@ import { api, apiImage } from "../../../utils/axios";
 import { getDataFromLocalStorage } from "../../../utils/localStorage";
 const token = getDataFromLocalStorage("accessToken");
 
-// Vendor Async Thunks
+// get all vendors reducer function
 export const getAllVendor = createAsyncThunk("admin/getAllVendor", async () => {
   try {
     const response = await api.get("/admin/vendors/", {
@@ -12,14 +12,19 @@ export const getAllVendor = createAsyncThunk("admin/getAllVendor", async () => {
       },
     });
 
-    if (response.data.status === 200) {
+    if (response.data.status === "success") {
       // setCheckVendors(true);
-      return response.data;
+      return response.data.data;
+    } else if (response.data.status === "error") {
+      throw response.data.message;
     }
   } catch (err) {
     console.log(err);
+    throw err;
   }
 });
+
+// reject vendor request reducer function
 export const rejectVendorRequest = createAsyncThunk(
   "admin/rejectVendorRequest",
   async ({ userId, toast }) => {
@@ -30,34 +35,45 @@ export const rejectVendorRequest = createAsyncThunk(
         { headers: { Authorization: "Bearer " + token } }
       );
 
-      if (response.data.status === 200) {
+      if (response.data.status === "success") {
         toast.success(response.data.message);
-        return { status: response.data.status, userId: userId };
+      } else if (response.data.status === "error") {
+        toast.error(response.data.message);
+        throw response.data.message;
       }
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 );
+
+// accept vendor request reducer function
 export const changeToVendor = createAsyncThunk(
   "admin/acceptVendorRequest",
   async ({ userId, toast }) => {
-    const response = await api.post(
-      "/admin/changeToVendor",
-      { userId },
-      {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      }
-    );
+    try {
+      const response = await api.post(
+        "/admin/changeToVendor",
+        { userId },
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
 
-    if (response.data.status === 200) {
-      toast.success(response.data.message);
-      return { status: response.data.status, userId: userId };
+      if (response.data.status === "success") {
+        toast.success(response.data.message);
+      } else if (response.data.status === "error") {
+        throw response.data.message;
+      }
+    } catch (error) {
+      throw error;
     }
   }
 );
+
+// delete a vendor reducer function
 export const deleteAVendor = createAsyncThunk(
   "admin/deleteVendor",
   async ({ id, toast, checkVendor }) => {
@@ -68,21 +84,21 @@ export const deleteAVendor = createAsyncThunk(
         },
       });
 
-      if (response.data.status === 200) {
+      if (response.data.status === "success") {
         toast.success(response.data.message);
         checkVendor(true);
-        return { status: response.data.status, id: id };
-      }
-      if (response.data.status === 404) {
+      } else if (response.data.status === "error") {
         toast.error(response.data.message);
+        throw response.data.message;
       }
     } catch (err) {
       console.log(err);
+      throw err;
     }
   }
 );
 
-// Category Async THunks
+// create new category reducer function
 export const createCategory = createAsyncThunk(
   "admin/createCategory",
   async ({ formData, toast, uploading, closeModal }) => {
@@ -93,19 +109,22 @@ export const createCategory = createAsyncThunk(
         },
       });
 
-      if (response.data.status === 200) {
+      if (response.data.status === "success") {
         toast.success(response.data.message);
         uploading(true);
         closeModal(false);
-      } else if (response.data.status === 400) {
+      } else if (response.data.status === "error") {
         toast.error(response.data.message);
+        throw response.data.message;
       }
     } catch (err) {
       console.log(err);
+      throw err;
     }
   }
 );
 
+// delete a category reducer function
 export const deleteCategory = createAsyncThunk(
   "admin/deleteCategory",
   async ({ id, DeleteCategory, toast }) => {
@@ -116,16 +135,16 @@ export const deleteCategory = createAsyncThunk(
         },
       });
 
-      if (response.data.status === 200) {
+      if (response.data.status === "success") {
         toast.success(response.data.message);
         DeleteCategory(true);
-        return { status: response.data.status, id };
-      }
-      if (response.data.status === 400) {
+      } else if (response.data.status === "error") {
         toast.error(response.data.message);
+        throw response.data.message;
       }
     } catch (err) {
       console.log(err);
+      throw err;
     }
   }
 );

@@ -1,8 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { api } from "../../../utils/axios";
 import { getDataFromLocalStorage } from "../../../utils/localStorage";
+import { toast } from "react-toastify";
 const accessToken = getDataFromLocalStorage("acccessToken");
 
+// create job Redux function
 export const postJob = createAsyncThunk(
   "vendor/createJob",
   async ({ formData, toast, navigate }) => {
@@ -13,16 +15,23 @@ export const postJob = createAsyncThunk(
         },
       });
 
-      if (response.data.status === 200) {
+      if (response.data.status === "success") {
         toast.success(response.data.message);
         navigate("/vendor");
+      } else if (response.data.status === "error") {
+        if (typeof response.data.message === "object") {
+          throw response.data.message;
+        } else {
+          toast.error(response.data.message);
+        }
       }
-    } catch (e) {
-      console.error(e);
+    } catch (error) {
+      throw error;
     }
   }
 );
 
+// view my jobs redux function
 export const myJobs = createAsyncThunk("vendor/jobs", async () => {
   try {
     const response = await api.get("/vendor/jobs", {
@@ -31,14 +40,19 @@ export const myJobs = createAsyncThunk("vendor/jobs", async () => {
       },
     });
 
-    if (response.data.status === 200) {
-      return response.data.jobs;
+    if (response.data.status === "success") {
+      return response.data.data;
+    } else if (response.data.status === "error") {
+      toast.error(response.data.message);
+      throw response.data.message;
     }
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    console.error(error);
+    throw error;
   }
 });
 
+// View single job redux function
 export const getSingleJob = createAsyncThunk("vendor/singlejob", async (id) => {
   try {
     const response = await api.get(`/vendor/jobs/${id}`, {
@@ -47,15 +61,20 @@ export const getSingleJob = createAsyncThunk("vendor/singlejob", async (id) => {
       },
     });
 
-    if (response.data.status === 200) {
+    if (response.data.status === "success") {
       return response.data.data;
+    } else if (response.data.status === "error") {
+      toast.error(response.data.message);
+      throw response.data.message;
     }
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    console.error(error);
+    throw error;
   }
 });
 
-export const deleteSingleJob = createAsyncThunk(
+// Delete a posted job redux function
+export const deleteJob = createAsyncThunk(
   "vendor/deleteSingleJob",
   async (id, toast, navigate) => {
     try {
@@ -63,9 +82,12 @@ export const deleteSingleJob = createAsyncThunk(
         headers: { Authorization: "Bearer " + accessToken },
       });
 
-      if (response.data.status === 200) {
+      if (response.data.status === "success") {
         toast.success(response.data.message);
-        navigate("/vendor")
+        navigate("/vendor");
+      } else if (response.data.status === "error") {
+        toast.error(response.data.message);
+        navigate("/vendor");
       }
     } catch (e) {
       console.error(e);
@@ -73,4 +95,27 @@ export const deleteSingleJob = createAsyncThunk(
   }
 );
 
-// TODO: Handle api of all routes
+// get all the applicants
+export const getApplicants = createAsyncThunk(
+  "vendor/getApplicants",
+  async () => {
+    try {
+      const response = await api.get("/vendor/applicants", {
+        headers: {
+          Authorization: "Bearer " + accessToken,
+        },
+      });
+
+      if (response.data.status === "success") {
+        return response.data.data;
+      } else if (response.data.status === "error") {
+        toast.error(response.data.message);
+        throw response.data.message;
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
+// TODO: Might add one more async thunk function here
