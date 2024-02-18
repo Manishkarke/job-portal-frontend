@@ -121,6 +121,7 @@ export const loginValidator = ({ email, password }, setErrors) => {
   }
 };
 
+// Vendor Registration Data Validator
 export const vendorRegistrationValidator = (
   { designation, service, contact, address },
   setErrors
@@ -166,6 +167,7 @@ export const vendorRegistrationValidator = (
   }
 };
 
+// Category Form data validator
 export const categoryFormValidation = ({ category, image }, setErrors) => {
   if (!category.trim())
     setErrors((prevErrors) => {
@@ -187,6 +189,7 @@ export const categoryFormValidation = ({ category, image }, setErrors) => {
     });
 };
 
+// Reset Password's data validator
 export const resetPasswordValidation = (
   { password, confirmPassword },
   setErrors
@@ -226,6 +229,82 @@ export const resetPasswordValidation = (
   } else {
     setErrors((prevErrors) => {
       return { ...prevErrors, confirmPassword: "" };
+    });
+  }
+};
+
+// Create job data validator
+export const createJobValidation = (
+  { title, description, location, salary, deadline, categoryId },
+  setErrors
+) => {
+  // Title validation
+  if (!title || !title.trim()) {
+    setErrors((prevErrors) => {
+      return { ...prevErrors, title: "Title is required" };
+    });
+  } else if (!title.match(/^[a-zA-Z\s]+$/)) {
+    setErrors((prevErrors) => {
+      return { ...prevErrors, title: "Title is invalid" };
+    });
+  } else {
+    setErrors((prevErrors) => {
+      return { ...prevErrors, title: "" };
+    });
+  }
+
+  // Description validation
+  if (!description || !description.trim()) {
+    setErrors((prevErrors) => {
+      return { ...prevErrors, description: "Description is required" };
+    });
+  } else {
+    setErrors((prevErrors) => {
+      return { ...prevErrors, description: "" };
+    });
+  }
+
+  // Location validation
+  if (!location || !location.trim()) {
+    setErrors((prevErrors) => {
+      return { ...prevErrors, location: "Location is required" };
+    });
+  } else {
+    setErrors((prevErrors) => {
+      return { ...prevErrors, location: "" };
+    });
+  }
+
+  // salary validation
+  if (!salary) {
+    setErrors((prevErrors) => {
+      return { ...prevErrors, salary: "Salary is required" };
+    });
+  } else {
+    setErrors((prevErrors) => {
+      return { ...prevErrors, salary: "" };
+    });
+  }
+
+  // deadline validation
+  if (!deadline) {
+    setErrors((prevErrors) => {
+      return { ...prevErrors, deadline: "Deadline is required" };
+    });
+  } else {
+    setErrors((prevErrors) => {
+      return { ...prevErrors, deadline: "" };
+    });
+  }
+
+  // Category id
+  if (!categoryId) {
+    setErrors((prevErrors) => {
+      return { ...prevErrors, category: "Category is required" };
+    });
+  } else {
+    setErrors((prevErrors) => {
+      return { ...prevErrors, category: "" };
     });
   }
 };

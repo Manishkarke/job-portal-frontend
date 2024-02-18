@@ -1,14 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { api, apiImage } from "../../../utils/axios";
 import { getDataFromLocalStorage } from "../../../utils/localStorage";
-const token = getDataFromLocalStorage("accessToken");
 
 // get all vendors reducer function
 export const getAllVendor = createAsyncThunk("admin/getAllVendor", async () => {
   try {
     const response = await api.get("/admin/vendors/", {
       headers: {
-        Authorization: "Bearer " + token,
+        Authorization: "Bearer " + getDataFromLocalStorage("accessToken"),
       },
     });
 
@@ -32,7 +31,7 @@ export const rejectVendorRequest = createAsyncThunk(
       const response = await api.post(
         "/admin/rejectVendor",
         { userId },
-        { headers: { Authorization: "Bearer " + token } }
+        { headers: { Authorization: "Bearer " + getDataFromLocalStorage("accessToken") } }
       );
 
       if (response.data.status === "success") {
@@ -57,7 +56,7 @@ export const changeToVendor = createAsyncThunk(
         { userId },
         {
           headers: {
-            Authorization: "Bearer " + token,
+            Authorization: "Bearer " + getDataFromLocalStorage("accessToken"),
           },
         }
       );
@@ -80,7 +79,7 @@ export const deleteAVendor = createAsyncThunk(
     try {
       const response = await api.delete(`/admin/vendors/${id}`, {
         headers: {
-          Authorization: "Bearer " + token,
+          Authorization: "Bearer " + getDataFromLocalStorage("accessToken"),
         },
       });
 
@@ -105,7 +104,7 @@ export const createCategory = createAsyncThunk(
     try {
       const response = await apiImage.post("/admin/category", formData, {
         headers: {
-          Authorization: "Bearer " + token,
+          Authorization: "Bearer " + getDataFromLocalStorage("accessToken"),
         },
       });
 
@@ -131,7 +130,7 @@ export const deleteCategory = createAsyncThunk(
     try {
       const response = await api.delete(`/admin/category/${id}`, {
         headers: {
-          Authorization: "Bearer " + token,
+          Authorization: "Bearer " + getDataFromLocalStorage("accessToken"),
         },
       });
 

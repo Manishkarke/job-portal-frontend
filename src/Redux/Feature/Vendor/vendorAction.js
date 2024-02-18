@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { api } from "../../../utils/axios";
 import { getDataFromLocalStorage } from "../../../utils/localStorage";
 import { toast } from "react-toastify";
-const accessToken = getDataFromLocalStorage("acccessToken");
+const accessToken = getDataFromLocalStorage("accessToken");
 
 // create job Redux function
 export const postJob = createAsyncThunk(
@@ -17,7 +17,7 @@ export const postJob = createAsyncThunk(
 
       if (response.data.status === "success") {
         toast.success(response.data.message);
-        navigate("/vendor");
+        navigate("/vendor/jobs");
       } else if (response.data.status === "error") {
         if (typeof response.data.message === "object") {
           throw response.data.message;
