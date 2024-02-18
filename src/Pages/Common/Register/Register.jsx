@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { Button } from "../../../Components/Button";
 import { RegisterPageLayout } from "../../../Layouts/RegisterPageLayout";
 import { userRegister } from "../../../Redux/Feature/auth/authAction";
-import { registrationValidator } from "../../../utils/ErrorHandler";
+import { registrationValidator } from "../../../utils/dataValidator";
 
 // Tailwind Class Name
 const tailwindClass = {

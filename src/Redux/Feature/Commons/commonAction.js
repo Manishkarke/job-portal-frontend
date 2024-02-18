@@ -17,9 +17,7 @@ export const fetchProfile = createAsyncThunk("common/get-profile", async () => {
     if (response.data.status === "success") {
       setDataInLocalStorage("user", response.data.data);
       return response.data.data;
-    }
-
-    if (response.data.status === "error") {
+    } else if (response.data.status === "error") {
       throw response.data.message;
     }
   } catch (err) {
@@ -32,13 +30,15 @@ export const getCategories = createAsyncThunk(
   "common/getCategories",
   async () => {
     try {
-      const response = await api.get("/common/category");
+      const response = await api.get("/common/category", {
+        headers: {
+          Authorization: "Bearer " + getDataFromLocalStorage("accessToken"),
+        },
+      });
 
       if (response.data.status === "success") {
-        console.log(response.data.data);
         return response.data.data;
-      }
-      if (response.data.status === "error") {
+      } else if (response.data.status === "error") {
         throw response.data.message;
       }
     } catch (err) {

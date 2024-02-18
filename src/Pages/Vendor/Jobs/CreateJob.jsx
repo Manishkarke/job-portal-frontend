@@ -25,7 +25,7 @@ export const CreateJob = () => {
     deadline: "",
     categoryId: "",
   });
-  const categories = useSelector((state) => state.categories);
+  const categories = useSelector((state) => state.common.categories);
   const dispatch = useDispatch();
 
   const today = new Date().toISOString().split("T")[0];
@@ -37,10 +37,6 @@ export const CreateJob = () => {
     setFormData((prevFormData) => {
       return { ...prevFormData, [event.target.name]: event.target.value };
     });
-
-    console.log(
-      "name: " + [event.target.name] + " value: " + event.target.value
-    );
   };
 
   React.useEffect(() => {

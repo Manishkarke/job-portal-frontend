@@ -82,6 +82,7 @@ const adminSlice = createSlice({
     });
     builder.addCase(createCategory.rejected, (state, action) => {
       state.isLoading = false;
+      console.error(action.error);
       state.error = action.error;
     });
 

@@ -81,9 +81,10 @@ export const userLogin = createAsyncThunk(
         password,
       });
 
+      console.log("Response data:");
       if (response.data.status === "success") {
-        setDataInLocalStorage("accessToken", response.data.token);
-        setDataInLocalStorage("role", response.data.role);
+        setDataInLocalStorage("accessToken", response.data.data.accessToken);
+        setDataInLocalStorage("role", response.data.data.user.role);
         setDataInLocalStorage("user", JSON.stringify(response.data.data.user));
         toast.success(response.data.message);
       }

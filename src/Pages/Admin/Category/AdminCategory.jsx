@@ -23,6 +23,7 @@ export const AdminCategory = () => {
     dispatch(getCategories());
     setUploading(false);
     setDeleting(false);
+    console.log("Categories: ", categories);
   }, [dispatch, uploading, showModal, deleting]);
   const categories = useSelector((state) => state.common.categories);
 
@@ -40,11 +41,11 @@ export const AdminCategory = () => {
             add category
           </Button>
         </div>
-        {categories.length === 0 ? (
+        {categories?.length === 0 ? (
           <h2>There is no any category in the db</h2>
         ) : (
           <ul className={tailwindCLass.cardList}>
-            {categories.map(({ _id, image, category }) => {
+            {categories?.map(({ _id, image, category }) => {
               return (
                 <li className="w-fit" key={_id}>
                   <AdminCategoryCard

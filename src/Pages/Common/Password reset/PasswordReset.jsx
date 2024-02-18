@@ -2,7 +2,7 @@ import React from "react";
 import { RegisterPageLayout } from "../../../Layouts/RegisterPageLayout";
 import { Button } from "../../../Components/Button";
 import { useDispatch, useSelector } from "react-redux";
-import { resetPasswordValidation } from "../../../utils/ErrorHandler";
+import { resetPasswordValidation } from "../../../utils/dataValidator";
 import { useNavigate } from "react-router-dom";
 import { getDataFromLocalStorage } from "../../../utils/localStorage";
 import { resetPassword } from "../../../Redux/Feature/auth/authAction";

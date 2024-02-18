@@ -1,5 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getDataFromLocalStorage } from "../../../utils/localStorage";
+import {
+  getDataFromLocalStorage,
+  removeDataFromLocalStorage,
+} from "../../../utils/localStorage";
 import {
   resetPassword,
   sendOtp,
@@ -8,6 +11,7 @@ import {
   verifyOtp,
   verifyRegistration,
 } from "./authAction";
+import { toast } from "react-toastify";
 
 const authSlice = createSlice({
   name: "auth",

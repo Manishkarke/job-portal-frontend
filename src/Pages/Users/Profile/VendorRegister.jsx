@@ -5,7 +5,7 @@ import { requestToBeVendor } from "../../../Redux/Feature/user/userAction";
 import { toast } from "react-toastify";
 import { getDataFromLocalStorage } from "../../../utils/localStorage";
 import { Button } from "../../../Components/Button";
-import { vendorRegistrationValidator } from "../../../utils/ErrorHandler";
+import { vendorRegistrationValidator } from "../../../utils/dataValidator";
 
 const tailwindClass = {
   formBox:

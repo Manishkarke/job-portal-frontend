@@ -1,10 +1,10 @@
 import React, { useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { createCategory } from "../../Redux/Feature/admin/adminAction";
 import imgUpload from "../../assets/images/imgUpload.png";
 import { Button } from "../Button";
-import { categoryFormValidation } from "../../utils/ErrorHandler";
+import { categoryFormValidation } from "../../utils/dataValidator";
 const tailwindClass = {
   box: "max-w-lg mx-auto flex flex-col justify-center align-center px-6 py-12 lg:px-8",
   inputField:
@@ -31,6 +31,7 @@ export const FormModal = ({ closeModal, uploading }) => {
     category: "",
     image: "",
   });
+  const error = useSelector((state) => state.admin.error);
   let isFormValid = true;
   const [isFormSubmitted, setFormSubmitted] = useState(false);
 
@@ -89,12 +90,13 @@ export const FormModal = ({ closeModal, uploading }) => {
         break;
       }
     }
-
     if (isFormValid && isFormSubmitted)
       dispatch(createCategory({ formData, toast, uploading, closeModal }));
 
     if (isFormSubmitted) setFormSubmitted(false);
-  }, [isFormSubmitted, isFormValid]);
+    console.log("error: ", error);
+  }, [isFormSubmitted, isFormValid, error]);
+
   return (
     <section className={tailwindClass.box}>
       <h2 className={tailwindClass.title}>Add Category</h2>
@@ -120,8 +122,10 @@ export const FormModal = ({ closeModal, uploading }) => {
               className={tailwindClass.inputField}
             />
           </div>
-          {errors.category && (
-            <span className={tailwindClass.error}>{errors.category}</span>
+          {(errors.category || error?.category) && (
+            <span className={tailwindClass.error}>
+              {errors.category || error?.category}
+            </span>
           )}
         </div>
 

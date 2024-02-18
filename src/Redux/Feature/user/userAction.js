@@ -1,4 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { api } from "../../../utils/axios";
+import { getDataFromLocalStorage } from "../../../utils/localStorage";
 
 // Vendor request reducer function
 export const requestToBeVendor = createAsyncThunk(
