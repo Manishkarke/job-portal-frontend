@@ -6,6 +6,7 @@ import VendorJobCard from "../../../Components/Cards/VendorJobCard";
 
 export const PostedJobList = () => {
   const jobs = useSelector((state) => state.vendor.postedJobs);
+  const error = useSelector((state) => state.vendor.error);
   const dispatch = useDispatch();
 
   // Effect
@@ -13,6 +14,7 @@ export const PostedJobList = () => {
     dispatch(myJobs());
     console.log(jobs);
   }, [dispatch]);
+  console.log(error);
   return (
     <>
       <section className="py-4">
@@ -25,9 +27,9 @@ export const PostedJobList = () => {
 
         {/* Job cards */}
         <section className="py-4 grid gap-4 justify-center justify-items-center md:grid-cols-2 lg:grid-cols-3">
-          {jobs.map((job) => (
-            <VendorJobCard key={job._id} {...job} />
-          ))}
+          {jobs.length !== 0
+            ? jobs.map((job) => <VendorJobCard key={job._id} {...job} />)
+            : error}
         </section>
       </section>
     </>

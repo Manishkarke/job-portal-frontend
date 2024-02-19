@@ -75,7 +75,7 @@ export const getSingleJob = createAsyncThunk("vendor/singlejob", async (id) => {
 // Delete a posted job redux function
 export const deleteJob = createAsyncThunk(
   "vendor/deleteSingleJob",
-  async (id, toast, navigate) => {
+  async ({id, toast, navigate}) => {
     try {
       const response = await api.delete(`/vendor/jobs/${id}`, {
         headers: {
