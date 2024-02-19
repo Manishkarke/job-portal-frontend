@@ -65,7 +65,7 @@ export const CreateJob = () => {
     }
 
     if (isFormSubmitted) setIsFormSubmitted(false);
-  }, [categories, dispatch, isFormSubmitted, isFormValid]);
+  }, [categories, isFormSubmitted, isFormValid]);
 
   return (
     <section>
