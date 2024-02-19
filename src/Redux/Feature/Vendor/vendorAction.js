@@ -2,7 +2,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { api } from "../../../utils/axios";
 import { getDataFromLocalStorage } from "../../../utils/localStorage";
 import { toast } from "react-toastify";
-const accessToken = getDataFromLocalStorage("accessToken");
 
 // create job Redux function
 export const postJob = createAsyncThunk(
@@ -11,7 +10,7 @@ export const postJob = createAsyncThunk(
     try {
       const response = await api.post("/vendor/jobs", formData, {
         headers: {
-          Authorization: "Bearer " + accessToken,
+          Authorization: "Bearer " + getDataFromLocalStorage("accessToken"),
         },
       });
 
@@ -36,7 +35,7 @@ export const myJobs = createAsyncThunk("vendor/jobs", async () => {
   try {
     const response = await api.get("/vendor/jobs", {
       headers: {
-        Authorization: "Bearer " + accessToken,
+        Authorization: "Bearer " + getDataFromLocalStorage("accessToken"),
       },
     });
 
@@ -57,7 +56,7 @@ export const getSingleJob = createAsyncThunk("vendor/singlejob", async (id) => {
   try {
     const response = await api.get(`/vendor/jobs/${id}`, {
       headers: {
-        Authorization: "Bearer " + accessToken,
+        Authorization: "Bearer " + getDataFromLocalStorage("accessToken"),
       },
     });
 
@@ -79,7 +78,9 @@ export const deleteJob = createAsyncThunk(
   async (id, toast, navigate) => {
     try {
       const response = await api.delete(`/vendor/jobs/${id}`, {
-        headers: { Authorization: "Bearer " + accessToken },
+        headers: {
+          Authorization: "Bearer " + getDataFromLocalStorage("accessToken"),
+        },
       });
 
       if (response.data.status === "success") {
@@ -102,7 +103,7 @@ export const getApplicants = createAsyncThunk(
     try {
       const response = await api.get("/vendor/applicants", {
         headers: {
-          Authorization: "Bearer " + accessToken,
+          Authorization: "Bearer " + getDataFromLocalStorage("accessToken"),
         },
       });
 
