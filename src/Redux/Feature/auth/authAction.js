@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { api } from "../../../utils/axios";
 import {
+  getDataFromLocalStorage,
   removeDataFromLocalStorage,
   setDataInLocalStorage,
 } from "../../../utils/localStorage";
@@ -81,34 +82,32 @@ export const userLogin = createAsyncThunk(
         password,
       });
 
-      console.log("Response data:");
       if (response.data.status === "success") {
         setDataInLocalStorage("accessToken", response.data.data.accessToken);
         setDataInLocalStorage("role", response.data.data.user.role);
         setDataInLocalStorage("user", JSON.stringify(response.data.data.user));
         toast.success(response.data.message);
-      }
 
-      if (response.data.data.user.role === "user") {
-        navigate("/");
-      } else if (response.data.data.user.role === "admin") {
-        navigate("/admin");
-      } else if (response.data.data.user.role === "vendor") {
-        navigate("/vendor");
+        // Since this only happen if the status is success
+        if (response.data.data.user.role === "user") {
+          navigate("/");
+        } else if (response.data.data.user.role === "admin") {
+          navigate("/admin");
+        } else if (response.data.data.user.role === "vendor") {
+          navigate("/vendor");
+        }
       }
 
       if (response.data.status === "error") {
-        if (typeof response.data.status === "object") {
+        if (typeof response.data.message === "object") {
           throw response.data.message;
-        }
-        if (response.data.message === "The email is not verified.") {
+        } else if (response.data.message === "The email is not verified.") {
           toast.error(response.data.message);
           navigate("/verify");
         } else {
-          toast.error(response.data.message);
+          throw response.data.message;
         }
       }
-      return response.data.data;
     } catch (err) {
       throw err;
     }
@@ -184,4 +183,36 @@ export const resetPassword = createAsyncThunk(
 export const generateNewAccessToken = createAsyncThunk(
   "auth/generateAccessToken",
   async () => {}
+);
+
+// Log out reducer function
+export const logout = createAsyncThunk(
+  "auth/logout",
+  async ({navigate, toast}) => {
+    try {
+      const response = await api.post(
+        "/auth/log-out",
+        {},
+        {
+          headers: {
+            Authorization: "Bearer " + getDataFromLocalStorage("accessToken"),
+          },
+        }
+      );
+
+      if (response.data.status === "success") {
+        removeDataFromLocalStorage("accessToken");
+        removeDataFromLocalStorage("role");
+        removeDataFromLocalStorage("user");
+        toast.success(response.data.message);
+        navigate("/login");
+        console.log("hellowoewj");
+      } else if (response.data.status === "error") {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
 );

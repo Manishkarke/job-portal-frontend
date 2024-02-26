@@ -14,7 +14,6 @@ export const Navigation = ({ className }) => {
     const token = getDataFromLocalStorage("accessToken");
     const role = getDataFromLocalStorage("role");
     if (token && role === "user") {
-      console.log("I am a user");
     } else if (token && role === "vendor") {
       navigate("/vendor");
     } else if (token && role === "admin") {

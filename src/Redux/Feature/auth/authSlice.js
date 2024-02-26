@@ -1,9 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
-  getDataFromLocalStorage,
-  removeDataFromLocalStorage,
-} from "../../../utils/localStorage";
-import {
+  logout,
   resetPassword,
   sendOtp,
   userLogin,
@@ -11,21 +8,12 @@ import {
   verifyOtp,
   verifyRegistration,
 } from "./authAction";
-import { toast } from "react-toastify";
 
 const authSlice = createSlice({
   name: "auth",
   initialState: {
     isLoading: false,
     error: null,
-  },
-  reducers: {
-    logout: () => {
-      removeDataFromLocalStorage("accessToken");
-      removeDataFromLocalStorage("role");
-      removeDataFromLocalStorage("user");
-      toast.success("Logged out successfully");
-    },
   },
   extraReducers: (builder) => {
     // Reducer for registration
@@ -64,11 +52,11 @@ const authSlice = createSlice({
     builder.addCase(userLogin.fulfilled, (state, action) => {
       state.isLoading = false;
       state.error = null;
-      console.log("action.payload: ", action.payload);
     });
     builder.addCase(userLogin.rejected, (state, action) => {
       state.isLoading = false;
-      state.error = action.error;
+      console.log(action.error);
+      state.error = action.error.message;
     });
 
     // Reducer for sending otp
@@ -112,8 +100,20 @@ const authSlice = createSlice({
       state.isLoading = false;
       state.error = action.error;
     });
+
+    // Reducer for logging out
+    builder.addCase(logout.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(logout.fulfilled, (state) => {
+      state.isLoading = false;
+    });
+    builder.addCase(logout.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error;
+    });
   },
 });
 
-export const { logout } = authSlice.actions;
 export const authReducer = authSlice.reducer;

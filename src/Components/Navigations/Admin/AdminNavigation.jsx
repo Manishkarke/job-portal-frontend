@@ -1,9 +1,9 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { logout } from "../../../Redux/Feature/auth/authSlice";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { Button } from "../../Button";
+import { logout } from "../../../Redux/Feature/auth/authAction";
 logout;
 
 const tailwindClass = {
@@ -20,8 +20,7 @@ export const AdminNavigation = ({ className }) => {
   const navigate = useNavigate();
 
   const logoutHandler = () => {
-    dispatch(logout());
-    navigate("/login");
+    dispatch(logout({navigate, toast}));
   };
 
   return (

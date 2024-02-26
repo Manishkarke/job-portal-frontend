@@ -1,8 +1,9 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
-import { logout } from "../../../Redux/Feature/auth/authSlice";
 import { Button } from "../../Button";
+import { logout } from "../../../Redux/Feature/auth/authAction";
+import { toast } from "react-toastify";
 
 export const VendorDropdownMenu = ({ user }) => {
   const dispatch = useDispatch();
@@ -16,15 +17,15 @@ export const VendorDropdownMenu = ({ user }) => {
   };
 
   const handleLogout = () => {
-    dispatch(logout());
-    navigate("/");
+    dispatch(logout({ navigate, toast }));
   };
 
   return (
     <ul className={tailwindClass.container}>
       <li className="py-2 font-medium">
         <h3>
-          hello <span className="text-indigo-950 font-extrabold text-lg">
+          hello{" "}
+          <span className="text-indigo-950 font-extrabold text-lg">
             {user.name}
           </span>
         </h3>

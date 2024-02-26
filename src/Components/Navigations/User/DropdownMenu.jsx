@@ -1,8 +1,9 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
-import { logout } from "../../../Redux/Feature/auth/authSlice";
 import { Button } from "../../Button";
+import { logout } from "../../../Redux/Feature/auth/authAction";
+import { toast } from "react-toastify";
 
 export const DropdownMenu = () => {
   const dispatch = useDispatch();
@@ -16,12 +17,7 @@ export const DropdownMenu = () => {
   };
 
   const handleLogout = () => {
-    dispatch(logout());
-    navigate("/");
-    toast.success("Logged Out Successfully");
-    localStorage.removeItem("user");
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("role");
+    dispatch(logout({navigate, toast}));
   };
 
   return (

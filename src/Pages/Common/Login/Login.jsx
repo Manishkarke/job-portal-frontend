@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Button } from "../../../Components/Button";
@@ -16,7 +16,7 @@ const tailwindClass = {
   links: `font-semibold capitalize ml-1 leading-6 text-orange-600 hover:text-orange-500`,
   title:
     "text-center text-2xl font-bold leading-9 tracking-tight text-gray-900",
-  error: "text-red-600 capitalize text-sm",
+  error: "text-red-600 text-sm",
 };
 
 export default function Login() {
@@ -24,32 +24,31 @@ export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // State for inputs
+  // States
   const [formData, setFormData] = React.useState({
     email: "",
     password: "",
   });
+  const error = useSelector((state) => state.auth.error);
   const [showPassword, setShowPassword] = React.useState(false);
-
   const [errors, setErrors] = React.useState({
     email: "",
     password: "",
   });
-  let isFormValid = true;
   const [isFormSubmitted, setFormSubmitted] = React.useState(false);
+  let isFormValid = true;
 
   // State handling Functions
   const inputChangeHandler = (e) => {
-    const { name, value } = e.target;
     setFormData((prevFormData) => {
-      return { ...prevFormData, [name]: value };
+      return { ...prevFormData, [e.target.name]: e.target.value };
     });
   };
 
   // Handle form submission
   const formSubmitHandler = (event) => {
     event.preventDefault();
-
+    
     loginValidator(formData, setErrors);
     setFormSubmitted(true);
   };
@@ -87,7 +86,11 @@ export default function Login() {
               <label htmlFor="email" className={tailwindClass.label}>
                 Email address
               </label>
-              <div className={`${tailwindClass.inputField}`}>
+              <div
+                className={`${tailwindClass.inputField} ${
+                  error || errors.email ? "ring-red-600" : ""
+                }`}
+              >
                 <input
                   id="email"
                   name="email"
@@ -114,7 +117,11 @@ export default function Login() {
                   </Link>
                 </div>
               </div>
-              <div className={`${tailwindClass.inputField} relative flex`}>
+              <div
+                className={`${tailwindClass.inputField} ${
+                  error || errors.password ? "ring-red-600" : ""
+                } relative flex`}
+              >
                 <input
                   id="password"
                   name="password"
@@ -131,7 +138,9 @@ export default function Login() {
                   }}
                 >
                   <i
-                    className={`fa-solid fa-${showPassword ? "eye-slash" : "eye"}`}
+                    className={`fa-solid fa-${
+                      showPassword ? "eye-slash" : "eye"
+                    }`}
                   ></i>
                 </span>
               </div>
@@ -140,6 +149,7 @@ export default function Login() {
               )}
             </div>
 
+            {error && <span className={tailwindClass.error}>{error}</span>}
             <Button type="submit" fullWidth={true}>
               sign in
             </Button>
