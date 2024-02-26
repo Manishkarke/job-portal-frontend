@@ -55,7 +55,6 @@ const authSlice = createSlice({
     });
     builder.addCase(userLogin.rejected, (state, action) => {
       state.isLoading = false;
-      console.log(action.error);
       state.error = action.error.message;
     });
 
