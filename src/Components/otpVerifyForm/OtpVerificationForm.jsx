@@ -55,7 +55,7 @@ export const OtpVerificationForm = ({ verificationFor }) => {
             />
             {error && (
               <span className=" mt-2 flex text-sm text-red-600 font-medium">
-                {error}
+                {error.message}
               </span>
             )}
           </div>

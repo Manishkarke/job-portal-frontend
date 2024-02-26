@@ -179,3 +179,9 @@ export const resetPassword = createAsyncThunk(
     }
   }
 );
+
+// Generate new access Token from refresh token
+export const generateNewAccessToken = createAsyncThunk(
+  "auth/generateAccessToken",
+  async () => {}
+);

@@ -13,7 +13,7 @@ export const PostedJobList = () => {
   React.useEffect(() => {
     dispatch(myJobs());
     console.log(jobs);
-  }, [dispatch]);
+  }, []);
   console.log(error);
   return (
     <>

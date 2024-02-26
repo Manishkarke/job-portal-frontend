@@ -41,7 +41,7 @@ const VendorJobCard = ({
         </p>
       </div>
 
-      <div className="flex justify-between ">
+      <div className="flex justify-between text-black">
         <Button
           type="button"
           onClick={deleteJobHanlder}
