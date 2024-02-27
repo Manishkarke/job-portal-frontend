@@ -20,7 +20,7 @@ export const userRegister = createAsyncThunk(
       if (response.data.status === "success") {
         toast.success(response.data.message);
         setDataInLocalStorage("email", email);
-        navigate("/verify");
+        navigate("/verify-otp", { state: { verificationFor: "registration" } });
       }
       if (response.data.status === "error") {
         if (typeof response.data.message === "object") {
@@ -30,7 +30,9 @@ export const userRegister = createAsyncThunk(
             response.data.message === "User already exist but is not verified"
           ) {
             toast.error(response.data.message);
-            navigate("/verify");
+            navigate("/verify-otp", {
+              state: { verificationFor: "registration" },
+            });
           } else if (response.data.message === "User already exist.") {
             toast.error(response.data.message);
             navigate("/login");
@@ -103,7 +105,9 @@ export const userLogin = createAsyncThunk(
           throw response.data.message;
         } else if (response.data.message === "The email is not verified.") {
           toast.error(response.data.message);
-          navigate("/verify");
+          navigate("/verify-otp", {
+            state: { verificationFor: "registration" },
+          });
         } else {
           throw response.data.message;
         }
@@ -117,13 +121,21 @@ export const userLogin = createAsyncThunk(
 // Send otp reducer function
 export const sendOtp = createAsyncThunk(
   "auth/sendOtp",
-  async ({ email, toast, navigate }) => {
+  async ({ email, toast, navigate, otpFor }) => {
     try {
       const response = await api.post("/auth/send-otp", { email });
       if (response.data.status === "success") {
         toast.success(response.data.message);
         setDataInLocalStorage("email", email);
-        navigate("/verify-otp");
+        if (otpFor === "registration") {
+          navigate("/verify-otp", {
+            state: { verificationFor: "registration" },
+          });
+        } else if (otpFor === "reset-password") {
+          navigate("/verify-otp", {
+            state: { verificationFor: "resetpassword" },
+          });
+        }
       }
       if (response.data.status === "error") {
         throw new Error(response.data.message);
@@ -188,7 +200,7 @@ export const generateNewAccessToken = createAsyncThunk(
 // Log out reducer function
 export const logout = createAsyncThunk(
   "auth/logout",
-  async ({navigate, toast}) => {
+  async ({ navigate, toast }) => {
     try {
       const response = await api.post(
         "/auth/log-out",

@@ -19,7 +19,7 @@ export const ConfirmEmail = () => {
     if (!email.trim()) {
       toast.error("this field is required.");
     } else {
-      dispatch(sendOtp({ email, toast, navigate }));
+      dispatch(sendOtp({ email, toast, navigate, otpFor: "reset-password" }));
     }
   };
   return (

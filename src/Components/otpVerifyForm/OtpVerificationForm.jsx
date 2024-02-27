@@ -1,28 +1,42 @@
 import React from "react";
 import { Button } from "../Button";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { getDataFromLocalStorage } from "../../utils/localStorage";
 import { RegisterPageLayout } from "../../Layouts/RegisterPageLayout";
 import {
+  sendOtp,
   verifyOtp,
   verifyRegistration,
 } from "../../Redux/Feature/auth/authAction";
 
-export const OtpVerificationForm = ({ verificationFor }) => {
+export const OtpVerificationForm = ({ state }) => {
+  const location = useLocation();
+  const { verificationFor } = location.state;
   const email = getDataFromLocalStorage("email");
   const [otp, setOtp] = React.useState("");
   const error = useSelector((state) => state.auth.error);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  console.log("verification for: ", verificationFor);
+
   const handleOtpSubmit = (e) => {
-    e.preventDefault();
-    if (verificationFor === "registration")
-      dispatch(verifyRegistration({ otp, email, navigate, toast }));
-    else if (verificationFor === "resetpassword")
-      dispatch(verifyOtp({ email, otp, toast, navigate }));
+      e.preventDefault();
+      if (verificationFor === "registration")
+        dispatch(verifyRegistration({ otp, email, navigate, toast }));
+      else if (verificationFor === "resetpassword")
+        dispatch(verifyOtp({ email, otp, toast, navigate }));
+  };
+  const resendOtp = () => {
+      if (verificationFor === "registration") {
+        console.log("hello world from resend otp reg");
+        dispatch(sendOtp({ email, navigate, toast, otpFor: "registration" }));
+      } else if (verificationFor === "resetpassword") {
+        console.log("hello world from resend otp reset password");
+        dispatch(sendOtp({ email, navigate, toast, otpFor: "reset-password" }));
+      }
   };
 
   return (
@@ -59,6 +73,16 @@ export const OtpVerificationForm = ({ verificationFor }) => {
               </span>
             )}
           </div>
+          <p>
+            Didn't get code yet?{" "}
+            <button
+              type="button"
+              onClick={resendOtp}
+              className="capitalize font-medium text-orange-500"
+            >
+              resend OTP
+            </button>
+          </p>
           <Button type="submit" customization="w-full py-3 px-6 text-lg">
             verify
           </Button>

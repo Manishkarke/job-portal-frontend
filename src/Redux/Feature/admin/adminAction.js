@@ -31,7 +31,11 @@ export const rejectVendorRequest = createAsyncThunk(
       const response = await api.post(
         "/admin/rejectVendor",
         { userId },
-        { headers: { Authorization: "Bearer " + getDataFromLocalStorage("accessToken") } }
+        {
+          headers: {
+            Authorization: "Bearer " + getDataFromLocalStorage("accessToken"),
+          },
+        }
       );
 
       if (response.data.status === "success") {
@@ -113,11 +117,9 @@ export const createCategory = createAsyncThunk(
         uploading(true);
         closeModal(false);
       } else if (response.data.status === "error") {
-        toast.error(response.data.message);
-        throw response.data.message;
+        throw response.data.message.category;
       }
     } catch (err) {
-      console.log(err);
       throw err;
     }
   }

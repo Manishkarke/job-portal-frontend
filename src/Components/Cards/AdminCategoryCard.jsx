@@ -7,7 +7,7 @@ import { Button } from "../Button";
 const tailwindCLass = {
   card: "max-w-80 flex flex-col gap-3 shadow-sm border border-solid rounded-lg py-2 px-4",
   imgCard: "w-full aspect-video rounded-md overflow-hidden",
-  categoryName: "text-xl font-semibold",
+  categoryName: "text-xl capitalize font-semibold",
 };
 export const AdminCategoryCard = ({ image, category, id, DeleteCategory }) => {
   const dispatch = useDispatch();

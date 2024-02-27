@@ -104,7 +104,7 @@ export default function Router() {
         }
       />
       <Route
-        path="/verify"
+        path="/verify-otp"
         element={
           <RestrictFromFormComponent>
             <VerificationForm />
@@ -119,14 +119,14 @@ export default function Router() {
           </RestrictFromFormComponent>
         }
       />
-      <Route
+      {/* <Route
         path="/verify-otp"
         element={
           <RestrictFromFormComponent>
             <OtpVerification />
           </RestrictFromFormComponent>
         }
-      />
+      /> */}
 
       <Route path="/reset-password" element={
         <RestrictFromFormComponent>

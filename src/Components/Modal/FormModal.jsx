@@ -119,12 +119,14 @@ export const FormModal = ({ closeModal, uploading }) => {
               autoComplete="category"
               value={formData.category}
               onChange={categoryNameChangeHandler}
-              className={tailwindClass.inputField}
+              className={`${tailwindClass.inputField} ${
+                errors.category || error ? "ring-red-600" : ""
+              }`}
             />
           </div>
-          {(errors.category || error?.category) && (
+          {(errors.category || error) && (
             <span className={tailwindClass.error}>
-              {errors.category || error?.category}
+              {errors.category || error}
             </span>
           )}
         </div>
@@ -135,7 +137,9 @@ export const FormModal = ({ closeModal, uploading }) => {
           </label>
           <div
             id="drop-area"
-            className={`mt-2 ${tailwindClass.imageInputField}`}
+            className={`mt-2 ${tailwindClass.imageInputField} ${
+              errors.image ? "border-red-600" : ""
+            }`}
             onDragOver={handleDragOver}
             onDrop={handleDrop}
           >

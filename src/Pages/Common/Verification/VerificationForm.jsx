@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { OtpVerificationForm } from "../../../Components/otpVerifyForm/OtpVerificationForm";
 
-export const VerificationForm = () => {
+export const VerificationForm = ({ verificationFor }) => {
   const email = getDataFromLocalStorage("email");
   const [otp, setOtp] = React.useState("");
   const error = useSelector((state) => state.auth.error);
@@ -20,7 +20,7 @@ export const VerificationForm = () => {
 
   return (
     <>
-      <OtpVerificationForm verificationFor="registration" />
+      <OtpVerificationForm verificationFor={verificationFor} />
     </>
   );
 };
