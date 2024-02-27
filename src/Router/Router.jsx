@@ -24,17 +24,9 @@ import { JobDetailPage } from "../Pages/Vendor/Jobs/JobDetailPage";
 import { VendorDashboard } from "../Pages/Vendor/Profile/VendorDashboard";
 import { VerificationForm } from "../Pages/Common/Verification/VerificationForm";
 import { ConfirmEmail } from "../Pages/Common/Password reset/ConfirmEmail";
-import { OtpVerification } from "../Pages/Common/Password reset/OtpVerification";
 import { PasswordReset } from "../Pages/Common/Password reset/PasswordReset";
 
 export default function Router() {
-  const userType = getDataFromLocalStorage("role");
-  useEffect(() => {
-    // const storedUserType = getDataFromLocalStorage("role");
-    // if (storedUserType) {
-    //   setUserType(storedUserType);
-    // }
-  }, []);
   return (
     <Routes>
       {/* User Routes */}
@@ -119,20 +111,15 @@ export default function Router() {
           </RestrictFromFormComponent>
         }
       />
-      {/* <Route
-        path="/verify-otp"
+
+      <Route
+        path="/reset-password"
         element={
           <RestrictFromFormComponent>
-            <OtpVerification />
+            <PasswordReset />
           </RestrictFromFormComponent>
         }
-      /> */}
-
-      <Route path="/reset-password" element={
-        <RestrictFromFormComponent>
-          <PasswordReset />
-        </RestrictFromFormComponent>
-      } />
+      />
 
       {/* Page not found route */}
       <Route path="*" element={<PageNotFound />} />
