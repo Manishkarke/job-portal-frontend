@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "../Button";
+import { Button } from "../../../Components/Button";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,7 +11,7 @@ import {
   verifyRegistration,
 } from "../../../Redux/Feature/auth/authAction";
 
-export const OtpVerificationForm = ({ state }) => {
+export const OtpVerificationForm = () => {
   const location = useLocation();
   const { verificationFor } = location.state;
   const email = getDataFromLocalStorage("email");
@@ -31,10 +31,8 @@ export const OtpVerificationForm = ({ state }) => {
   };
   const resendOtp = () => {
     if (verificationFor === "registration") {
-      console.log("hello world from resend otp reg");
       dispatch(sendOtp({ email, navigate, toast, otpFor: "registration" }));
     } else if (verificationFor === "resetpassword") {
-      console.log("hello world from resend otp reset password");
       dispatch(sendOtp({ email, navigate, toast, otpFor: "reset-password" }));
     }
   };

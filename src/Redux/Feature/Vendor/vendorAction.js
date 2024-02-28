@@ -42,11 +42,9 @@ export const myJobs = createAsyncThunk("vendor/jobs", async () => {
     if (response.data.status === "success") {
       return response.data.data;
     } else if (response.data.status === "error") {
-      toast.error(response.data.message);
       throw response.data.message;
     }
   } catch (error) {
-    console.error(error);
     throw error;
   }
 });
@@ -75,7 +73,7 @@ export const getSingleJob = createAsyncThunk("vendor/singlejob", async (id) => {
 // Delete a posted job redux function
 export const deleteJob = createAsyncThunk(
   "vendor/deleteSingleJob",
-  async ({id, toast, navigate}) => {
+  async ({ id, toast, navigate }) => {
     try {
       const response = await api.delete(`/vendor/jobs/${id}`, {
         headers: {

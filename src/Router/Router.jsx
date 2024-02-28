@@ -22,9 +22,10 @@ import { ApplicantLists } from "../Pages/Vendor/Applicants/ApplicantLists";
 import { ApplicantDetail } from "../Pages/Vendor/Applicants/ApplicantDetail";
 import { JobDetailPage } from "../Pages/Vendor/Jobs/JobDetailPage";
 import { VendorDashboard } from "../Pages/Vendor/Profile/VendorDashboard";
-import { VerificationForm } from "../Pages/Common/Verification/VerificationForm";
 import { ConfirmEmail } from "../Pages/Common/Password reset/ConfirmEmail";
 import { PasswordReset } from "../Pages/Common/Password reset/PasswordReset";
+import { OtpVerificationForm } from "../Pages/Common/Verification/OtpVerificationForm";
+import JobDetail from "../Pages/Users/Jobs/JobDetailPage";
 
 export default function Router() {
   return (
@@ -39,6 +40,7 @@ export default function Router() {
         }
       >
         <Route index element={<JobList />} />
+        <Route path=":id" element={<JobDetail />} />
         <Route path="user" element={<ProfileNavigation />}>
           <Route path="profile" element={<Profile />} />
           <Route path="appliedJobs" element={<AppliedJobs />} />
@@ -99,7 +101,7 @@ export default function Router() {
         path="/verify-otp"
         element={
           <RestrictFromFormComponent>
-            <VerificationForm />
+            <OtpVerificationForm />
           </RestrictFromFormComponent>
         }
       />

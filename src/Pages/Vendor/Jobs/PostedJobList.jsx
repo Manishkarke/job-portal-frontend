@@ -12,9 +12,7 @@ export const PostedJobList = () => {
   // Effect
   React.useEffect(() => {
     dispatch(myJobs());
-    console.log(jobs);
   }, []);
-  console.log(error);
   return (
     <>
       <section className="py-4">
