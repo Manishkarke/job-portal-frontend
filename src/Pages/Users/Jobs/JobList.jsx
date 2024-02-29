@@ -1,16 +1,21 @@
+import axios from "axios";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getJobs } from "../../../Redux/Feature/user/userAction";
 import { Banner } from "../../../Components/Banner";
 import { JobCard } from "../../../Components/Cards/JobCard";
+import { getJobs } from "../../../Redux/Feature/user/userAction";
 
 export const JobList = () => {
   const jobs = useSelector((state) => state.user.jobs);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getJobs());
+    const source = axios.CancelToken.source();
+    dispatch(getJobs(source.token));
+    return () => {
+      source.cancel("Job request canceled");
+    };
   }, []);
-  console.log(jobs);
+
   return (
     <>
       <Banner

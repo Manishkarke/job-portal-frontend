@@ -7,13 +7,11 @@ export const JobCard = ({
   _id,
   category,
   title,
-  description,
   postedBy,
   location,
   salary,
   deadline,
 }) => {
-  const navigate = useNavigate();
   const today = new Date();
   const deadlineTime = new Date(deadline);
 
@@ -37,7 +35,7 @@ export const JobCard = ({
           #{category.category}
         </span>
         <p className="max-w-80 line-clamp-2">
-          <i class="fa-solid fa-location-dot"></i> {location}
+          <i className="fa-solid fa-location-dot"></i> {location}
         </p>
         <div className="flex justify-between">
           <p className="font font-medium">
@@ -49,7 +47,7 @@ export const JobCard = ({
         </div>
       </div>
 
-      <Button type="button" navigateTo={`${_id}`}>
+      <Button type="button" navigateTo={`jobs/${_id}`}>
         view details
       </Button>
     </article>

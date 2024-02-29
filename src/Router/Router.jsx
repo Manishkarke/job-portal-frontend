@@ -40,7 +40,7 @@ export default function Router() {
         }
       >
         <Route index element={<JobList />} />
-        <Route path=":id" element={<JobDetail />} />
+        <Route path="jobs/:id" element={<JobDetail />} />
         <Route path="user" element={<ProfileNavigation />}>
           <Route path="profile" element={<Profile />} />
           <Route path="appliedJobs" element={<AppliedJobs />} />

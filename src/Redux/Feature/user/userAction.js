@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 import { api } from "../../../utils/axios";
 import { getDataFromLocalStorage } from "../../../utils/localStorage";
 
@@ -30,17 +31,19 @@ export const requestToBeVendor = createAsyncThunk(
 );
 
 // Get job reducer function
-export const getJobs = createAsyncThunk("user/getAllJobs", async () => {
+export const getJobs = createAsyncThunk("user/getAllJobs", async (token) => {
   try {
-    const response = await api.get("/user/jobs");
+    const response = await api.get("/user/jobs", {cancelToken: token});
 
+    console.log(response);
     if (response.data.status === "success") {
       return response.data.data;
     } else if (response.data.status === "error") {
+      console.log("Helloooooo");
       throw response.data.message;
     }
   } catch (err) {
-    console.log(err);
+    // if (axios.isCancel(err)) console.log(err.message);
     throw err;
   }
 });
@@ -48,18 +51,25 @@ export const getJobs = createAsyncThunk("user/getAllJobs", async () => {
 // get single Job reducer function
 export const getSingleJob = createAsyncThunk(
   "user/getSingleJob",
-  async (id) => {
+  async (id, canceltoken) => {
     try {
-      const response = await api.get(`/user/jobs/${id}`);
+      const response = await api.get(`/user/jobs/${id}`, {
+        cancelToken: canceltoken,
+      });
 
       if (response.data.status === "success") {
         return response.data.data;
       } else if (response.data.status === "error") {
+        console.log("error ", response.data.message);
         throw response.data.message;
       }
     } catch (err) {
       console.log(err);
       throw err;
+    } finally {
+      if (axios.isCancel(err)) {
+        console.error("request cancelled", err.message);
+      }
     }
   }
 );
