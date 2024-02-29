@@ -4,6 +4,7 @@ import {
   getDataFromLocalStorage,
   setDataInLocalStorage,
 } from "../../../utils/localStorage";
+import axios from "axios";
 
 // Reducer function for fetching user details
 export const fetchProfile = createAsyncThunk("common/get-profile", async () => {
@@ -28,12 +29,13 @@ export const fetchProfile = createAsyncThunk("common/get-profile", async () => {
 // Reducer function for getting categories
 export const getCategories = createAsyncThunk(
   "common/getCategories",
-  async () => {
+  async (token) => {
     try {
       const response = await api.get("/common/category", {
         headers: {
           Authorization: "Bearer " + getDataFromLocalStorage("accessToken"),
         },
+        cancelToken: token,
       });
 
       if (response.data.status === "success") {
@@ -42,7 +44,7 @@ export const getCategories = createAsyncThunk(
         throw response.data.message;
       }
     } catch (err) {
-      console.error(err);
+      if (axios.isCancel(err)) console.error("Request cancelled", err);
       throw err;
     }
   }

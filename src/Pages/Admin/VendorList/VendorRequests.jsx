@@ -5,6 +5,7 @@ import { getAllVendor } from "../../../Redux/Feature/admin/adminAction";
 import { VendorsTableHeader } from "../../../Components/Tables/VendorsTableHeader";
 import { VendorRequestsRow } from "../../../Components/Tables/VendorRequestsRow";
 import { Button } from "../../../Components/Button";
+import axios from "axios";
 
 // Tailwind Classes
 const tailwindCLass = {
@@ -22,11 +23,16 @@ export const VendorRequests = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getAllVendor());
+    const source = axios.CancelToken.source();
+    dispatch(getAllVendor(source.token));
 
     if (refresh) {
       setRefresh(false);
     }
+
+    return () => {
+      source.cancel();
+    };
   }, [dispatch, refresh]);
 
   const vendorRequests = vendors?.filter(

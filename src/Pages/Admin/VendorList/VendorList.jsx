@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { Button } from "../../../Components/Button";
 import { VendorDataRow } from "../../../Components/Tables/VendorDataRow";
 import { VendorsTableHeader } from "../../../Components/Tables/VendorsTableHeader";
 import { getAllVendor } from "../../../Redux/Feature/admin/adminAction";
-import { Button } from "../../../Components/Button";
+import axios from "axios";
 
 // Tailwind Classes
 const tailwindCLass = {
@@ -21,9 +22,16 @@ export const VendorList = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
-    dispatch(getAllVendor());
+    const source = axios.CancelToken.source();
+    dispatch(getAllVendor(source.token));
 
-    if (refresh) setRefresh(false);
+    if (refresh) {
+      setRefresh(false);
+    }
+
+    return () => {
+      source.cancel();
+    };
   }, [dispatch, refresh]);
   return (
     <>

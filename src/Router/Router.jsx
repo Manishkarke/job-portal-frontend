@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import React from "react";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { AdminPageLayout } from "../Layouts/AdminPageLayout";
 import { UserLayout } from "../Layouts/UserLayout";
 import { AdminCategory } from "../Pages/Admin/Category/AdminCategory";
@@ -12,7 +12,6 @@ import { JobList } from "../Pages/Users/Jobs/JobList";
 import { AppliedJobs } from "../Pages/Users/Profile/AppliedJobs";
 import { Profile } from "../Pages/Users/Profile/Profile";
 import { VendorRegister } from "../Pages/Users/Profile/VendorRegister";
-import { getDataFromLocalStorage } from "../utils/localStorage";
 import { VendorPageLayout } from "../Layouts/VendorPageLayout";
 import { PageNotFound } from "../Pages/Common/PageNotFound";
 import { ProfileNavigation } from "../Components/Navigations/User/ProfileNavigation";
@@ -27,7 +26,57 @@ import { PasswordReset } from "../Pages/Common/Password reset/PasswordReset";
 import { OtpVerificationForm } from "../Pages/Common/Verification/OtpVerificationForm";
 import JobDetail from "../Pages/Users/Jobs/JobDetailPage";
 
+import { toast } from "react-toastify";
+import { api } from "../utils/axios";
+import {
+  getDataFromLocalStorage,
+  removeDataFromLocalStorage,
+  setDataInLocalStorage,
+} from "../utils/localStorage";
+
 export default function Router() {
+  const navigate = useNavigate();
+  // Axios middleware for response
+  api.interceptors.response.use(
+    async (response) => {
+      // check if the we get token expired message and if so then call the generate new accesstoken api endpoint
+      if (response.data.message === "The access token is expired") {
+        const newAccessTokenResponse = await api.post(
+          "/auth/generateAccessToken"
+        );
+        // if the new access token is generated then store it in the local storage and change the token in header
+        if (newAccessTokenResponse.data.status === "success") {
+          setDataInLocalStorage(
+            "accessToken",
+            newAccessTokenResponse.data.data
+          );
+
+          const originalRequest = response.config;
+          originalRequest.headers.Authorization =
+            "Bearer " + newAccessTokenResponse.data.data;
+          return api(originalRequest);
+
+          // if the new access token failed then remove the existing tokens from local storage and send user to sign in page
+        } else if (newAccessTokenResponse.data.status === "error") {
+          if (
+            newAccessTokenResponse.data.message === "Refresh Token not found"
+          ) {
+            removeDataFromLocalStorage("accessToken");
+            removeDataFromLocalStorage("role");
+            removeDataFromLocalStorage("user");
+            toast.error(newAccessTokenResponse.data.message);
+            navigate("/login");
+          }
+        }
+      } else {
+        return response;
+      }
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+
   return (
     <Routes>
       {/* User Routes */}

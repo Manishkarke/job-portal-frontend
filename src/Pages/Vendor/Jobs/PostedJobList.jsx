@@ -3,6 +3,7 @@ import { Button } from "../../../Components/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { myJobs } from "../../../Redux/Feature/Vendor/vendorAction";
 import VendorJobCard from "../../../Components/Cards/VendorJobCard";
+import axios from "axios";
 
 export const PostedJobList = () => {
   const jobs = useSelector((state) => state.vendor.postedJobs);
@@ -11,7 +12,12 @@ export const PostedJobList = () => {
 
   // Effect
   React.useEffect(() => {
-    dispatch(myJobs());
+    const source = axios.CancelToken.source();
+    dispatch(myJobs(source.token));
+
+    return () => {
+      source.cancel();
+    };
   }, []);
   return (
     <>

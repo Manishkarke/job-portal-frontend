@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { api } from "../../../utils/axios";
 import { getDataFromLocalStorage } from "../../../utils/localStorage";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 // create job Redux function
 export const postJob = createAsyncThunk(
@@ -31,12 +32,13 @@ export const postJob = createAsyncThunk(
 );
 
 // view my jobs redux function
-export const myJobs = createAsyncThunk("vendor/jobs", async () => {
+export const myJobs = createAsyncThunk("vendor/jobs", async (token) => {
   try {
     const response = await api.get("/vendor/jobs", {
       headers: {
         Authorization: "Bearer " + getDataFromLocalStorage("accessToken"),
       },
+      cancelToken: token,
     });
 
     if (response.data.status === "success") {
@@ -45,6 +47,7 @@ export const myJobs = createAsyncThunk("vendor/jobs", async () => {
       throw response.data.message;
     }
   } catch (error) {
+    if (axios.isCancel(error)) console.log("Request cancelled", error.message);
     throw error;
   }
 });

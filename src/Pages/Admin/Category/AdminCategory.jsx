@@ -5,6 +5,7 @@ import { FormModal } from "../../../Components/Modal/FormModal";
 import { ModalLayout } from "../../../Components/Modal/ModalLayout";
 import { Button } from "../../../Components/Button";
 import { getCategories } from "../../../Redux/Feature/Commons/commonAction";
+import axios from "axios";
 
 const tailwindCLass = {
   section: "flex flex-col relative",
@@ -20,10 +21,14 @@ export const AdminCategory = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getCategories());
+    const source = axios.CancelToken.source();
+    dispatch(getCategories(source.token));
     setUploading(false);
     setDeleting(false);
-    console.log("Categories: ", categories);
+
+    return () => {
+      source.cancel();
+    };
   }, [dispatch, uploading, showModal, deleting]);
   const categories = useSelector((state) => state.common.categories);
 

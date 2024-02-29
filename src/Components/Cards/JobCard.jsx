@@ -42,7 +42,8 @@ export const JobCard = ({
             <i className="fa-solid fa-dollar-sign"></i> {salary}
           </p>
           <p className="font font-medium">
-            <i className="fa-solid fa-clock"></i> {remainingTime} days left
+            <i className="fa-solid fa-clock"></i>{" "}
+            {remainingTime >= 0 ? `${remainingTime} days left` : "expired"}
           </p>
         </div>
       </div>
