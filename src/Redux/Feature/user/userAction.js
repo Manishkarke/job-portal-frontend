@@ -33,7 +33,7 @@ export const requestToBeVendor = createAsyncThunk(
 // Get job reducer function
 export const getJobs = createAsyncThunk("user/getAllJobs", async (token) => {
   try {
-    const response = await api.get("/user/jobs", {cancelToken: token});
+    const response = await api.get("/user/jobs", { cancelToken: token });
 
     console.log(response);
     if (response.data.status === "success") {
@@ -43,7 +43,7 @@ export const getJobs = createAsyncThunk("user/getAllJobs", async (token) => {
       throw response.data.message;
     }
   } catch (err) {
-    // if (axios.isCancel(err)) console.log(err.message);
+    if (axios.isCancel(err)) console.log(err.message);
     throw err;
   }
 });
@@ -51,25 +51,21 @@ export const getJobs = createAsyncThunk("user/getAllJobs", async (token) => {
 // get single Job reducer function
 export const getSingleJob = createAsyncThunk(
   "user/getSingleJob",
-  async (id, canceltoken) => {
+  async (id) => {
     try {
-      const response = await api.get(`/user/jobs/${id}`, {
-        cancelToken: canceltoken,
-      });
-
+      const response = await api.get(`/user/jobs/${id}`);
       if (response.data.status === "success") {
+        console.log(response.data.data);
         return response.data.data;
       } else if (response.data.status === "error") {
-        console.log("error ", response.data.message);
         throw response.data.message;
       }
     } catch (err) {
       console.log(err);
-      throw err;
-    } finally {
       if (axios.isCancel(err)) {
         console.error("request cancelled", err.message);
       }
+      throw err;
     }
   }
 );

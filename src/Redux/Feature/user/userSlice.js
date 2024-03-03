@@ -53,6 +53,7 @@ const userSlice = createSlice({
     builder.addCase(getSingleJob.fulfilled, (state, action) => {
       state.isLoading = false;
       state.error = null;
+      console.log("payload: ", action.payload);
       state.singleJob = action.payload;
     });
     builder.addCase(getSingleJob.rejected, (state, action) => {
