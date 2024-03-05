@@ -6,7 +6,7 @@ const tailwindClass = {
   label: "block text-sm font-medium leading-6 capitalize text-gray-900",
   error: "text-red-600 text-sm",
   showPasswordIcon:
-    "h-full border-l border-solid w-10 grid text-orange-600 hover:text-orange-500 place-content-center absolute top-0 right-0",
+    "h-full bg-white border-l border-solid w-10 grid text-orange-600 hover:text-orange-500 place-content-center absolute top-0 right-0  ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring focus:ring-indigo-600 rounded-r-md",
 };
 
 const InputField = ({
