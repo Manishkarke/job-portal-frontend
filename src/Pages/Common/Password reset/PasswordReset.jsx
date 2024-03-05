@@ -7,16 +7,14 @@ import { useNavigate } from "react-router-dom";
 import { getDataFromLocalStorage } from "../../../utils/localStorage";
 import { resetPassword } from "../../../Redux/Feature/auth/authAction";
 import { toast } from "react-toastify";
+import InputField from "../../../Components/FormComponents/InputField";
 
 const tailwindClass = {
-  inputField: `block p-1.5 w-full h-9 border-solid text-gray-900 shadow-sm sm:text-sm sm:leading-6 rounded-md ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring focus:ring-indigo-600`,
-  input: "h-full px-2",
-  label: "block text-sm font-medium leading-6 capitalize text-gray-900",
-  error: "text-red-600 text-sm",
-  showPasswordIcon:
-    "h-full border-l border-solid w-10 grid text-orange-600 hover:text-orange-500 place-content-center absolute top-0 right-0",
-  title:
-    " text-center text-2xl font-bold leading-9 tracking-tight text-gray-900",
+  title: " text-center text-2xl font-bold leading-9 tracking-tight text-gray-900",
+  box: "max-w-xm py-8 px-6 rounded-3xl text-center shadow-lg grid place-content-center gap-2 border border-solid",
+  message: "font-medium flex flex-col jusfify-center w-3/4 mx-auto",
+  form: "grid gap-4 place-content-center",
+  button: "w-full py-3 px-6 text-lg",
 };
 
 export const PasswordReset = () => {
@@ -38,7 +36,7 @@ export const PasswordReset = () => {
   const [isFormSubmitted, setFormSubmitted] = React.useState(false);
 
   // Show Passwords
-  const showPassordNormal = () => {
+  const showPasswordNormal = () => {
     setShowPassword((prevShowPassword) => {
       return { ...prevShowPassword, password: !prevShowPassword.password };
     });
@@ -85,83 +83,38 @@ export const PasswordReset = () => {
   }, [isFormSubmitted, isFormValid]);
   return (
     <RegisterPageLayout>
-      <article className="max-w-xm py-8 px-6 rounded-3xl text-center shadow-lg grid place-content-center gap-2 border border-solid">
+      <article className={tailwindClass.box}>
         <h2 className={tailwindClass.title}>Reset the password</h2>
-        <p className="font-medium flex flex-col jusfify-center w-3/4 mx-auto">
-          Please Enter your new password. New password must be different from
-          old password.
+        <p className={tailwindClass.message}>
+          Please Enter your new password. New password must be different from old password.
         </p>
 
-        <form
-          action="POST"
-          className="grid gap-4 place-content-center "
-          onSubmit={handleFormSubmit}
-        >
-          <div>
-            <div className="flex items-center justify-between">
-              <label htmlFor="password" className={tailwindClass.label}>
-                New password
-              </label>
-            </div>
-            <div className={`${tailwindClass.inputField} flex relative`}>
-              <input
-                id="password"
-                name="password"
-                type={`${showPassword.password ? "text" : "password"}`}
-                value={passwords.password}
-                onChange={inputFieldChangeHandler}
-                autoComplete="current-password"
-                className={tailwindClass.input}
-              />
-              <span
-                className={tailwindClass.showPasswordIcon}
-                onClick={showPassordNormal}
-              >
-                <i
-                  className={`fa-solid fa-${
-                    showPassword.password ? "eye-slash" : "eye"
-                  }`}
-                ></i>
-              </span>
-            </div>
-            {errors.password && (
-              <span className={tailwindClass.error}>{errors.password}</span>
-            )}
-          </div>
-          <div>
-            <div className="flex items-center justify-between">
-              <label htmlFor="confirmPassword" className={tailwindClass.label}>
-                Repeat new password
-              </label>
-            </div>
-            <div className={`${tailwindClass.inputField} flex relative`}>
-              <input
-                id="confirmPassword"
-                name="confirmPassword"
-                type={`${showPassword.confirmPassword ? "text" : "password"}`}
-                value={passwords.confirmPassword}
-                onChange={inputFieldChangeHandler}
-                autoComplete="confirm-password"
-                className={tailwindClass.input}
-              />
-              <span
-                className={tailwindClass.showPasswordIcon}
-                onClick={showConfirmPassword}
-              >
-                <i
-                  className={`fa-solid fa-${
-                    showPassword.confirmPassword ? "eye-slash" : "eye"
-                  }`}
-                ></i>
-              </span>
-            </div>
-            {errors.confirmPassword && (
-              <span className={tailwindClass.error}>
-                {errors.confirmPassword}
-              </span>
-            )}
-          </div>
-          <Button type="submit" customization="w-full py-3 px-6 text-lg">
+        <form action="POST" className={tailwindClass.form} onSubmit={handleFormSubmit}>
+          <InputField
+            autoComplete="current-password"
+            error={errors.password}
+            id="password"
+            label="New password"
+            name="password"
+            onChange={inputFieldChangeHandler}
+            showPassword={showPassword.password}
+            showPasswordFunc={showPasswordNormal}
+            type="password"
+            value={passwords.password}
+          />
+          <InputField
+            autoComplete="confirm-password"
+            error={errors.confirmPassword}
+            id="confirmPassword"
+            label="Repeat new password"
+            name="confirmPassword"
+            onChange={inputFieldChangeHandler}
+            showPassword={showPassword.confirmPassword}
+            showPasswordFunc={showConfirmPassword}
+            type="password"
+            value={passwords.confirmPassword}
+          />
+          <Button type="submit" customization={tailwindClass.button}>
             reset password
           </Button>
         </form>

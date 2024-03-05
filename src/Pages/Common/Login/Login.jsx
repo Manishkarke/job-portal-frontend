@@ -6,17 +6,15 @@ import { Button } from "../../../Components/Button";
 import { RegisterPageLayout } from "../../../Layouts/RegisterPageLayout";
 import { userLogin } from "../../../Redux/Feature/auth/authAction";
 import { loginValidator } from "../../../utils/dataValidator";
+import InputField from "../../../Components/FormComponents/InputField";
 
 // Tailwind Class Name
 const tailwindClass = {
   box: "max-w-lg mx-auto border border-solid rounded-lg shadow grid gap-5 align-center p-6 lg:px-8",
-  inputField: `block p-1.5 w-full h-9 border-solid text-gray-900 shadow-sm sm:text-sm sm:leading-6 rounded-md ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring focus:ring-indigo-600`,
-  input: "h-full px-2",
-  label: "block text-sm font-medium leading-6 text-gray-900",
   links: `font-semibold capitalize ml-1 leading-6 text-orange-600 hover:text-orange-500`,
-  title:
-    "text-center text-2xl font-bold leading-9 tracking-tight text-gray-900",
+  title: "text-center text-2xl font-bold leading-9 tracking-tight text-gray-900",
   error: "text-red-600 text-sm",
+  footerPara: "text-center text-sm text-gray-500",
 };
 
 export default function Login() {
@@ -45,10 +43,14 @@ export default function Login() {
     });
   };
 
+  const showPasswordInput = () => {
+    setShowPassword(!showPassword);
+  };
+
   // Handle form submission
   const formSubmitHandler = (event) => {
     event.preventDefault();
-    
+
     loginValidator(formData, setErrors);
     setFormSubmitted(true);
   };
@@ -72,96 +74,51 @@ export default function Login() {
   return (
     <RegisterPageLayout>
       <div className={tailwindClass.box}>
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h2 className={tailwindClass.title}>Sign in to your account</h2>
-        </div>
+        {/* <div className="sm:mx-auto sm:w-full sm:max-w-sm"> */}
+        <h2 className={tailwindClass.title}>Sign in to your account</h2>
+        {/* </div> */}
 
-        <div className="grid gap-5 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form
-            className="grid gap-4"
-            method="POST"
-            onSubmit={formSubmitHandler}
+        {/* <div className="grid gap-5 sm:mx-auto sm:w-full sm:max-w-sm"> */}
+        <form className="grid gap-4" method="POST" onSubmit={formSubmitHandler}>
+          <InputField
+            id="email"
+            label="Email address"
+            error={error || errors.email}
+            name="email"
+            type="email"
+            value={formData.email}
+            onChange={inputChangeHandler}
+            autoComplete="email"
+          />
+
+          <InputField
+            id="password"
+            label="Password"
+            error={error || errors.password}
+            name="password"
+            type="password"
+            value={formData.password}
+            onChange={inputChangeHandler}
+            autoComplete="current-password"
+            showPassword={showPassword}
+            showPasswordFunc={showPasswordInput}
           >
-            <div>
-              <label htmlFor="email" className={tailwindClass.label}>
-                Email address
-              </label>
-              <div
-                className={`${tailwindClass.inputField} ${
-                  error || errors.email ? "ring-red-600" : ""
-                }`}
-              >
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={inputChangeHandler}
-                  autoComplete="email"
-                  className={`${tailwindClass.input} w-full`}
-                />
-              </div>
-              {errors.email && (
-                <span className={tailwindClass.error}>{errors.email}</span>
-              )}
-            </div>
-
-            <div>
-              <div className="flex items-center justify-between">
-                <label htmlFor="password" className={tailwindClass.label}>
-                  Password
-                </label>
-                <div className="text-sm">
-                  <Link to="/confirm-email" className={tailwindClass.links}>
-                    Forgot password?
-                  </Link>
-                </div>
-              </div>
-              <div
-                className={`${tailwindClass.inputField} ${
-                  error || errors.password ? "ring-red-600" : ""
-                } relative flex`}
-              >
-                <input
-                  id="password"
-                  name="password"
-                  type={`${showPassword ? "text" : "password"}`}
-                  value={formData.password}
-                  onChange={inputChangeHandler}
-                  autoComplete="current-password"
-                  className={`${tailwindClass.input}`}
-                />
-                <span
-                  className="h-full border-l border-solid w-10 grid text-orange-600 hover:text-orange-500 place-content-center absolute top-0 right-0"
-                  onClick={() => {
-                    setShowPassword(!showPassword);
-                  }}
-                >
-                  <i
-                    className={`fa-solid fa-${
-                      showPassword ? "eye-slash" : "eye"
-                    }`}
-                  ></i>
-                </span>
-              </div>
-              {errors.password && (
-                <span className={tailwindClass.error}>{errors.password}</span>
-              )}
-            </div>
-
-            {error && <span className={tailwindClass.error}>{error}</span>}
-            <Button type="submit" fullWidth={true}>
-              sign in
-            </Button>
-          </form>
-
-          <p className="text-center text-sm text-gray-500">
-            don&apos;t have an account?
-            <Link to={"/register"} className={tailwindClass.links}>
-              register
+            <Link to="/confirm-email" className={`${tailwindClass.links} text-sm`}>
+              Forgot password?
             </Link>
-          </p>
-        </div>
+          </InputField>
+
+          {error && <span className={tailwindClass.error}>{error}</span>}
+          <Button type="submit">sign in</Button>
+        </form>
+
+        <p className={tailwindClass.footerPara}>
+          don&apos;t have an account?
+          <Link to={"/register"} className={tailwindClass.links}>
+            register
+          </Link>
+        </p>
+        {/* </div> */}
       </div>
     </RegisterPageLayout>
   );

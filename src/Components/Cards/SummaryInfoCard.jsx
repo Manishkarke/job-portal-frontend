@@ -10,7 +10,7 @@ const SummaryInfoCard = ({ iconClass, title, children }) => {
         <h4 className="text-sm capitalize font-semibold text-gray-500">
           {title}
         </h4>
-        <p className="text-sm capitalize">{children}</p>
+        <p className="font-medium text-lg">{children}</p>
       </div>
     </li>
   );

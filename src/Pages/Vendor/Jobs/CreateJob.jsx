@@ -6,6 +6,7 @@ import { createJobValidation } from "../../../utils/dataValidator";
 import { postJob } from "../../../Redux/Feature/Vendor/vendorAction";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import InputField from "../../../Components/FormComponents/InputField";
 
 // Tailwind Class Name
 const tailwindClass = {
@@ -13,10 +14,8 @@ const tailwindClass = {
   inputField: `block p-1.5 w-full h-9 border-solid text-gray-900 shadow-sm sm:text-sm sm:leading-6 rounded-md ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring focus:ring-indigo-600`,
   input: "h-full px-2",
   label: "block text-sm font-medium leading-6 capitalize text-gray-900",
-  links:
-    "font-semibold capitalize ml-1 leading-6 text-orange-600 hover:text-orange-500",
-  title:
-    " text-center text-2xl font-bold leading-9 tracking-tight text-gray-900",
+  links: "font-semibold capitalize ml-1 leading-6 text-orange-600 hover:text-orange-500",
+  title: " text-center text-2xl font-bold leading-9 tracking-tight text-gray-900",
   error: "text-red-600 text-sm",
 };
 
@@ -78,87 +77,61 @@ export const CreateJob = () => {
 
       <form className={tailwindClass.box} onSubmit={formSubmitHandler}>
         {/* Title Input field */}
-        <div>
-          <label htmlFor="title" className={tailwindClass.label}>
-            title
-          </label>
-          <input
-            type="text"
-            name="title"
-            id="title"
-            value={formData.title}
-            className={`${tailwindClass.inputField} ${
-              errors?.title ? `ring-red-600` : ""
-            }`}
-            onChange={inputFieldChangeHandler}
-          />
-          {errors?.title && (
-            <span className={tailwindClass.error}>{errors?.title}</span>
-          )}
-        </div>
+        <InputField
+          id="title"
+          label="title"
+          type="text"
+          name="title"
+          value={formData.title}
+          error={errors?.title}
+          onChange={inputFieldChangeHandler}
+        />
 
         {/* Description Input field */}
-        <div>
-          <label htmlFor="description" className={tailwindClass.label}>
-            description
-          </label>
-          <input
-            type="text"
-            name="description"
-            id="description"
-            value={formData.description}
-            className={`${tailwindClass.inputField} ${
-              errors?.description ? `ring-red-400` : ""
-            }`}
-            onChange={inputFieldChangeHandler}
-          />
-          {errors?.description && (
-            <span className={tailwindClass.error}>{errors?.description}</span>
-          )}
-        </div>
+        <InputField
+          id="description"
+          label="description"
+          type="text"
+          name="description"
+          value={formData.description}
+          onChange={inputFieldChangeHandler}
+          error={errors?.description}
+        />
 
         {/* Location input field */}
-        <div>
-          <label htmlFor="location" className={tailwindClass.label}>
-            location
-          </label>
-          <input
-            type="text"
-            name="location"
-            id="location"
-            value={formData.location}
-            className={`${tailwindClass.inputField} ${
-              errors?.location ? "ring-red-600" : ""
-            }`}
-            onChange={inputFieldChangeHandler}
-          />
-          {errors?.location && (
-            <span className={tailwindClass.error}>{errors?.location}</span>
-          )}
-        </div>
+        <InputField
+          id="location"
+          label="location"
+          type="text"
+          name="location"
+          value={formData.location}
+          onChange={inputFieldChangeHandler}
+          error={errors?.location}
+        />
 
         {/* Salary Input field */}
-        <div>
-          <label htmlFor="salary" className={tailwindClass.label}>
-            salary
-          </label>
-          <input
-            type="number"
-            name="salary"
-            id="salary"
-            value={formData.salary}
-            className={`${tailwindClass.inputField} ${
-              errors?.salary ? "ring-red-600" : ""
-            }`}
-            onChange={inputFieldChangeHandler}
-          />
-          {errors?.salary && (
-            <span className={tailwindClass.error}>{errors?.salary}</span>
-          )}
-        </div>
+        <InputField
+          id="salary"
+          label="salary"
+          name="salary"
+          type="text"
+          value={formData.salary}
+          onChange={inputFieldChangeHandler}
+          error={errors?.salary}
+        />
 
         {/* Deadline Input field */}
-        <div>
+        <InputField
+          id="deadline"
+          label="deadline"
+          type="date"
+          name="deadline"
+          value={formData.deadline}
+          min={today}
+          onChange={inputFieldChangeHandler}
+          error={errors?.deadline}
+        />
+        {/* <div>
           <label htmlFor="deadline" className={tailwindClass.label}>
             deadline
           </label>
@@ -168,15 +141,11 @@ export const CreateJob = () => {
             id="deadline"
             value={formData.deadline}
             min={today}
-            className={`${tailwindClass.inputField} ${
-              errors?.deadline ? "ring-red-600" : ""
-            }`}
+            className={`${tailwindClass.inputField} ${errors?.deadline ? "ring-red-600" : ""}`}
             onChange={inputFieldChangeHandler}
           />
-          {errors?.deadline && (
-            <span className={tailwindClass.error}>{errors?.deadline}</span>
-          )}
-        </div>
+          {errors?.deadline && <span className={tailwindClass.error}>{errors?.deadline}</span>}
+        </div> */}
 
         {/* Category input field */}
         <div>
@@ -187,9 +156,7 @@ export const CreateJob = () => {
             type="date"
             name="categoryId"
             id="categoryId"
-            className={`${tailwindClass.inputField} ${
-              errors?.category ? "ring-red-600" : ""
-            }`}
+            className={`${tailwindClass.inputField} ${errors?.category ? "ring-red-600" : ""}`}
             value={formData.categoryId}
             onChange={inputFieldChangeHandler}
           >
@@ -200,15 +167,10 @@ export const CreateJob = () => {
               </option>
             ))}
           </select>
-          {errors?.category && (
-            <span className={tailwindClass.error}>{errors?.category}</span>
-          )}
+          {errors?.category && <span className={tailwindClass.error}>{errors?.category}</span>}
         </div>
 
-        <Button
-          type="submit"
-          customization="md:col-span-2 md:max-w-fit md:justify-self-end"
-        >
+        <Button type="submit" customization="md:col-span-2 md:max-w-fit md:justify-self-end">
           create post
         </Button>
       </form>
