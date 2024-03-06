@@ -6,7 +6,14 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { sendOtp } from "../../../Redux/Feature/auth/authAction";
+import InputField from "../../../Components/FormComponents/InputField";
+import FormTitle from "../../../Components/FormComponents/FormTitle";
 
+const tailwindCLass = {
+  box: "max-w-xm py-8 px-6 rounded-3xl text-center shadow-lg grid place-content-center gap-2 border border-solid",
+  form: "grid gap-4 place-content-center",
+  button: "w-full py-3 px-6 text-lg",
+};
 export const ConfirmEmail = () => {
   const [email, setEmail] = useState("");
   let error = useSelector((state) => state.auth.error);
@@ -22,36 +29,28 @@ export const ConfirmEmail = () => {
       dispatch(sendOtp({ email, toast, navigate, otpFor: "reset-password" }));
     }
   };
+
+  const inputFieldChangeHandler = (e) => {
+    setEmail(e.target.value);
+  };
   return (
     <RegisterPageLayout>
-      <article className="max-w-xm py-8 px-6 rounded-3xl text-center shadow-lg grid place-content-center gap-2 border border-solid">
-        <h2 className="text-2xl font-bold leading-snug capitalize">
-          Forget the password
-        </h2>
-        <p className="font-medium flex flex-col jusfify-center w-3/4 mx-auto">
-          Don't worry! It happens. Please enter your email address associated
-          with your account.
-        </p>
+      <article className={tailwindCLass.box}>
+        <FormTitle
+          title="Forget the password"
+          message="Don't worry! It happens. Please enter your email address associated with your account."
+        />
 
-        <form
-          action="POST"
-          className="grid gap-4 place-content-center "
-          onSubmit={handleFormSubmit}
-        >
-          <div>
-            <input
-              className="border-2 text-lg rounded-lg text-center w-full py-2 border-solid "
-              type="email"
-              name="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            {error && (
-              <span className="text-sm text-red-500 capitalize">{error}</span>
-            )}
-          </div>
-          <Button type="submit" customization="w-full py-3 px-6 text-lg">
+        <form action="POST" className={tailwindCLass.form} onSubmit={handleFormSubmit}>
+          <InputField
+            type="text"
+            id="email"
+            name="email"
+            value={email}
+            onChange={inputFieldChangeHandler}
+            error={error}
+          />
+          <Button type="submit" customization={tailwindCLass.button}>
             confirm email
           </Button>
         </form>

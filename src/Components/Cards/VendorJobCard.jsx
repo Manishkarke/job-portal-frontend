@@ -5,15 +5,7 @@ import { deleteJob } from "../../Redux/Feature/Vendor/vendorAction";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-const VendorJobCard = ({
-  _id,
-  category,
-  title,
-  description,
-  location,
-  salary,
-  deadline,
-}) => {
+const VendorJobCard = ({ _id, category, title, description, salary, deadline }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const today = new Date();
@@ -37,7 +29,8 @@ const VendorJobCard = ({
           <i className="fa-solid fa-dollar-sign"></i> {salary}
         </p>
         <p className="font font-medium">
-          <i className="fa-solid fa-clock"></i> {remainingTime} days left
+          <i className="fa-solid fa-clock"></i>{" "}
+          {remainingTime >= 0 ? `${remainingTime} days left` : "Expired"}
         </p>
       </div>
 
@@ -45,7 +38,9 @@ const VendorJobCard = ({
         <Button
           type="button"
           onClick={deleteJobHanlder}
-          customization="bg-transparent hover:bg-green-600 hover:text-white border-2 border-solid text-current"
+          color="text-black"
+          background="bg-transparent"
+          customization="hover:bg-green-600 hover:text-white border-2 border-solid"
         >
           delete job
         </Button>

@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 const buttonClass =
-  "flex justify-center capitalize rounded-md bg-orange-600 px-3 py-1.5 text-md font-semibold leading-6 text-white hover:bg-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600";
+  "flex justify-center capitalize rounded-md bg-orange-600 px-3 py-1.5 text-md font-semibold leading-6 hover:bg-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600";
 export const Button = ({
   type,
   children,
@@ -9,6 +9,8 @@ export const Button = ({
   sectionId,
   onClick,
   customization,
+  color,
+  background,
 }) => {
   const navigate = useNavigate();
 
@@ -27,7 +29,12 @@ export const Button = ({
 
   if (type === "submit")
     return (
-      <button type={type} className={`${customization} ${buttonClass}`}>
+      <button
+        type={type}
+        className={`${customization} ${buttonClass} ${color || "text-white"} ${
+          background || "bg-orange-600"
+        }`}
+      >
         {children}
       </button>
     );
@@ -35,7 +42,9 @@ export const Button = ({
     return (
       <button
         type={type}
-        className={`${buttonClass} ${customization}`}
+        className={`${buttonClass} ${customization} ${color || "text-white"} ${
+          background || "bg-orange-600"
+        }`}
         onClick={() => onClick()}
       >
         {children}
@@ -45,7 +54,9 @@ export const Button = ({
     return (
       <button
         type={type}
-        className={`${buttonClass} ${customization}`}
+        className={`${buttonClass} ${customization} ${color || "text-white"} ${
+          background || "bg-orange-600"
+        }`}
         onClick={handleClick}
       >
         {children}

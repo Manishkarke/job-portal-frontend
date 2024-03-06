@@ -8,11 +8,10 @@ import { getDataFromLocalStorage } from "../../../utils/localStorage";
 import { resetPassword } from "../../../Redux/Feature/auth/authAction";
 import { toast } from "react-toastify";
 import InputField from "../../../Components/FormComponents/InputField";
+import FormTitle from "../../../Components/FormComponents/FormTitle";
 
 const tailwindClass = {
-  title: " text-center text-2xl font-bold leading-9 tracking-tight text-gray-900",
   box: "max-w-xm py-8 px-6 rounded-3xl text-center shadow-lg grid place-content-center gap-2 border border-solid",
-  message: "font-medium flex flex-col jusfify-center w-3/4 mx-auto",
   form: "grid gap-4 place-content-center",
   button: "w-full py-3 px-6 text-lg",
 };
@@ -84,10 +83,10 @@ export const PasswordReset = () => {
   return (
     <RegisterPageLayout>
       <article className={tailwindClass.box}>
-        <h2 className={tailwindClass.title}>Reset the password</h2>
-        <p className={tailwindClass.message}>
-          Please Enter your new password. New password must be different from old password.
-        </p>
+        <FormTitle
+          title="Reset the password"
+          message="Please Enter your new password. New password must be different from old password."
+        />
 
         <form action="POST" className={tailwindClass.form} onSubmit={handleFormSubmit}>
           <InputField

@@ -18,6 +18,7 @@ const InputField = ({
   showPasswordFunc,
   onChange,
   min,
+  maxLength,
   name,
   value,
   autoComplete,
@@ -26,12 +27,15 @@ const InputField = ({
   if (type === "password")
     return (
       <div>
-        <div className="flex items-center justify-between">
-          <label htmlFor={id} className={tailwindClass.label}>
-            {label}
-          </label>
-          {children || null}
-        </div>
+        {(label && (
+          <div className="flex items-center justify-between">
+            <label htmlFor={id} className={tailwindClass.label}>
+              {label}
+            </label>
+            {children || null}
+          </div>
+        )) ||
+          null}
         <div className={`${tailwindClass.inputField} flex relative`}>
           <input
             id={id}
@@ -62,6 +66,7 @@ const InputField = ({
           name={name}
           id={id}
           min={min || null}
+          maxLength={maxLength || null}
           value={value}
           className={`${tailwindClass.inputField} ${error ? `ring-red-600` : ""}`}
           onChange={onChange}
