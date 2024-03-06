@@ -5,6 +5,7 @@ import { createCategory } from "../../Redux/Feature/admin/adminAction";
 import imgUpload from "../../assets/images/imgUpload.png";
 import { Button } from "../Button";
 import { categoryFormValidation } from "../../utils/dataValidator";
+import InputField from "../FormComponents/InputField";
 const tailwindClass = {
   box: "max-w-lg mx-auto flex flex-col justify-center align-center px-6 py-12 lg:px-8",
   inputField:
@@ -12,8 +13,7 @@ const tailwindClass = {
   imageInputField:
     "w-full flex flex-col gap-2 cursor-pointer capitalize justify-center p-4 items-center rounded-md h-full border-2 border-dashed",
   label: "block capitalize text-sm font-medium leading-6 text-gray-900",
-  title:
-    "text-center text-2xl font-bold leading-9 tracking-tight text-gray-900",
+  title: "text-center text-2xl font-bold leading-9 tracking-tight text-gray-900",
   error: "text-red-600 text-sm",
 };
 
@@ -107,29 +107,16 @@ export const FormModal = ({ closeModal, uploading }) => {
         className={"flex flex-col gap-2"}
         onSubmit={formSubmitHandler}
       >
-        <div>
-          <label htmlFor="category" className={tailwindClass.label}>
-            category name
-          </label>
-          <div className="mt-2">
-            <input
-              id="category"
-              name="category"
-              type="text"
-              autoComplete="category"
-              value={formData.category}
-              onChange={categoryNameChangeHandler}
-              className={`${tailwindClass.inputField} ${
-                errors.category || error ? "ring-red-600" : ""
-              }`}
-            />
-          </div>
-          {(errors.category || error) && (
-            <span className={tailwindClass.error}>
-              {errors.category || error}
-            </span>
-          )}
-        </div>
+        <InputField
+          id="category"
+          label="category name"
+          name="category"
+          type="text"
+          autoComplete="category"
+          value={formData.category}
+          onChange={categoryNameChangeHandler}
+          error={errors.category}
+        />
 
         <div>
           <label htmlFor="categoryImage" className={tailwindClass.label}>
@@ -164,9 +151,7 @@ export const FormModal = ({ closeModal, uploading }) => {
                   <p className="flex flex-col gap-3">
                     drag and drop or click here <br />
                     to upload
-                    <span className="text-xs text-neutral-500">
-                      upload any images from desktop
-                    </span>
+                    <span className="text-xs text-neutral-500">upload any images from desktop</span>
                   </p>
                 </>
               ) : (
@@ -179,9 +164,7 @@ export const FormModal = ({ closeModal, uploading }) => {
             </div>
           </div>
 
-          {errors.image && (
-            <span className={tailwindClass.error}>{errors.image}</span>
-          )}
+          {errors.image && <span className={tailwindClass.error}>{errors.image}</span>}
         </div>
 
         <Button type="submit">add category</Button>

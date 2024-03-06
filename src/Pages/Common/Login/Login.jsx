@@ -74,51 +74,49 @@ export default function Login() {
   return (
     <RegisterPageLayout>
       <div className={tailwindClass.box}>
-        {/* <div className="sm:mx-auto sm:w-full sm:max-w-sm"> */}
         <h2 className={tailwindClass.title}>Sign in to your account</h2>
-        {/* </div> */}
 
-        {/* <div className="grid gap-5 sm:mx-auto sm:w-full sm:max-w-sm"> */}
-        <form className="grid gap-4" method="POST" onSubmit={formSubmitHandler}>
-          <InputField
-            id="email"
-            label="Email address"
-            error={error || errors.email}
-            name="email"
-            type="email"
-            value={formData.email}
-            onChange={inputChangeHandler}
-            autoComplete="email"
-          />
+        <div className="grid gap-5 sm:mx-auto sm:w-full sm:max-w-sm">
+          <form className="grid gap-4" method="POST" onSubmit={formSubmitHandler}>
+            <InputField
+              id="email"
+              label="Email address"
+              error={error || errors.email}
+              name="email"
+              type="email"
+              value={formData.email}
+              onChange={inputChangeHandler}
+              autoComplete="email"
+            />
 
-          <InputField
-            id="password"
-            label="Password"
-            error={error || errors.password}
-            name="password"
-            type="password"
-            value={formData.password}
-            onChange={inputChangeHandler}
-            autoComplete="current-password"
-            showPassword={showPassword}
-            showPasswordFunc={showPasswordInput}
-          >
-            <Link to="/confirm-email" className={`${tailwindClass.links} text-sm`}>
-              Forgot password?
+            <InputField
+              id="password"
+              label="Password"
+              error={error || errors.password}
+              name="password"
+              type="password"
+              value={formData.password}
+              onChange={inputChangeHandler}
+              autoComplete="current-password"
+              showPassword={showPassword}
+              showPasswordFunc={showPasswordInput}
+            >
+              <Link to="/confirm-email" className={`${tailwindClass.links} text-sm`}>
+                Forgot password?
+              </Link>
+            </InputField>
+
+            {error && <span className={tailwindClass.error}>{error}</span>}
+            <Button type="submit">sign in</Button>
+          </form>
+
+          <p className={tailwindClass.footerPara}>
+            don&apos;t have an account?
+            <Link to={"/register"} className={tailwindClass.links}>
+              register
             </Link>
-          </InputField>
-
-          {error && <span className={tailwindClass.error}>{error}</span>}
-          <Button type="submit">sign in</Button>
-        </form>
-
-        <p className={tailwindClass.footerPara}>
-          don&apos;t have an account?
-          <Link to={"/register"} className={tailwindClass.links}>
-            register
-          </Link>
-        </p>
-        {/* </div> */}
+          </p>
+        </div>
       </div>
     </RegisterPageLayout>
   );
